@@ -194,6 +194,7 @@
     canvas: 0
     year: [1871]
 - 
+# New images were added in second batch
   tresor: TRG-9301-K-01
   dlcs: reuzenarbeid\TRG-9301-K-01
   oclc: [1299148289]
@@ -371,6 +372,7 @@
     canvas: 13
     year: [1883, 1884, 1885, 1888]
 - 
+# New images added in second batch
   tresor: TRG-9302-M-01
   dlcs: reuzenarbeid\TRG-9302-M-01
   oclc: [1237803161, 1237803643]
@@ -641,10 +643,6 @@
   dlcs: reuzenarbeid\TRG-9301-G-02
   oclc: [1237635783]
 -
-  tresor: TRG-9301-K-01
-  dlcs: reuzenarbeid\TRG-9301-K-01
-  oclc: [1299148289]
--
   tresor: TRG-9301-M-02
   dlcs: reuzenarbeid\TRG-9301-M-02
   oclc: [1237637525]
@@ -668,10 +666,6 @@
   tresor: TRG-9302-H-02
   dlcs: reuzenarbeid\TRG-9302-H-02
   oclc: [1237802155]
--
-  tresor: TRG-9302-M-01
-  dlcs: reuzenarbeid\TRG-9302-M-01
-  oclc: [1237803161]
 -
   tresor: TRK-9103-E-03
   dlcs: reuzenarbeid\TRK-9103-E-03

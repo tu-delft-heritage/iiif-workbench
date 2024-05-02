@@ -1,0 +1,710 @@
+# First batch
+- 
+  tresor: TRG-9105-B-04
+  dlcs: reuzenarbeid\TRG-9105-B-04
+  oclc: [1288316919]
+  first-canvas: 21
+  projects:
+  -
+    project: Kolonievaart
+    photographers: Friedrich Julius von Kolkow
+    canvas: 0
+    year: [1882, 1884]
+  -
+    project: Verbetering Kanaal van Terneuzen. Schutsluis Sas-van-Gent
+    photographers: K. D'Hoy
+    canvas: 3
+    year: [1882, 1883]
+  -
+    project: Koloniesluis
+    photographers: Friedrich Julius von Kolkow
+    canvas: 13
+    year: [1882]
+  -
+    project: Zijkanaal naar de Maas. Sluis No. 1 te Meijel
+    photographers:
+    canvas: 19
+    year: [1884]
+- 
+  tresor: TRG-9301-A-01
+  dlcs: reuzenarbeid\TRG-9301-A-01
+  oclc: [1237339284]
+  first-canvas: 42
+  projects:
+  -
+    project: Verlegging uitmonding Maas
+    photographers: Arnoud Pistoor & Zn.
+    canvas: 0
+    year: [1904]
+- 
+  tresor: TRG-9301-A-02
+  dlcs: reuzenarbeid\TRG-9301-A-02
+  oclc: [1298544315]
+  first-canvas: 48
+  projects: 
+  -
+    project: Cellulaire gevangenis te Breda
+    photographers: Henri de Louw
+    canvas: 0
+    year:
+  -
+    project: Gemeente gasfabriek Rotterdam
+    photographers: Franz Friedrich Anton Albert von Pöppinghausen
+    canvas: 4
+    year: [1884]
+- 
+  tresor: TRG-9301-B-01
+  dlcs: reuzenarbeid\TRG-9301-B-01
+  oclc: [1288321449]
+  first-canvas: 60
+  projects: 
+  -
+    project: Aanleg van rijswerken tussen de Steenenhoeksche-kanaalsluis en de Giessendamsche plaat
+    photographers: 
+    canvas: 0
+    year: [1873]
+  - 
+    project: Beneden Merwede
+    photographers: 
+    canvas: 2
+    year: 
+  -
+    project: Sluizen Merwede Kanaal Bewesten Utrecht
+    photographers: Arnaud Pistoor & Zn.
+    canvas: 4
+    year: [1904, 1905]
+  -
+    project: Waterweg van Rotterdam naar Zee
+    photographers:
+    canvas: 17
+    year: 
+  -
+    project: Verlenging der Ketel-kribben aan den mond van den Gelderschen IJssel
+    photographers: Pieter Oosterhuis
+    canvas: 22
+    year: 
+- 
+  tresor: TRG-9301-B-02
+  dlcs: reuzenarbeid\TRG-9301-B-02
+  oclc: [1295407601]
+  first-canvas: 84
+  projects: 
+  - 
+    project: Herstelling Schutsluis te Nieuwesluis
+    photographers: G. A. Sonstral
+    range: 0
+    year: [1910]
+- 
+  tresor: TRG-9301-C-01
+  dlcs: reuzenarbeid\TRG-9301-C-01
+  oclc: [1294291971]
+  first-canvas: 88
+  projects: 
+  -
+    project: Kanaal van Neuzen
+    photographers:
+    canvas: 0
+    year: [1872, 1874]
+  -
+    project: Brug over den IJssel bij Westervoort
+    photographers: Arnaud Pistoor & Zn.
+    canvas: 2
+    year: 1898
+  -
+    project: Brug over de Tay
+    photographers:
+    canvas: 6
+    year:
+  -
+    project: Brug over Merwede
+    photographers: Johann Georg Hameter
+    canvas: 9
+    year: [1884, 1885]
+  -
+    project: Spoorwegbrug over het Noordzeekanaal nabij Zaandam
+    photographers: 
+    canvas: 15
+    year: [1875]
+  -
+    project: Spoorwegbrug tegenover de Oosterdoksluizen te Amsterdam
+    photographers: 
+    canvas: 16
+    year: [1875]
+  -
+    project: Brug in den Spoorweg over de Maas
+    photographers: Johann Georg Hameter
+    canvas: 18
+    year: [1877]
+  -
+    project: Locomotievenloods en werkplaats te Fijenoord
+    photographers: Johann Georg Hameter
+    canvas: 19
+    year: [1877]
+  -
+    project: Brug over de Koningshaven te Rotterdam (Fijenoord)
+    photographers: Johann Georg Hameter
+    canvas: 21
+    year: [1876]
+  -
+    project: Willemsbrug over de Maas te Rotterdam
+    photographers: Johann Georg Hameter
+    canvas: 23
+    year:
+  -
+    project: Spoorweg Amersfoort-Nymegen
+    photographers:
+    canvas: 25
+    year:
+- 
+  tresor: TRG-9301-C-02
+  dlcs: reuzenarbeid\TRG-9301-C-02
+  oclc: [1288324810]
+  first-canvas: 121
+  projects:
+  -
+    project: Buitenhaven te Scheveningen
+    photographers: Arnaud Pistoor & Zn.
+    canvas: 0
+    year: [1901, 1903, 1905]
+  -
+    project: Havendammen Vlissingen
+    photographers: Anton Lauwrens Preuninger
+    canvas: 6
+    year: [1868, 1869, 1870]
+- 
+  tresor: TRG-9301-F-03
+  dlcs: reuzenarbeid\TRG-9301-F-03
+  oclc: [1295407846]
+  first-canvas: 143
+  projects:
+  -
+    project: Spoorwegbrug over de Waal beneden Nymegen
+    photographers: Gustav Overbeck
+    canvas: 0
+    year: [1875, 1877]
+- 
+  tresor: TRG-9301-F-05
+  dlcs: reuzenarbeid\TRG-9301-F-05
+  oclc: [1295407701]
+  first-canvas: 146
+  projects: 
+  -
+    project: Spoorweg-Brug over het Hollandschdiep bij Moerdijk
+    photographers:
+    canvas: 0
+    year: [1871]
+- 
+  tresor: TRG-9301-K-01
+  dlcs: reuzenarbeid\TRG-9301-K-01
+  oclc: [1299148289]
+  first-canvas: 160
+  projects:
+  -
+    project: Verbetering kanaal Gent naar Terneuzen
+    photographers: Sytze Reinder Elzinga
+    canvas: 0
+    year: [1906, 1907, 1908, 1909, 1910]
+- 
+  tresor: TRG-9301-M-04
+  dlcs: reuzenarbeid\TRG-9301-M-04
+  oclc: [1237635910]
+  first-canvas: 179
+  projects:
+  -
+    project: Oostelijke waaijerdeur der Korenbrugsluis te Gorichem
+    photographers:
+    canvas: 0
+    year: [1871]
+  -
+    project: Nieuwe Schutsluis te Zwartsluis
+    photographers: Deutmann
+    canvas: 1
+    year: [1877, 1878]
+  -
+    project: Schutsluis Willem I
+    photographers: 
+    canvas: 7
+    year: [1865, 1866, 1867, 1868]
+- 
+  tresor: TRG-9301-P-02
+  dlcs: reuzenarbeid\TRG-9301-P-02
+  oclc: [1288325317]
+  first-canvas: 194
+  projects:
+  -
+    project: Verbetering van de verbinding van haven en Oude Vest te Leiden
+    photographers: Henri de Louw
+    canvas: 0
+    year: [1894, 1865]
+  -
+    project: Wilhelminakanaal. Vaste boogbrug in gewapend beton nabij de Goorstraat te Oosterhout
+    photographers: Arnaud Pistoor & Zn.
+    canvas: 3
+    year: [1910, 1911]
+  -
+    project: Brug aan de voormalige Rotterdamsche Poort te Delft
+    photographers: Henri de Louw
+    canvas: 5
+    year: [1892, 1893, 1894]
+  -
+    project: Keersluis en brug bij Rijnoever aan den Rijksweg bij Leiden
+    photographers: Henri de Louw
+    canvas: 7
+    year: [1889, 1890, 1893]
+  -
+    project: De Hoornbrug
+    photographers: Henri de Louw
+    canvas: 11
+    year: [1891, 1892, 1894]
+  -
+    project: Geestbrug
+    photographers: Henri de Louw
+    canvas: 14
+    year: [1895]
+  -
+    project: Nieuwe tolbrug en 't huis te Burghvliet
+    photographers: Henri de Louw
+    canvas: 15
+    year: [1892]
+  -
+    project: Bouw schutsluis en ophaalbrug te Leidschendam
+    photographers: Henri de Louw
+    canvas: 16
+    year:
+  -
+    project: Oostpoort te Delft
+    photographers: Henri de Louw
+    canvas: 20
+    year: [1891, 1895]
+  -
+    project: Afdamming van het Sloe ten tijde van hoog water
+    photographers: Anton Lauwrens Preuninger
+    canvas: 22
+    year: [1871]
+- 
+  tresor: TRG-9301-T-02
+  dlcs: reuzenarbeid\TRG-9301-T-02
+  oclc: [1299149200]
+  first-canvas: 219
+  projects:
+  -
+    project: Brug over den Rijn nabij Arnhem
+    photographers: Julius Berger, Theodor Creifelds
+    canvas: 0
+    year: [1876, 1877, 1878, 1879]
+  -
+    project: Haltegebouw te Oosterbeek
+    photographers: Theodor Creifelds
+    canvas: 10
+    year: [1879]
+- 
+  tresor: TRG-9302-A-01
+  dlcs: reuzenarbeid\TRG-9302-A-01
+  oclc: [1237637624]
+  first-canvas: 230
+  projects:
+  -
+    project: Verbetering van het kanaal van Gent naar Ter Neuzen
+    photographers: Sytze Reinder Elzinga
+    canvas: 0
+    year: [1904, 1905, 1906]
+  -
+    project: Schutsluis, draaibrug en kanaalwerken Sas-van-Gent
+    photographers: Sytze Reinder Elzinga
+    canvas: 
+    year: [1902, 1903, 1904, 1905, 1906, 1907, 1908, 1906]
+- 
+  tresor: TRG-9302-F-04
+  dlcs: reuzenarbeid\TRG-9302-F-04
+  oclc: [1237802179]
+  first-canvas: 266
+  projects:
+  -
+    project: Brug bij Bommel
+    photographers: Pieter Oosterhuis
+    canvas: 0
+    year: [1866, 1868, 1869, 1870]
+  -
+    project: Brug Venlo
+    photographers:
+    canvas: 7
+    year:
+  -
+    project: Brug Zutphen
+    photographers:
+    canvas: 15
+    year:
+  -
+    project: Brug over de Oude Maas bij Barendrecht
+    photographers: Johann Georg Hameter
+    canvas: 21
+    year: [1887, 1888]
+  -
+    project: Doorgangen onder het Station in het Openhavenfront te Amsterdam
+    photographers:
+    canvas: 23
+    year: [1877]
+  -
+    project: Spoorwegbrug over den Rijn nabij Coblenz
+    photographers:
+    canvas: 26
+    year:
+- 
+  tresor: TRG-9302-H-01
+  dlcs: reuzenarbeid\TRG-9302-H-01
+  oclc: [1237640632]
+  first-canvas: 298
+  projects:
+  -
+    project: Kanaalgedeelte tusschen den Zeijlweg onder Maarsen en de Schutsluis bewesten Utrecht
+    photographers: Pieter Oosterhuis
+    canvas: 0
+    year: [1890, 1891, 1892]
+  -
+    project: Kunstwerken en een gedeelte kanaal bij den Leidschen Rijn
+    photographers: Pieter Oosterhuis
+    canvas: 9
+    year: [1887, 1888]
+  -
+    project: Schutsluis bij Vreeswijk
+    photographers: Pieter Oosterhuis
+    canvas: 13
+    year: [1883, 1884, 1885, 1888]
+- 
+  tresor: TRG-9302-M-01
+  dlcs: reuzenarbeid\TRG-9302-M-01
+  oclc: [1237803161, 1237803643]
+  first-canvas: 323
+  projects:
+  -
+    project: Kanaalgedeelte Schotdeuren - Gorichem
+    photographers: Johann Georg Hameter
+    canvas: 24
+    year: [1888, 1889, 1890]
+  -
+    project: Schutsluis te Vianen
+    photographers: Pieter Oosterhuis
+    canvas: 0
+    year: [1884, 1885, 1886]
+  -
+    project: Verruiming en gedeeltelijke omlegging van het Zederikkanaal
+    photographers: Pieter Oosterhuis
+    canvas: 12
+    year: [1885, 1886, 1887, 1888]
+- 
+  tresor: TRG-9302-T-02
+  dlcs: reuzenarbeid\TRG-9302-T-02
+  oclc: [841361495]
+  first-canvas: 351
+  projects:
+  -
+    project: Zuid-Willemsvaart te Maastricht
+    photographers:
+    canvas: 0
+    year:
+  -
+    project: Drentsche hoofdvaart
+    photographers: Friedrich Julius von Kolkow
+    canvas: 2
+    year: [1879, 1880]
+  -
+    project: Kolonie Veenhuizen
+    photographers: Friedrich Julius von Kolkow
+    canvas: 14
+    year: [1878, 1879, 1881]
+- 
+  tresor: TRG-9302-Z-01
+  dlcs: reuzenarbeid\TRG-9302-Z-01
+  oclc: [1299149883]
+  first-canvas: 377
+  projects:
+  -
+    project: Oosthavendam te Veere
+    photographers:
+    canvas: 0
+    year: 1869
+  -
+    project: Merwedekanaal bewesten Utrecht
+    photographers: Arnoud Pistoor
+    canvas: 1
+    year: 1905
+  -
+    project: Schutsluis bij Andel
+    photographers: Arnoud Pistoor
+    canvas: 2
+    year: [1897 1898]
+  -
+    project: Havendammen te Vlissingen
+    photographers:
+    canvas: 5
+    year: 1868
+  -
+    project: Brug over den IJssel
+    photographers: Arnoud Pistoor
+    canvas: 6
+    year: 1898
+  -
+    project: Schutsluis te Vlissingen
+    photographers:
+    canvas: 8
+    year: 1869
+  -
+    project: Spoorburg over het Noordzeekanaal te Velsen
+    photographers:
+    canvas: 10
+    year: 1872
+  -
+    project: Brug Venlo
+    photographers:
+    canvas: 11
+    year:
+  -
+    project: Brug over de Oude Maas bij Barendrecht
+    photographers: Johann Georg Hameter
+    canvas: 13
+    year: [1887, 1888]
+  -
+    project: Brug over Rijn nabij Rhenen
+    photographers: Julius Berger Theodor Creifelds
+    canvas: 14
+    year: 1882
+  -
+    project: Spoorbrug Nijmegen
+    photographers: Gustav Overbeck
+    canvas: 16
+    year: 1879
+- 
+  tresor: TRG-9401-F-02
+  dlcs: reuzenarbeid\TRG-9401-F-02
+  oclc: [841361502]
+  first-canvas: 395
+  projects:
+  -
+    project: Brug over de Oude Maas te Dordrecht
+    photographers: Julius Berger
+    canvas: 0
+    year: [1866, 1867, 1868, 1871, 1872, 1873]
+  -
+    project: Draaibrug over het kanaal van Voorne
+    photographers:
+    canvas: 8
+    year: [1873, 1874]
+  -
+    project: Station Dordrecht
+    photographers: Julius Berger
+    canvas: 13
+    year: [1872]
+- 
+  tresor: TRG-9405-R-03
+  dlcs: reuzenarbeid\TRG-9405-R-03
+  oclc: [841361501, 841731801, 841731797, 841732255]
+  first-canvas: 411
+  projects:
+  -
+    project: Boomshoofd te Delfzijl
+    photographers: Friedrich Julius von Kolkow
+    canvas: 0
+    year: [1879]
+  -
+    project: Keersluis te Zwolle
+    photographers: Deutmann
+    canvas: 2
+    year: [1878]
+  -
+    project: Staatsspoorweg te Amsterdam. Viaduct langs de Houttuinen
+    photographers: Pieter Oosterhuis
+    canvas: 4
+    year: [1872]
+  -
+    project: Schutsluis te Arkel
+    photographers:
+    canvas: 5
+    year: [1879]
+- 
+  tresor: TRG-9410-B-05
+  dlcs: reuzenarbeid\TRG-9410-B-05
+  oclc: [905855596]
+  first-canvas: 0
+  projects:
+  -
+    project: Brug te Kuilenburg
+    photographers:
+    canvas: 0
+    year: [1865, 1866, 1867, 1868]
+- 
+  tresor: TRG-9410-N-02
+  dlcs: reuzenarbeid\TRG-9410-N-02
+  oclc: [840510196]
+  first-canvas: 13
+  projects:
+  -
+    project: Lemmer Sluis en Dijkswerken
+    photographers: Fidel Carl Albert Greiner 
+    canvas: 0
+    year: [1887, 1888]
+- 
+  tresor: TRK-9105-G-08
+  dlcs: reuzenarbeid\TRK-9105-G-08
+  oclc: [841362051, 841362049, 1301476653]
+  first-canvas: 420
+  projects:
+  -
+    project: Franz-Josephs-Brücke über die Moldau zu Prag
+    photographers: František Fridrich
+    canvas: 0
+    year: [1867, 1868]
+  -
+    project: Het droogdok te Middelburg
+    photographers: Carl Wilhelm Bauer 
+    canvas: 10
+    year:
+  -
+    project: Zwaanspreng bij Apeldoorn
+    photographers:
+    canvas: 12
+    year: [1868]
+  -
+    project: Oosterhuizensche Spreng
+    photographers:
+    canvas: 13
+    year: [1868]
+  -
+    project: Velduizer Spreng
+    photographers: Pieter Oosterhuis
+    canvas: 14
+    year: [1869]
+  -
+    project: Bruggen Rotterdam
+    photographers: Erckens
+    canvas: 16
+    year: [1877]
+  -
+    project: Oranjesluizen tijdens de bouw
+    photographers: Pieter Oosterhuis
+    canvas: 20
+    year: [1870]
+  -
+    project: Noordzeekanaal Velsen
+    photographers: Pieter Oosterhuis
+    canvas: 21
+    year: [1869, 1870]
+  -
+    project: Bouw afsluitdijk in het IJ (Oranjesluizen)
+    photographers: Pieter Oosterhuis
+    canvas: 37
+    year: [1868, 1870]
+- 
+  tresor: TRK-9105-H-01
+  dlcs: reuzenarbeid\TRK-9105-H-01
+  oclc: [841361497]
+  first-canvas: 460
+  projects:
+  -
+    project: Binnen Rotte
+    photographers: Julius Berger
+    canvas: 0
+    year: [1870, 1871, 1873, 1874]
+  -
+    project: Oude Haven
+    photographers: Julius Berger
+    canvas: 3
+    year: [1871]
+  -
+    project: Havenwerken te Feijenoord
+    photographers: Johann Georg Hameter
+    canvas: 7
+    year: [1876]
+  -
+    project: Schutsluis Willem II
+    photographers:
+    canvas: 9
+    year: [1864, 1865]
+# Second batch
+-
+  tresor: TRG-9105-A-01
+  dlcs: reuzenarbeid\TRG-9105-A-01
+  oclc: [1378470126]
+-
+  tresor: TRG-9301-E-01
+  dlcs: reuzenarbeid\TRG-9301-E-01
+  oclc: [1243057076]
+-
+  tresor: TRG-9301-E-02
+  dlcs: reuzenarbeid\TRG-9301-E-02
+  oclc: [1237634525]
+-
+  tresor: TRG-9301-G-01
+  dlcs: reuzenarbeid\TRG-9301-G-01
+  oclc: [1237635605]
+-
+  tresor: TRG-9301-G-02
+  dlcs: reuzenarbeid\TRG-9301-G-02
+  oclc: [1237635783]
+-
+  tresor: TRG-9301-K-01
+  dlcs: reuzenarbeid\TRG-9301-K-01
+  oclc: [1299148289]
+-
+  tresor: TRG-9301-M-02
+  dlcs: reuzenarbeid\TRG-9301-M-02
+  oclc: [1237637525]
+-
+  tresor: TRG-9301-M-03
+  dlcs: reuzenarbeid\TRG-9301-M-03
+  oclc: [1378470890]
+-
+  tresor: TRG-9301-T-03
+  dlcs: reuzenarbeid\TRG-9301-T-03
+  oclc: [1378470871]
+-
+  tresor: TRG-9302-B-01
+  dlcs: reuzenarbeid\TRG-9302-B-01
+  oclc: [1237638879]
+-
+  tresor: TRG-9302-B-02
+  dlcs: reuzenarbeid\TRG-9302-B-02
+  oclc: [1237640454]
+-
+  tresor: TRG-9302-H-02
+  dlcs: reuzenarbeid\TRG-9302-H-02
+  oclc: [1237802155]
+-
+  tresor: TRG-9302-M-01
+  dlcs: reuzenarbeid\TRG-9302-M-01
+  oclc: [1237803161]
+-
+  tresor: TRK-9103-E-03
+  dlcs: reuzenarbeid\TRK-9103-E-03
+  oclc: [841362050]
+-
+  tresor: TRK-9103-M-04
+  dlcs: reuzenarbeid\TRK-9103-M-04
+  oclc: [1378469923]
+-
+  tresor: TRK-9105-A-02
+  dlcs: reuzenarbeid\TRK-9105-A-02
+  oclc: [841361496]
+-
+  tresor: TRK-9105-A-03
+  dlcs: reuzenarbeid\TRK-9105-A-03
+  oclc: [841362052]
+-
+  tresor: TRK-9105-A-04
+  dlcs: reuzenarbeid\TRK-9105-A-04
+  oclc: [841361499]
+-
+  tresor: TRK-9105-A-05
+  dlcs: reuzenarbeid\TRK-9105-A-05
+  oclc: [841362055]
+-
+  tresor: TRK-9105-T-01
+  dlcs: reuzenarbeid\TRK-9105-T-01
+  oclc: [841362054]
+-
+  tresor: TRK-9801-135
+  dlcs: reuzenarbeid\TRK-9801-135
+  oclc: [841723422]
+-
+  tresor: TRK-9806-129
+  dlcs: reuzenarbeid\TRK-9806-129
+  oclc: [842009241]

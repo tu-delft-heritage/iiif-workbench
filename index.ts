@@ -3,6 +3,7 @@ import { createSelection } from "bun-promptx";
 import yaml from "js-yaml";
 import { sleep } from "./src/utils.ts";
 import { fetchJson } from "./src/utils.ts";
+import { formats } from "./src/formats.ts";
 import { Vault as IIIFVault } from "@iiif/helpers";
 
 // Listing files in input folder
@@ -34,7 +35,7 @@ const vault = new IIIFVault();
 
 // Log file
 const date = new Date().toISOString().slice(0, -5).replaceAll(":", ".");
-const log = Bun.file(`logs/${date}.txt`);
+const log = Bun.file(`logs/${date}-${filename.split(".yml")[0]}.txt`);
 const writer = log.writer();
 
 // Using a proxy for the OCLC Search API
@@ -136,7 +137,8 @@ function processMetadata(respArray: any, shelfNumber: string) {
       resp.note.generalNotes.forEach((item) => notes.push(item.text));
     }
     if (resp.format?.generalFormat) {
-      format.push(resp.format?.generalFormat);
+      const betterFormat = formats[resp.format.generalFormat];
+      format.push(betterFormat);
     }
   }
 
@@ -215,39 +217,52 @@ async function writeManifests() {
         // Fetch skeleton manifest from DLCS and OCLC responses
         // For promises: https://gist.github.com/bschwartz757/5d1ff425767fdc6baedb4e5d5a5135c8
         const manifest = await vault.loadManifest(dlcsApiBase + dlcs);
-        let metadata = undefined;
-        if (cache.includes(shelfNumber)) {
-          // Get cached json response
-          metadata = await Bun.file("./.cache/" + shelfNumber + ".json").json();
-        } else {
-          metadata = await Promise.all(
-            oclcNumbers.map(async (id) => {
-              const resp = await fetchJson(oclcApiBase + id);
-              // Timeout for val.town limit
-              await sleep(6000);
-              return resp;
-            })
-          );
-          // Write cache
-          await Bun.write(
-            `.cache/${shelfNumber}.json`,
-            JSON.stringify(metadata, null, 4)
-          );
+        let metadata = new Array();
+        for (const number of oclcNumbers) {
+          if (cache.includes(number.toString())) {
+            // Get cached json response
+            const resp = await Bun.file(
+              "./.cache/" + number.toString() + ".json"
+            ).json();
+            metadata.push(resp);
+          } else {
+            // Fetch json
+            const resp = await fetchJson(oclcApiBase + number);
+            metadata.push(resp);
+            // Write cache
+            await Bun.write(
+              `.cache/${number}.json`,
+              JSON.stringify(resp, null, 4)
+            );
+            // Timeout for val.town limit
+            await sleep(6000);
+          }
         }
-        if (manifest && metadata) {
+        if (manifest && metadata.length) {
           // Set label and metadata
           manifest.label = { none: metadata[0].title.mainTitles[0].text };
           manifest.metadata = processMetadata(metadata, shelfNumber);
           // Write file
+          const filename =
+            shelfNumber === "Tresorleeszaal"
+              ? shelfNumber.toLowerCase().replaceAll(" ", "-") +
+                "-" +
+                oclcNumbers[0]
+              : shelfNumber.toLowerCase().replaceAll(" ", "-");
+          const exists = await Bun.file(`output/${filename}.json`).exists();
           await Bun.write(
-            `output/${shelfNumber.toLowerCase()}.json`,
+            `output/${filename}.json`,
             JSON.stringify(vault.toPresentation3(manifest), null, 4)
           );
           // Console output
-          console.log(`File ${shelfNumber}.json has been created successfully`);
+          if (exists) {
+            console.log(`Existing file ${filename}.json was overwritten`);
+          } else {
+            console.log(`File ${filename}.json has been created successfully`);
+          }
         }
       } catch (err) {
-        console.log(shelfNumber, err);
+        console.log("Error: ", shelfNumber, oclcNumbers.join(", "), err);
       }
     }
   }
@@ -255,6 +270,7 @@ async function writeManifests() {
 
 await writeManifests();
 writer.flush();
+writer.end();
 
 console.log(`Done. ${mapping.length} files written.`);
-console.log(`Log: ${date}.txt`);
+console.log(`Log: ${date}-${filename.split(".yml")[0]}.txt`);

@@ -11,6 +11,8 @@
   "dependencies": {
     "@iiif/helpers": "^1.1.0",
     "bun-promptx": "^0.2.0",
-    "js-yaml": "^4.1.0"
+    "js-yaml": "^4.1.0",
+    "openapi-fetch": "^0.9.5",
+    "openapi-typescript": "^6.7.5"
   }
 }

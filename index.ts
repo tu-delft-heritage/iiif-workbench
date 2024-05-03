@@ -4,7 +4,14 @@ import yaml from "js-yaml";
 import { sleep } from "./src/utils.ts";
 import { fetchJson } from "./src/utils.ts";
 import { formats } from "./src/formats.ts";
+import { fetchMetadata } from "./src/oclc.ts";
 import { Vault as IIIFVault } from "@iiif/helpers";
+
+// Types
+import type { paths } from "./src/types/openapi-schema.ts";
+
+type SuccessResponse =
+  paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];
 
 // Listing files in input folder
 const inputGlob = new Glob("input/*.yml");
@@ -38,12 +45,6 @@ const date = new Date().toISOString().slice(0, -5).replaceAll(":", ".");
 const log = Bun.file(`logs/${date}-${filename.split(".yml")[0]}.txt`);
 const writer = log.writer();
 
-// Using a proxy for the OCLC Search API
-// https://www.val.town/v/sammeltassen/oclcSearchApi
-// Test: https://sammeltassen-oclcsearchapi.web.val.run/?oclcnumber=1378470126
-const oclcApiBase =
-  "https://sammeltassen-oclcsearchapi.web.val.run/?oclcnumber=";
-
 // Base urls
 const dlcsApiBase = `https://dlc.services/iiif-resource/7/string1string2string3/`;
 const worldCatBase = "https://tudelft.on.worldcat.org/oclc/";
@@ -55,7 +56,7 @@ for await (const file of glob.scan("./.cache")) {
   cache.push(file.split(".")[0]);
 }
 
-function processMetadata(respArray: any, shelfNumber: string) {
+function processMetadata(respArray: SuccessResponse[], shelfNumber: string) {
   const oclcNumber = new Array();
   const title = new Array();
   const contributor = new Array();
@@ -66,16 +67,18 @@ function processMetadata(respArray: any, shelfNumber: string) {
   const format = new Array();
 
   if (respArray.length > 1) {
-    const urls = respArray.map((i) => worldCatBase + i.identifier.oclcNumber);
+    const urls = respArray.map((i) => worldCatBase + i.identifier?.oclcNumber);
     writer.write(
       `${shelfNumber} heeft meerdere OCLC nummers (${urls.join(", ")})\n`
     );
   }
 
   for (const resp of respArray) {
-    const url = worldCatBase + resp.identifier.oclcNumber;
-    oclcNumber.push(`<a href="${url}">${resp.identifier.oclcNumber}</a>`);
-    resp.title.mainTitles.forEach((item) => title.push(item.text));
+    const url = worldCatBase + resp.identifier?.oclcNumber;
+    oclcNumber.push(`<a href="${url}">${resp.identifier?.oclcNumber}</a>`);
+    if (resp.title?.mainTitles) {
+      resp.title.mainTitles.forEach((item) => title.push(item.text));
+    }
     // Alternative: resp.contributor.statementOfResponsibility
     if (resp.contributor?.creators) {
       resp.contributor.creators.forEach((item) => {
@@ -95,8 +98,8 @@ function processMetadata(respArray: any, shelfNumber: string) {
             `${shelfNumber} heeft een auteur met alleen een achternaam (${url})\n`
           );
         }
-        if (item.creatorNotes) {
-          name = name.concat(" (", item.creatorNotes, ")");
+        if (name && item.creatorNotes) {
+          name = name.concat(" (", item.creatorNotes.join(", "), ")");
         }
         contributor.push(name);
       });
@@ -105,7 +108,7 @@ function processMetadata(respArray: any, shelfNumber: string) {
     }
     if (resp.publishers) {
       resp.publishers.forEach((item) =>
-        publisher.push(item.publisherName.text + ", " + item.publicationPlace)
+        publisher.push(item.publisherName?.text + ", " + item.publicationPlace)
       );
     }
     if (resp.date?.publicationDate) {
@@ -118,7 +121,7 @@ function processMetadata(respArray: any, shelfNumber: string) {
       }
     }
     // Sometimes physicalDescription can be found in bibliographies property
-    if (resp.description.bibliographies) {
+    if (resp.description?.bibliographies) {
       const content = resp.description.bibliographies.map((item) => item.text);
       content.forEach((item) => description.push(item));
       writer.write(
@@ -211,7 +214,7 @@ async function writeManifests() {
   for (let item of mapping) {
     const shelfNumber: string = item.tresor;
     const dlcs: string = item.dlcs;
-    const oclcNumbers: string[] = item.oclc;
+    const oclcNumbers: number[] = item.oclc;
     if (shelfNumber && dlcs && oclcNumbers) {
       try {
         // Fetch skeleton manifest from DLCS and OCLC responses
@@ -227,15 +230,17 @@ async function writeManifests() {
             metadata.push(resp);
           } else {
             // Fetch json
-            const resp = await fetchJson(oclcApiBase + number);
-            metadata.push(resp);
-            // Write cache
-            await Bun.write(
-              `.cache/${number}.json`,
-              JSON.stringify(resp, null, 4)
-            );
-            // Timeout for val.town limit
-            await sleep(6000);
+            const resp = await fetchMetadata(number);
+            if (resp.data) {
+              metadata.push(resp.data);
+              // Write cache
+              await Bun.write(
+                `.cache/${number}.json`,
+                JSON.stringify(resp.data, null, 4)
+              );
+            }
+            // Optional timeout between fetches
+            // await sleep(6000);
           }
         }
         if (manifest && metadata.length) {

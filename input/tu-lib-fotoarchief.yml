@@ -1,0 +1,42 @@
+collection:
+  dlcs:
+    space: fotoarchief
+  metadata:
+    institution:
+      en: TU Delft Library
+    collection:
+      nl: Fotoarchief
+      en: Photo Archive
+items:
+  - dlcs: bouw-geodesie
+    metadata:
+      label:
+        en: Construction of the Faculty of Geodesy
+      format:
+        en: Photo
+      year:
+        en: 1970s
+  # - dlcs: otb-76-4
+  #   metadata:
+  #     label:
+  #       none: 76-4
+  #     collection:
+  #       nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
+  # - dlcs: otb-77-5
+  #   metadata:
+  #     label:
+  #       none: 77-5
+  #     collection:
+  #       nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
+  # - dlcs: otb-78-10
+  #   metadata:
+  #     label:
+  #       none: 78-10
+  #     collection:
+  #       nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
+  - dlcs: repository
+    metadata:
+      label:
+        en: Various photos of the campus of TU Delft
+      format:
+        en: Photo

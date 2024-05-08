@@ -1,0 +1,69 @@
+collection:
+  metadata:
+    institution:
+      nl: Nationaal Archief
+      en: National Archives
+items:
+  - dlcs: 523/3.12.08.01
+    metadata:
+      title:
+        nl: Krantenknipsels betreffende nieuwbouwplannen in de Wippolder, 1947-1956
+      collection:
+        nl: "Archieven van de Technische Hogeschool te Delft: Besturen van: de Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs, 1841-1864; de Polytechnische School etc.; de Technische Hogeschool etc. (3.12.08.01)"
+      inventory-number:
+        none: 523
+      permalink:
+        none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
+  - dlcs: 524/3.12.08.01
+    metadata:
+      title:
+        nl: Verslagen van vergaderingen van het College van Curatoren over het te voeren bouwbeleid, 1947-1956.
+      collection:
+        en: "Archieven van de Technische Hogeschool te Delft: Besturen van: de Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs, 1841-1864; de Polytechnische School etc.; de Technische Hogeschool etc. (3.12.08.01)"
+      inventory-number:
+        none: 524
+      permalink:
+        none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
+  - dlcs: 526/3.12.08.01
+    metadata:
+      label:
+        nl: Stukken betreffende het verstrekken van Marshallhulp voor nieuwbouw, verbouw en het aanschaffen van de nodige apparatuur, 1948-1951.
+      collection:
+        nl: "Archieven van de Technische Hogeschool te Delft: Besturen van: de Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs, 1841-1864; de Polytechnische School etc.; de Technische Hogeschool etc. (3.12.08.01)"
+      inventory-number:
+        none: 526
+      permalink:
+        none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
+  - dlcs: 527/3.12.08.01
+    metadata:
+      label:
+        nl: Stukken betreffende de huisvesting van de Technische Hogeschool, met aanvullingen en opmerkingen door de afdelingen, 1949-1955.
+      collection:
+        nl: "Archieven van de Technische Hogeschool te Delft: Besturen van: de Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs, 1841-1864; de Polytechnische School etc.; de Technische Hogeschool etc. (3.12.08.01)"
+      inventory-number:
+        none: 527
+      permalink:
+        none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
+  - dlcs: 1486/3.12.08.01
+    metadata:
+      label:
+        nl: "Memories betreffende het situatieplan van de gebouwen, gericht aan het College van Curatoren; afschrift met twee foto's van een maquette voor nieuwbouw, 1947 november."
+      collection:
+        nl: "Archieven van de Technische Hogeschool te Delft: Besturen van: de Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs, 1841-1864; de Polytechnische School etc.; de Technische Hogeschool etc. (3.12.08.01)"
+      inventory-number:
+        none: 1486
+      permalink:
+        none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
+  - dlcs: 864-899/4.KIVI
+    metadata:
+      label:
+        nl: Bouwtekeningen van de Indische Technische Hogeschool te Bandoeng, ontworpen door H. Maclaine Pont, getekend door Witteveen, uitgegeven door het Koninklijk Instituut voor Hoger Technisch Onderwijs in Nederlands Indië.
+      year:
+        none: 1919
+      description:
+        nl: Plattegrond van de begroeiing en de galerijen (1:1000); dwars- en langsdoorsneden (1:20)
+      collection:
+        nl: "4.KIVI Inventaris van de verzameling atlassen, kaarten, tekeningen, prenten en foto's van het Koninklijk Instituut van Ingenieurs (KIVI) [opgericht in 1847], over de periode 1606-1976"
+      inventory-number:
+        none: 864-899
+      permalink: http://hdl.handle.net/10648/502713ef-3ed0-494e-a74a-3ce9b90c0be0

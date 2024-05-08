@@ -1,0 +1,48 @@
+collection:
+  metadata:
+    institution:
+      en: TU Delft Library
+    collection:
+      nl: Kaartenkamer
+      en: Map Room
+items:
+  - dlcs: kaarten-publicaties-integraal
+    metadata:
+      label:
+        nl: Het maken van drie-dimensionale kaarten
+      journal:
+        none: Delft Integraal 1986.3/4
+  - dlcs: gidskaartjes-edit
+    metadata:
+      label:
+        en: Guide maps of the TU Delft campus
+      year:
+        none: 1956-1985
+  - dlcs: kaarten-campus-citg
+    metadata:
+      label:
+        nl: Inrichting gebied tussen Bouwkunde en Civiele Techniek
+      year:
+        none: 1976
+  - dlcs: kaarten-campus-plattegronden
+    metadata:
+      label:
+        nl: Maps of Delft and environs
+      year:
+        none: 1954/1959
+  - dlcs: kaarten-publicaties-cvb
+    metadata:
+      label:
+        nl: Toekomst TU Wijk
+      makers:
+        none: Facilitair Bedrijf TU Delft
+      year:
+        none: 1992
+      publisher:
+        none: College van Bestuur TU Delft
+  - dlcs: kaarten-campus-uitbreidingsplannen
+    metadata:
+      label:
+        en: Extension plans of the city of Delft
+      year:
+        none: 1954/1964

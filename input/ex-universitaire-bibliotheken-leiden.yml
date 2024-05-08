@@ -1,0 +1,33 @@
+# Leiden University Libraries
+collection:
+  metadata:
+    institution:
+      en: Leiden University Libraries
+      nl: Universitaire Bibliotheken Leiden
+items:
+  - dlcs: kitlv
+    metadata:
+      label:
+        en: Various images related to Bandung technical college
+      collection:
+        none: KITLV
+      inventory-number:
+        none:
+          [
+            KITLV 11869,
+            KITLV 11910,
+            KITLV 11908,
+            KITLV 50592,
+            KITLV 116885,
+            KITLV 404088,
+          ]
+      permalink:
+        none:
+          [
+            http://hdl.handle.net/1887.1/item:912661,
+            http://hdl.handle.net/1887.1/item:910893,
+            http://hdl.handle.net/1887.1/item:913018,
+            http://hdl.handle.net/1887.1/item:763321,
+            http://hdl.handle.net/1887.1/item:891246,
+            http://hdl.handle.net/1887.1/item:727838,
+          ]

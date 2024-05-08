@@ -1,0 +1,167 @@
+collection:
+  metadata:
+    institution:
+      en: TU Delft Library
+    collection:
+      nl: Fotografie
+      en: Photography
+items:
+  # Todo: reverse string1 and string2 order
+  - dlcs:
+      space: fotografie
+      string1: 2020-depots-museumcollectie
+      string2: achterberg
+    metadata:
+      label:
+        en: Impressions of the three depots for the Special Collections of TU Delft Library
+        nl: Een indruk van de drie depots voor de Bijzondere Collecties van de TU Delft Library
+      format:
+        en: Photo
+      contributor:
+        none: Geertje van Achterberg
+      year:
+        none: 2020
+  - dlcs:
+      space: fotografie
+      string1: 2020-library-bandung
+      string2: achterberg
+    metadata:
+      label:
+        en: Photos of "Irrigation Knowledge" and "Bandoeng - Bandung" exhibitions at TU Delft Library
+        nl: Foto"s van de tentoonstellingen "Irrigation Knowledge" en "Bandoeng - Bandung" bij de TU Delft Library
+      format:
+        en: Photo
+      contributor:
+        none: Geertje van Achterberg
+      year:
+        none: 2020
+  - dlcs:
+      space: fotografie
+      string1: 2018-library-01-afterlife-of-satellites
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the "Afterlife of Satellites" exhibition at TU Delft Library
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2018
+  - dlcs:
+      space: fotografie
+      string1: 2018-erfgoed-chemische-technologie
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the empty Chemical Engineering building
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2018
+  - dlcs:
+      space: fotografie
+      string1: 2019-sc-optics-for-all
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the "Optics for All" exhibition at TU Delft Science Centre
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2019
+  - dlcs:
+      space: fotografie
+      string1: 2017-aula-rise-of-a-campus
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the "Rise of a Campus" exhibition at TU Delft Aula
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2017
+  - dlcs:
+      space: fotografie
+      string1: 2018-erfgoed-slingeruurwerk
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the pendulum clock by Strasser & Rohde on display at the depot of Stichting De Hollandse Cirkel (Kanaalweg 4)
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2018
+  - dlcs:
+      space: fotografie
+      string1: 2017-teaching-lab-01
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the "Mathematical Plaster Models" exhibition curated by Annoesjka Cabo at Teaching Lab
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2017
+  - dlcs:
+      space: fotografie
+      string1: 2018-teaching-lab-02
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of "The Golden Calf" exhibition curated by Bart Root at Teaching Lab
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2018
+  - dlcs:
+      space: fotografie
+      string1: 2018-teaching-lab-03
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the "Object-based Learning" exhibition curated by Charlotte van Wijk at Teaching Lab
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2018
+  - dlcs:
+      space: fotografie
+      string1: 2018-aula-the-age-of-standards
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of "The Age of Standards" exhibition at TU Delft Aula
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2018
+  - dlcs:
+      space: fotografie
+      string1: 2019-extern-vanaf-het-hoogste-punt
+      string2: schwartz
+    metadata:
+      label:
+        en: Photos of the "From the highest point" exhibition at Panorama Mesdag (The Hague)
+      format:
+        en: Photo
+      contributor:
+        none: Johannes Schwartz
+      year:
+        none: 2019

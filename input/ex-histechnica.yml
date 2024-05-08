@@ -1,0 +1,18 @@
+collection:
+  metadata:
+    institution:
+      en: Private collection, Makkink family
+      nl: Privéverzameling, familie Makkink
+items:
+  - dlcs: gedenkboek-makkink
+    metadata:
+      label:
+        en: Memorial album on the occasion of the 40th work anniversary of J.H. Makkink, with the compliments of his staff
+        nl: Gedenkalbum ter gelegenheid van het 40-jarig ambtsjubileum van Ir. J.H. Makkink aangeboden door zijn personeel
+      format:
+        en: Photo album
+      year:
+        none: 1987
+      description:
+        en: J.H. Makkink was the first director of the Delft Technical Exhibition Centre. The memorial book provides an overview of exhibitions organised in the period 1971-1987.
+        nl: J.H. Makkink was de eerste directeur van het Technisch Tentoonstellingscentrum in Delft. Het gedenkboek geeft een overzicht van de tentoonstellingen in de periode 1971-1987

@@ -1,0 +1,23 @@
+collection:
+  metadata:
+    institution:
+      nl: Stadsarchief Delft
+      en: City Archive Delft
+items:
+  - dlcs: spiero-bk
+    metadata:
+      label:
+        en: Photos of the fire and demolition of the Faculty of Architecture
+      format:
+        en: Photo
+      contributor:
+        none: K.G. Spiero
+      year:
+        none: 2008
+  - dlcs: kaarten
+    # Todo: change string1 value
+    metadata:
+      label:
+        en: City plan of Delft and extension plans for the Wippolder, 1900-1921
+      format:
+        en: Map

@@ -1,0 +1,64 @@
+collection:
+  metadata:
+    institution:
+      nl: Nieuwe Instituut
+      en: New Institute
+items:
+  - dlcs: best-10
+    metadata:
+      label:
+        nl: H. Maclaine Pont, W.J. Witteveen, Bestek voor twee barakgebouwen voor de Technische Hogeschool in Bandoeng.
+      year:
+        none: 1919
+      collection:
+        nl: Bestekken / Verzameling
+      inventory-number:
+        none: BEST 10
+  - dlcs: brox-f1216
+    metadata:
+      collection:
+        nl: Architectenbureau Van den Broek en Bakema / Archief
+      inventory-number:
+        none: BROX f1216
+  - dlcs: eest-10.847
+    metadata:
+      collection:
+        nl: Eesteren, C. (Cornelis) van / Archief
+      inventory-number:
+        none: EEST 10.847
+  - dlcs: post-D171
+    metadata:
+      collection:
+        nl: Postel, H. (Hendrikus) / Archief
+      inventory-number:
+        none: POST D171
+  - dlcs: post-t281
+    metadata:
+      collection:
+        nl: Postel, H. (Hendrikus) / Archief
+      inventory-number:
+        none: POST t281
+  - dlcs: weeb-306
+    metadata:
+      collection:
+        nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
+      inventory-number:
+        none: WEEB 306
+  - dlcs: weeb-308
+    metadata:
+      collection:
+        nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
+      inventory-number:
+        none: WEEB 308
+  - dlcs: weeb-597
+    metadata:
+      collection:
+        nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
+      inventory-number:
+        none: WEEB 597
+  - dlcs: weeb-1012
+    metadata:
+      collection:
+        nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
+      inventory-number:
+        none: WEEB 1012

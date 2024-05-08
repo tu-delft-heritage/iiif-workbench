@@ -1,0 +1,56 @@
+collection:
+  dlcs:
+    space: atria
+  metadata:
+    institution:
+      none: Atria, Kennisinstituut voor Emancipatie en Vrouwengeschiedenis
+items:
+  - dlcs: ned22-1989
+    metadata:
+      label:
+        nl: De Technische Universiteit, een mannenwereld
+      format:
+        en: Book
+      contributor:
+        none:
+          [René van Lieshout (ed.), Lex Veldhoen (ed.), Johan den Hartog (ed.)]
+      year:
+        none: 1989
+      publisher:
+        none: "Delft: Studium Generale TU Delft"
+      inventory-number:
+        none: NED 22 1989 - B
+      permalink:
+        none: https://hdl.handle.net/11653/book103591
+  - dlcs: ned22-1984
+    metadata:
+      label:
+        nl: Vrouwen die techniek studeren... hoe apart
+      format:
+        en: Book
+      contributor:
+        none: Frida de Jong
+      year:
+        none: 1984
+      publisher:
+        none: "Delft: Technische Hogeschool Delft"
+      inventory-number:
+        none: NED 22 1984 - C
+      permalink:
+        none: https://hdl.handle.net/11653/book2206
+  - dlcs: ned72-1985
+    metadata:
+      label:
+        nl: "THD-vrouwendag 1985 : lezingen - vraagstelling - forum"
+      format:
+        en: Book
+      contributor:
+        none: R. Giezen (ed.)
+      year:
+        none: 1985
+      publisher:
+        none: "Delft: Technische Hogeschool Delft"
+      inventory-number:
+        none: NED 72 1985 - B
+      permalink:
+        none: https://hdl.handle.net/11653/book72863

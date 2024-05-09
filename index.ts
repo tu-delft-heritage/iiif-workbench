@@ -30,7 +30,7 @@ const result = createSelection(inputFiles, {
 const filename = inputFiles[result.selectedIndex].text;
 const file = await Bun.file("./input/" + filename).text();
 const mapping = yaml.load(file);
-writer.write("Selected input file: ${filename}\n");
+writer.write(`Selected input file: ${filename}\n`);
 
 // For parsing IIIF Manifests and converting to version 3
 const vault = new IIIFVault();
@@ -81,7 +81,7 @@ async function writeManifests() {
         }
         if (manifest && metadata.length) {
           // Set label and metadata
-          manifest.label = { none: metadata[0].title.mainTitles[0].text };
+          manifest.label = { none: [metadata[0].title.mainTitles[0].text] };
           manifest.metadata = processOclcMetadata(metadata, shelfNumber);
           // Write file
           const filename =
@@ -114,4 +114,4 @@ writer.flush();
 writer.end();
 
 console.log(`Done. ${mapping.items.length} files written.`);
-console.log(`Log: ${date}-${filename.split(".yml")[0]}.txt`);
+console.log(`Log: ${date}.txt`);

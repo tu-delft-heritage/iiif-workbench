@@ -70,6 +70,12 @@ export function processOclcMetadata(
   const notes = new Array();
   const format = new Array();
 
+  // Todo: process language:
+  //     "language": {
+  //       "itemLanguage": "dut",
+  //       "catalogingLanguage": "dut"
+  //   },
+
   if (respArray.length > 1) {
     const urls = respArray.map((i) => worldCatBase + i.identifier?.oclcNumber);
     writer.write(
@@ -124,6 +130,10 @@ export function processOclcMetadata(
         );
       }
     }
+    if (resp.description?.summaries) {
+      const content = resp.description.summaries.map((item) => item.text);
+      content.forEach((item) => description.push(item));
+    }
     // Sometimes physicalDescription can be found in bibliographies property
     if (resp.description?.bibliographies) {
       const content = resp.description.bibliographies.map((item) => item.text);
@@ -133,7 +143,8 @@ export function processOclcMetadata(
           ", "
         )}" (${url})\n`
       );
-    } else if (resp.description?.physicalDescription) {
+    }
+    if (resp.description?.physicalDescription) {
       description.push(resp.description.physicalDescription);
     }
     if (resp.description?.contents) {

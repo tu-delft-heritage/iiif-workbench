@@ -1,0 +1,29 @@
+collection:
+  metadata:
+    institution:
+      en: TU Delft Library
+    collection:
+      none: Piranesi, Trésor
+items:
+  - tresor: TRG 9413 G 02
+    dlcs: piranesi/TRG-9413-G02
+    oclc: [842525508]
+  - tresor: TRG 9413 G 03
+    dlcs: piranesi/TRG-9413-G03
+    oclc: [842552167]
+  - tresor: TRG 9413 G 04
+    dlcs: piranesi/TRG-9413-G04
+    oclc: [1190868492]
+  - tresor: TRG 9413 G 05
+    dlcs: piranesi/TRG-9413-G05
+    oclc: [842552166]
+  - tresor: TRG 9413 G 06
+    dlcs: piranesi/TRG-9413-G06
+    oclc: [842546045]
+  # - tresor: "2003"
+  #   dlcs: piranesi/2003
+  #   oclc:
+  # # Niet Piranesi
+  # - tresor: "2010"
+  #   dlcs: piranesi/2010
+  #   oclc:

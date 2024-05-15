@@ -20,6 +20,7 @@ items:
     dlcs: txf952A16
     oclc: [840592995]
   - tresor: Tresorleeszaal
+    # Fout in creatorNotes
     dlcs: 64319573
     oclc: [64319573]
   - tresor: Tresorleeszaal
@@ -38,8 +39,14 @@ items:
     dlcs: 72665213-1925
     oclc: [72665213]
   - tresor: Tresorleeszaal
+    # Fout in creatorNotes
+    # description > summaries
+    # description > bibliographies
     dlcs: 68976673
     oclc: [68976673]
+  - tresor: TR 540202
+    dlcs: TR-540202
+    oclc: [841756583]
 
   # Fotoalbums
   - tresor: TRK 9811201
@@ -48,20 +55,30 @@ items:
   - tresor: TR 2988225
     dlcs: TR-2988225
     oclc: [840594332]
-
-  # Need to be ingested
-  # - tresor: TRK 9811202
-  #   oclc: 840493169
-  # - tresor: TRK 9806213
-  #   oclc: 1085541704
-  # - tresor: TRK 9806215
-  #   oclc: 1143214906
-  # - tresor: TRK 9806214
-  #   oclc: 1143215179
-  # - tresor: TRK 9806309
-  #   oclc: 911056836
-  # - tresor: TR 3072156
-  #   oclc: 842118846
+  - tresor: TRK 9811202
+    dlcs: trk-9811202
+    oclc: [840493169]
+  - tresor: TRK 9806213
+    dlcs: trk-9806213
+    oclc: [1085541704]
+  - tresor: TRK 9806215
+    dlcs: trk-9806215
+    oclc: [1143214906]
+  - tresor: TRK 9806214
+    dlcs: trk-9806214
+    oclc: [1143215179]
+  - tresor: TRK 9806309
+    dlcs: trk-9806309
+    oclc: [911056836]
+  - tresor: TR 3072156
+    dlcs: tr-3072156
+    oclc: [842118846]
+  - tresor: TRG 9302 R 06
+    dlcs: trg-9302-r-06
+    oclc: [1417317487]
+  - tresor: TRG 9105 G 10
+    dlcs: trg-9105-g-10
+    oclc: [1410098495]
 
   # Maps
   - tresor: TRK 9812103
@@ -73,3 +90,11 @@ items:
   #   metadata:
   #     label:
   #       nl: Kaarten en tekeningen van de Pekalenwerken in Nederlands-Indië
+
+  # Kaartenproject 2008
+  - tresor: TR 514425
+    dlcs: tr-514425
+    oclc: [842524767]
+  - tresor: TR 2984343
+    dlcs: tr-2984343
+    oclc: [63820402]

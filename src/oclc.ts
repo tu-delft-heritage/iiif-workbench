@@ -166,56 +166,56 @@ export function processOclcMetadata(
         en: ["Title"],
         nl: ["Titel"],
       },
-      value: { none: title.length ? title : [""] },
+      value: { none: title.length ? title : ["n/a"] },
     },
     {
       label: {
         en: contributor.length <= 1 ? ["Contributor"] : ["Contributors"],
         nl: contributor.length <= 1 ? ["Maker"] : ["Makers"],
       },
-      value: { none: contributor.length ? [...new Set(contributor)] : [""] },
+      value: { none: contributor.length ? [...new Set(contributor)] : ["n/a"] },
     },
     {
       label: {
         en: ["Publisher"],
         nl: ["Uitgever"],
       },
-      value: { none: publisher.length ? [...new Set(publisher)] : [""] },
+      value: { none: publisher.length ? [...new Set(publisher)] : ["n/a"] },
     },
     {
       label: {
         en: ["Year"],
         nl: ["Jaar"],
       },
-      value: { none: year.length ? [...new Set(year)] : [""] },
+      value: { none: year.length ? [...new Set(year)] : ["n/a"] },
     },
     {
       label: {
         en: ["Format"],
         nl: ["Formaat"],
       },
-      value: { none: format.length ? [...new Set(format)] : [""] },
+      value: { none: format.length ? [...new Set(format)] : ["n/a"] },
     },
     {
       label: {
         en: ["Description"],
         nl: ["Omschrijving"],
       },
-      value: { none: description.length ? description : [""] },
+      value: { none: description.length ? description : ["n/a"] },
     },
     {
       label: {
         en: ["Notes"],
         nl: ["Noot"],
       },
-      value: { none: notes.length ? notes : [""] },
+      value: { none: notes.length ? notes : ["n/a"] },
     },
     {
       label: {
         en: oclcNumber.length <= 1 ? ["OCLC Number"] : ["OCLC Numbers"],
         nl: oclcNumber.length <= 1 ? ["OCLC nummer"] : ["OCLC nummers"],
       },
-      value: { none: oclcNumber.length ? oclcNumber : [""] },
+      value: { none: oclcNumber.length ? oclcNumber : ["n/a"] },
     },
     {
       label: { en: ["Shelf Number"], nl: ["Plaatsnummer"] },

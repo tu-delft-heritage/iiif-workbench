@@ -1,4 +1,5 @@
 collection:
+  prefix: aviodrome
   metadata:
     institution:
       none: Aviodrome

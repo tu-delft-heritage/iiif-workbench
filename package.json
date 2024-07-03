@@ -9,8 +9,8 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
-    "@iiif/helpers": "^1.2.0",
-    "@iiif/parser": "^2.1.1",
+    "@iiif/helpers": "^1.2.18",
+    "@iiif/parser": "^2.1.3",
     "bun-promptx": "^0.2.0",
     "js-yaml": "^4.1.0",
     "openapi-fetch": "^0.9.5",

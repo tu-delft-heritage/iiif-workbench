@@ -1,6 +1,7 @@
 collection:
   dlcs:
     space: atria
+  prefix: ex-atria
   metadata:
     institution:
       none: Atria, Kennisinstituut voor Emancipatie en Vrouwengeschiedenis

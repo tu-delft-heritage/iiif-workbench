@@ -2,7 +2,7 @@
 
 This repository is used to create IIIF Manifests for TU Delft Library's [academic heritage website](https://heritage.tudelft.nl/en).
 
-OpenAPI yml file has been converted to typescript with [OpenAPI Typescript](bun openapi-typescript ./src/open-api-schema.yml -o ./src/open-api-schema.ts)
+OpenAPI yml file has been converted to typescript with [OpenAPI Typescript](https://openapi-ts.dev/):
 
 ```
 bun openapi-typescript ./src/open-api-schema.yml -o ./src/open-api-schema.ts

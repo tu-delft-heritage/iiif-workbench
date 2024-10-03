@@ -47,9 +47,10 @@ items:
   - tresor: TR 540202
     dlcs: TR-540202
     oclc: [841756583]
-  - tresor: TRK 9209204
-    dlcs: trk-9209204
-    oclc: [842545703]
+  # Metadata niet correct
+  # - tresor: TRK 9209204
+  #   dlcs: trk-9209204
+  #   oclc: [842545703]
 
   # Fotoalbums
   - tresor: TRK 9811201
@@ -101,3 +102,17 @@ items:
   - tresor: TR 2984343
     dlcs: tr-2984343
     oclc: [63820402]
+
+  # GMS 2024
+  - tresor: Tresorleeszaal
+    dlcs: 839007461
+    oclc: [839007461]
+  - tresor: TR 2980745
+    dlcs: 841075233
+    oclc: [841075233]
+  - tresor: TRK 9819521
+    dlcs: 840551651
+    oclc: [840551651]
+  - tresor: TR 3021410
+    dlcs: 905462128
+    oclc: [905462128]

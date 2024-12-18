@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/lib-fotoarchief
   dlcs:
     space: fotoarchief
   metadata:

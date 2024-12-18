@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/ex-nieuwe-instituut
   metadata:
     institution:
       nl: Nieuwe Instituut

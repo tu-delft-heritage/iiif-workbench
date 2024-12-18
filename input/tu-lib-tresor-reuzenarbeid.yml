@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/lib-reuzenarbeid
   metadata:
     institution:
       en: TU Delft Library

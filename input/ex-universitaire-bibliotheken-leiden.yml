@@ -1,5 +1,6 @@
 # Leiden University Libraries
 collection:
+  output: dlcs/ex-ubl
   metadata:
     institution:
       en: Leiden University Libraries

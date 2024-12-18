@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/ex-nationaal-archief
   metadata:
     institution:
       nl: Nationaal Archief

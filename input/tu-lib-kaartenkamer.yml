@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/lib-kaartenkamer
   metadata:
     institution:
       en: TU Delft Library

@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/ex-histechnica
   metadata:
     institution:
       en: Private collection, Makkink family

@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/ex-aviodrome
   prefix: aviodrome
   metadata:
     institution:

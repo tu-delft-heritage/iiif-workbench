@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/ex-atria
   dlcs:
     space: atria
   prefix: ex-atria

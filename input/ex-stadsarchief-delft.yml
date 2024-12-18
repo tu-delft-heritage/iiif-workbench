@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/ex-stadsarchief-delft
   metadata:
     institution:
       nl: Stadsarchief Delft

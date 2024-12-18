@@ -1,4 +1,5 @@
 collection:
+  output: dlcs/lib-tresor-piranesi
   metadata:
     institution:
       en: TU Delft Library

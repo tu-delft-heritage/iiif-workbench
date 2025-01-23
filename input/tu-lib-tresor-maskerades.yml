@@ -6,13 +6,12 @@ collection:
     collection:
       none: Maskerades, Trésor
 items:
-  # Image failed
-  # - tresor: TRG 9403 E 02
-  #   dlcs: maskerades/trg-9403-e-02
-  #   oclc: 65902380
-  # - tresor: TRG 9403 E 03
-  #   dlcs: maskerades/trg-9403-e-03
-  #   oclc: 65902377
+  - tresor: TRG 9403 E 02
+    dlcs: maskerades/trg-9403-e-02
+    oclc: [65902380]
+  - tresor: TRG 9403 E 03
+    dlcs: maskerades/trg-9403-e-03
+    oclc: [65902377]
   - tresor: TRG 9403 E 04
     dlcs: maskerades/trg-9403-e-04
     oclc: [65122733]
@@ -31,10 +30,9 @@ items:
   - tresor: TRG 9403 P 06
     dlcs: maskerades/trg-9403-p-06
     oclc: [67348487]
-  # Image failed
-  # - tresor: TRG 9403 P 07
-  #   dlcs: maskerades/trg-9403-p-07
-  #   oclc: 64500041
+  - tresor: TRG 9403 P 07
+    dlcs: maskerades/trg-9403-p-07
+    oclc: [64500041]
   - tresor: TRG 9809 E 03
     dlcs: maskerades/trk-9809-e-03
     oclc: [840592757]

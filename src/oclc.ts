@@ -1,7 +1,8 @@
 import createClient, { type Middleware } from "openapi-fetch";
 import { writer } from "./log.ts";
-import type { paths } from "./types/openapi-schema.ts";
 import { formats } from "./formats.ts";
+
+import type { paths } from "./types/openapi-schema.ts";
 
 type SuccessResponse =
   paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];

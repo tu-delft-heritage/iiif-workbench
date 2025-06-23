@@ -1,108 +1,96 @@
-import { Glob } from "bun";
-import { createSelection } from "bun-promptx";
-import yaml from "js-yaml";
-import { sleep, fetchJson } from "./src/utils.ts";
-import { fetchOclcMetadata, processOclcMetadata } from "./src/oclc.ts";
-import { Vault as IIIFVault } from "@iiif/helpers";
-import type { Manifest, Service } from "@iiif/presentation-3";
+import {
+  sleep,
+  fetchJson,
+  checkArrray,
+  selectFile,
+  loadYml,
+  cleanManifest,
+  clearOrCreateOutputDir,
+  fetchOclcMetadataWithCache,
+  parseMetadata,
+  getLabel,
+} from "./src/shared.ts";
+import { processOclcMetadata } from "./src/oclc.ts";
+import { IIIFBuilder } from "@iiif/builder";
 import { date, writer } from "./src/log.ts";
+import { dlcsQueryBase, outputDirBase } from "./src/settings.ts";
 
-// Listing files in input folder
-const inputGlob = new Glob("input/*.yml");
+import type {
+  InternationalString,
+  Manifest,
+  MetadataItem,
+} from "@iiif/presentation-3";
 
-const inputFiles = new Array();
-
-for await (const file of inputGlob.scan(".")) {
-  inputFiles.push({ text: file.split("/")[1] });
-}
-
-if (inputFiles.length === 0) {
-  throw new Error("No input files found");
-}
-
-// Prompt user for file
-const result = createSelection(inputFiles, {
-  headerText: "Select input file: ",
-  perPage: 10,
-});
-
-// Load and parse selected yaml file containing mapping and metadata
-const filename = inputFiles[result.selectedIndex].text;
-const file = await Bun.file("./input/" + filename).text();
-const mapping = yaml.load(file);
-writer.write(`Selected input file: ${filename}\n`);
+const inputPath = await selectFile("input/*.yml");
+const mapping = await loadYml(inputPath);
 
 // For parsing IIIF Manifests and converting to version 3
-const vault = new IIIFVault();
+const builder = new IIIFBuilder();
+const vault = builder.vault;
 
-// Base urls
-const dlcsApiBase = `https://dlc.services/iiif-resource/v3/7/string1string2string3/`;
+// Create output directory
+const outputDir = mapping.collection.guid;
+if (!outputDir) throw new Error("Collection GUID missing!");
 
-// Load cache
-const glob = new Glob("*.json");
-const cache = new Array();
-for await (const file of glob.scan("./.cache")) {
-  cache.push(file.split(".")[0]);
-}
+clearOrCreateOutputDir(`${outputDirBase}/${outputDir}`);
 
-// https://bun.sh/docs/api/file-io
 async function writeManifests() {
   for (let item of mapping.items) {
-    const shelfNumber: string = item.tresor;
-    const dlcs: string = item.dlcs;
-    const oclcNumbers: number[] = item.oclc;
-    if (shelfNumber && dlcs && oclcNumbers) {
+    const {
+      tresor: shelfNumber,
+      dlcs,
+      oclc: oclcNumbers,
+      guid,
+      metadata: metadataValues,
+    } = item;
+    if (dlcs) {
       try {
         // Fetch skeleton manifest from DLCS and OCLC responses
         // For promises: https://gist.github.com/bschwartz757/5d1ff425767fdc6baedb4e5d5a5135c8
-        // const manifest = await vault.loadManifest(dlcsApiBase + dlcs);
-        const manifest = (await fetchJson(dlcsApiBase + dlcs)) as Manifest;
-        let metadata = new Array();
-        for (const number of oclcNumbers) {
-          if (cache.includes(number.toString())) {
-            // Get cached json response
-            const resp = await Bun.file(
-              "./.cache/" + number.toString() + ".json"
-            ).json();
-            metadata.push(resp);
-          } else {
-            // Fetch json
-            const resp = await fetchOclcMetadata(number);
-            if (resp.data) {
-              metadata.push(resp.data);
-              // Write cache
-              await Bun.write(
-                `.cache/${number}.json`,
-                JSON.stringify(resp.data, null, 4)
-              );
-            }
-            // Optional timeout between fetches
-            // await sleep(6000);
+        const manifestId = dlcsQueryBase + dlcs;
+        const skeletonManifest = (await fetchJson(manifestId)) as Manifest;
+        cleanManifest(skeletonManifest);
+        vault.load(manifestId, skeletonManifest);
+
+        let metadata: MetadataItem[] | undefined = undefined;
+        let label: InternationalString | undefined = undefined;
+        if (oclcNumbers && shelfNumber) {
+          const parsedOclcNumbers = checkArrray(oclcNumbers) as number[];
+          const oclcResponses = new Array();
+          for (const number of parsedOclcNumbers) {
+            const resp = await fetchOclcMetadataWithCache(number);
+            oclcResponses.push(resp);
           }
+          metadata = processOclcMetadata(oclcResponses, shelfNumber);
+          label = getLabel(metadata);
+        } else if (metadataValues) {
+          metadata = parseMetadata(metadataValues);
+          label = getLabel(metadata);
         }
-        if (manifest && metadata.length) {
+        if (metadata && label) {
           // Set label and metadata
-          manifest.label = { none: [metadata[0].title.mainTitles[0].text] };
-          manifest.metadata = processOclcMetadata(metadata, shelfNumber);
-          // Remove ImageService2
-          manifest.thumbnail?.[0].service.shift();
-          manifest.items.map((canvas) => {
-            canvas?.thumbnail?.[0].service.shift();
-            canvas?.items?.[0].items?.[0].body?.service.shift();
-            // Remove canvas metadata
-            delete canvas.metadata;
-          });
-          // Write file
-          const filename =
-            shelfNumber === "Tresorleeszaal"
-              ? shelfNumber.toLowerCase().replaceAll(" ", "-") +
-                "-" +
-                oclcNumbers[0]
-              : shelfNumber.toLowerCase().replaceAll(" ", "-");
-          const exists = await Bun.file(`output/${filename}.json`).exists();
+          const normalizedManifest = builder.editManifest(
+            manifestId,
+            (manifest) => {
+              manifest.setLabel(label);
+              manifest.setMetadata(metadata);
+            }
+          );
+          const outputManifest = vault.toPresentation3(normalizedManifest);
+          // const filename =
+          //   shelfNumber === "Tresorleeszaal"
+          //     ? shelfNumber.toLowerCase().replaceAll(" ", "-") +
+          //       "-" +
+          //       parsedOclcNumbers[0]
+          //     : shelfNumber.toLowerCase().replaceAll(" ", "-");
+          const filename = guid;
+          if (!filename) throw new Error("Item GUID missing!");
+          const exists = await Bun.file(
+            `${outputDirBase}/${outputDir}/${filename}.json`
+          ).exists();
           await Bun.write(
-            `output/${filename}.json`,
-            JSON.stringify(manifest, null, 4)
+            `${outputDirBase}/${outputDir}/${filename}.json`,
+            JSON.stringify(outputManifest, null, 4)
           );
           // Console output
           if (exists) {
@@ -110,10 +98,14 @@ async function writeManifests() {
           } else {
             console.log(`File ${filename}.json has been created successfully`);
           }
+        } else {
+          console.log("No label or metadata found");
         }
       } catch (err) {
-        console.log("Error: ", shelfNumber, oclcNumbers.join(", "), err);
+        console.log("Error:\n", item, err);
       }
+    } else {
+      console.log("No DLCS string found");
     }
   }
 }

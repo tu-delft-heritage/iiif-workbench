@@ -1,17 +1,15 @@
 collection:
-  output: dlcs/lib-photography
+  guid: 429a71f7-b0c3-4fab-823e-521b504f0f8e
   metadata:
-    institution:
-      en: TU Delft Library
-    collection:
+    label:
       nl: Fotografie
       en: Photography
+    institution:
+      en: TU Delft Library
 items:
   # Todo: reverse string1 and string2 order
-  - dlcs:
-      space: fotografie
-      string1: 2020-depots-museumcollectie
-      string2: achterberg
+  - guid: ec078729-f33f-4166-be14-1ab7c0a7da4d
+    dlcs: 2020-depots-museumcollectie
     metadata:
       label:
         en: Impressions of the three depots for the Special Collections of TU Delft Library
@@ -22,10 +20,8 @@ items:
         none: Geertje van Achterberg
       year:
         none: 2020
-  - dlcs:
-      space: fotografie
-      string1: 2020-library-bandung
-      string2: achterberg
+  - guid: 7f8af037-9cd4-4ded-8865-7476f6c94628
+    dlcs: 2020-library-bandung
     metadata:
       label:
         en: Photos of "Irrigation Knowledge" and "Bandoeng - Bandung" exhibitions at TU Delft Library
@@ -36,10 +32,8 @@ items:
         none: Geertje van Achterberg
       year:
         none: 2020
-  - dlcs:
-      space: fotografie
-      string1: 2018-library-01-afterlife-of-satellites
-      string2: schwartz
+  - guid: 36a0f349-2e4b-4adf-83d6-2466d0f33660
+    dlcs: 2018-library-01-afterlife-of-satellites
     metadata:
       label:
         en: Photos of the "Afterlife of Satellites" exhibition at TU Delft Library
@@ -49,10 +43,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2018
-  - dlcs:
-      space: fotografie
-      string1: 2018-erfgoed-chemische-technologie
-      string2: schwartz
+  - guid: 024bf679-255b-42a1-98c5-88f05c1c86ae
+    dlcs: 2018-erfgoed-chemische-technologie
     metadata:
       label:
         en: Photos of the empty Chemical Engineering building
@@ -62,10 +54,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2018
-  - dlcs:
-      space: fotografie
-      string1: 2019-sc-optics-for-all
-      string2: schwartz
+  - guid: 1fc0bccf-4a53-43ae-a9ce-a461c275591a
+    dlcs: 2019-sc-optics-for-all
     metadata:
       label:
         en: Photos of the "Optics for All" exhibition at TU Delft Science Centre
@@ -75,10 +65,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2019
-  - dlcs:
-      space: fotografie
-      string1: 2017-aula-rise-of-a-campus
-      string2: schwartz
+  - guid: 146181de-bca0-48b0-a4f1-5a578965c5c5
+    dlcs: 2017-aula-rise-of-a-campus
     metadata:
       label:
         en: Photos of the "Rise of a Campus" exhibition at TU Delft Aula
@@ -88,10 +76,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2017
-  - dlcs:
-      space: fotografie
-      string1: 2018-erfgoed-slingeruurwerk
-      string2: schwartz
+  - guid: 86596cc0-2a9f-48e4-bf1e-49a52b8fc467
+    dlcs: 2018-erfgoed-slingeruurwerk
     metadata:
       label:
         en: Photos of the pendulum clock by Strasser & Rohde on display at the depot of Stichting De Hollandse Cirkel (Kanaalweg 4)
@@ -101,10 +87,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2018
-  - dlcs:
-      space: fotografie
-      string1: 2017-teaching-lab-01
-      string2: schwartz
+  - guid: 5f7888d0-03fa-483f-a9b9-db5432fec44c
+    dlcs: 2017-teaching-lab-01
     metadata:
       label:
         en: Photos of the "Mathematical Plaster Models" exhibition curated by Annoesjka Cabo at Teaching Lab
@@ -114,10 +98,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2017
-  - dlcs:
-      space: fotografie
-      string1: 2018-teaching-lab-02
-      string2: schwartz
+  - guid: 2865c3e9-bcd3-412d-8659-f6ffad859d64
+    dlcs: 2018-teaching-lab-02
     metadata:
       label:
         en: Photos of "The Golden Calf" exhibition curated by Bart Root at Teaching Lab
@@ -127,10 +109,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2018
-  - dlcs:
-      space: fotografie
-      string1: 2018-teaching-lab-03
-      string2: schwartz
+  - guid: 25971986-c627-42b4-9acd-d2fafd5e8da6
+    dlcs: 2018-teaching-lab-03
     metadata:
       label:
         en: Photos of the "Object-based Learning" exhibition curated by Charlotte van Wijk at Teaching Lab
@@ -140,10 +120,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2018
-  - dlcs:
-      space: fotografie
-      string1: 2018-aula-the-age-of-standards
-      string2: schwartz
+  - guid: 78193c4a-d399-4a0c-85f8-d2686d312fa1
+    dlcs: 2018-aula-the-age-of-standards
     metadata:
       label:
         en: Photos of "The Age of Standards" exhibition at TU Delft Aula
@@ -153,10 +131,8 @@ items:
         none: Johannes Schwartz
       year:
         none: 2018
-  - dlcs:
-      space: fotografie
-      string1: 2019-extern-vanaf-het-hoogste-punt
-      string2: schwartz
+  - guid: afd03440-7bfc-41fc-9e98-97ba28da7e1a
+    dlcs: 2019-extern-vanaf-het-hoogste-punt
     metadata:
       label:
         en: Photos of the "From the highest point" exhibition at Panorama Mesdag (The Hague)

@@ -1,4 +1,5 @@
 collection:
+  guid: b1ca53b7-10ae-4647-9964-e142ea848453
   output: dlcs/lib-kaartenkamer
   metadata:
     institution:
@@ -7,41 +8,47 @@ collection:
       nl: Kaartenkamer
       en: Map Room
 items:
-  - dlcs: kaarten-publicaties-integraal
+  - guid: 84fc0bf9-a1f0-4e58-bdcc-725b6058ade3
+    dlcs: kaarten-publicaties-integraal
     metadata:
       label:
         nl: Het maken van drie-dimensionale kaarten
       journal:
         none: Delft Integraal 1986.3/4
-  - dlcs: gidskaartjes-edit
+  - guid: 244f3706-6c6e-40b5-9693-deff3e69b53d
+    dlcs: gidskaartjes-edit
     metadata:
       label:
         en: Guide maps of the TU Delft campus
       year:
         none: 1956-1985
-  - dlcs: kaarten-campus-citg
+  - guid: f21adf56-e87a-4ffb-9e7d-df62a557b0cd
+    dlcs: kaarten-campus-citg
     metadata:
       label:
         nl: Inrichting gebied tussen Bouwkunde en Civiele Techniek
       year:
         none: 1976
-  - dlcs: kaarten-campus-plattegronden
+  - guid: 45ed7448-cda4-416e-a214-0d759b61bcc5
+    dlcs: kaarten-campus-plattegronden
     metadata:
       label:
         nl: Maps of Delft and environs
       year:
         none: 1954/1959
-  - dlcs: kaarten-publicaties-cvb
+  - guid: b09d32f7-830a-49a5-99d3-edef1425aee4
+    dlcs: kaarten-publicaties-cvb
     metadata:
       label:
         nl: Toekomst TU Wijk
-      makers:
+      contributor:
         none: Facilitair Bedrijf TU Delft
       year:
         none: 1992
       publisher:
         none: College van Bestuur TU Delft
-  - dlcs: kaarten-campus-uitbreidingsplannen
+  - guid: df7de4e8-4574-46bb-8a29-4669477b2ae7
+    dlcs: kaarten-campus-uitbreidingsplannen
     metadata:
       label:
         en: Extension plans of the city of Delft

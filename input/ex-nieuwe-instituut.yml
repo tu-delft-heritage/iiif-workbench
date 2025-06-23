@@ -1,63 +1,75 @@
 collection:
+  guid: 8fd2b106-dc53-4bcb-8410-94100946df3f
   output: dlcs/ex-nieuwe-instituut
   metadata:
     institution:
       nl: Nieuwe Instituut
       en: New Institute
 items:
-  - dlcs: best-10
+  - guid: 61c1ce50-1979-493d-b6da-5dc4a697f251
+    dlcs: best-10
     metadata:
       label:
-        nl: H. Maclaine Pont, W.J. Witteveen, Bestek voor twee barakgebouwen voor de Technische Hogeschool in Bandoeng.
+        nl: >-
+          H. Maclaine Pont, W.J. Witteveen, Bestek voor twee barakgebouwen voor
+          de Technische Hogeschool in Bandoeng.
       year:
         none: 1919
       collection:
         nl: Bestekken / Verzameling
       inventory-number:
         none: BEST 10
-  - dlcs: brox-f1216
+  - guid: d344b1fc-96c7-4cbd-952c-da52bc4b2aee
+    dlcs: brox-f1216
     metadata:
       collection:
         nl: Architectenbureau Van den Broek en Bakema / Archief
       inventory-number:
         none: BROX f1216
-  - dlcs: eest-10.847
+  - guid: 9055b7c3-1b52-405d-a669-8ca97d1d3146
+    dlcs: eest-10.847
     metadata:
       collection:
         nl: Eesteren, C. (Cornelis) van / Archief
       inventory-number:
         none: EEST 10.847
-  - dlcs: post-D171
+  - guid: cfa32229-31da-4f7c-bce9-17576ac9501c
+    dlcs: post-D171
     metadata:
       collection:
         nl: Postel, H. (Hendrikus) / Archief
       inventory-number:
         none: POST D171
-  - dlcs: post-t281
+  - guid: 34558b85-c5c4-4ae9-ad5a-74ea42fd6004
+    dlcs: post-t281
     metadata:
       collection:
         nl: Postel, H. (Hendrikus) / Archief
       inventory-number:
         none: POST t281
-  - dlcs: weeb-306
+  - guid: 70976d4b-bdbd-4d52-8f82-490967f18d65
+    dlcs: weeb-306
     metadata:
       collection:
         nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
       inventory-number:
         none: WEEB 306
-  - dlcs: weeb-308
+  - guid: 8807bf45-7174-4482-9265-3babfea9363c
+    dlcs: weeb-308
     metadata:
       collection:
         nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
       inventory-number:
         none: WEEB 308
-  - dlcs: weeb-597
+  - guid: 0fadad09-abfc-4a7b-b366-1f18371794e0
+    dlcs: weeb-597
     metadata:
       collection:
         nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief
       inventory-number:
         none: WEEB 597
-  - dlcs: weeb-1012
+  - guid: 4d311dea-8d2a-4343-862d-fd8e6c962957
+    dlcs: weeb-1012
     metadata:
       collection:
         nl: Weeber, C.J.M. (Carlos José Maria / Carel) / Archief

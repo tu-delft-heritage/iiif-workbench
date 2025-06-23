@@ -1,12 +1,13 @@
-# Leiden University Libraries
 collection:
+  guid: bb2c00e7-00cf-4f23-ade7-863069f3a6a4
   output: dlcs/ex-ubl
   metadata:
     institution:
       en: Leiden University Libraries
       nl: Universitaire Bibliotheken Leiden
 items:
-  - dlcs: kitlv
+  - guid: d9d935ed-321a-4dfa-91bb-bbdc66c4a279
+    dlcs: kitlv
     metadata:
       label:
         en: Various images related to Bandung technical college
@@ -14,21 +15,17 @@ items:
         none: KITLV
       inventory-number:
         none:
-          [
-            KITLV 11869,
-            KITLV 11910,
-            KITLV 11908,
-            KITLV 50592,
-            KITLV 116885,
-            KITLV 404088,
-          ]
+          - KITLV 11869
+          - KITLV 11910
+          - KITLV 11908
+          - KITLV 50592
+          - KITLV 116885
+          - KITLV 404088
       permalink:
         none:
-          [
-            http://hdl.handle.net/1887.1/item:912661,
-            http://hdl.handle.net/1887.1/item:910893,
-            http://hdl.handle.net/1887.1/item:913018,
-            http://hdl.handle.net/1887.1/item:763321,
-            http://hdl.handle.net/1887.1/item:891246,
-            http://hdl.handle.net/1887.1/item:727838,
-          ]
+          - http://hdl.handle.net/1887.1/item:912661
+          - http://hdl.handle.net/1887.1/item:910893
+          - http://hdl.handle.net/1887.1/item:913018
+          - http://hdl.handle.net/1887.1/item:763321
+          - http://hdl.handle.net/1887.1/item:891246
+          - http://hdl.handle.net/1887.1/item:727838

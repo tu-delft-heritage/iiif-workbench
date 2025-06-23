@@ -1,4 +1,5 @@
 collection:
+  guid: 4abb584e-e48c-4d31-839e-0562b9f257a9
   output: dlcs/lib-fotoarchief
   dlcs:
     space: fotoarchief
@@ -9,7 +10,8 @@ collection:
       nl: Fotoarchief
       en: Photo Archive
 items:
-  - dlcs: bouw-geodesie
+  - guid: 8f2cfbc4-e0ce-4fa6-b005-79e6a5699b73
+    dlcs: bouw-geodesie
     metadata:
       label:
         en: Construction of the Faculty of Geodesy
@@ -35,7 +37,8 @@ items:
   #       none: 78-10
   #     collection:
   #       nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
-  - dlcs: repository
+  - guid: fdd36563-62bd-4cf2-aed4-16f99beb3eac
+    dlcs: repository
     metadata:
       label:
         en: Various photos of the campus of TU Delft

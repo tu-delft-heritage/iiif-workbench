@@ -1,4 +1,5 @@
 collection:
+  guid: 5c548510-9a87-4eed-89b9-6cec3266efbc
   output: dlcs/lib-tresor-piranesi
   metadata:
     institution:
@@ -6,21 +7,26 @@ collection:
     collection:
       none: Piranesi, Trésor
 items:
-  - tresor: TRG 9413 G 02
+  - guid: a43a7b36-0644-4d34-8652-c8e2daeaa63a
+    tresor: TRG 9413 G 02
     dlcs: piranesi/TRG-9413-G02
-    oclc: [842525508]
-  - tresor: TRG 9413 G 03
+    oclc: 842525508
+  - guid: 219d769e-ae19-4fbe-9947-51855c6033b5
+    tresor: TRG 9413 G 03
     dlcs: piranesi/TRG-9413-G03
-    oclc: [842552167]
-  - tresor: TRG 9413 G 04
+    oclc: 842552167
+  - guid: 7fc20a9a-2981-4746-9c52-f39e7f88b9b5
+    tresor: TRG 9413 G 04
     dlcs: piranesi/TRG-9413-G04
-    oclc: [1190868492]
-  - tresor: TRG 9413 G 05
+    oclc: 1190868492
+  - guid: 3b293468-c430-4e5a-9ef4-61a58f9a960d
+    tresor: TRG 9413 G 05
     dlcs: piranesi/TRG-9413-G05
-    oclc: [842552166]
-  - tresor: TRG 9413 G 06
+    oclc: 842552166
+  - guid: 5c239105-52aa-42e1-91af-c5570f182103
+    tresor: TRG 9413 G 06
     dlcs: piranesi/TRG-9413-G06
-    oclc: [842546045]
+    oclc: 842546045
   # - tresor: "2003"
   #   dlcs: piranesi/2003
   #   oclc:

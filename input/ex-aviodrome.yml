@@ -1,11 +1,13 @@
 collection:
+  guid: 537f4a35-6755-4298-9617-4447d6aff759
   output: dlcs/ex-aviodrome
   prefix: aviodrome
   metadata:
     institution:
       none: Aviodrome
 items:
-  - dlcs: aviodrome
+  - guid: 7de565c0-2d55-45aa-8084-4e2297015558
+    dlcs: aviodrome
     metadata:
       label:
         en: Aerial photos of Delft

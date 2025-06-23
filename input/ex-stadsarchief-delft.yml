@@ -1,11 +1,13 @@
 collection:
+  guid: ccf73a05-fb9b-41ad-8434-60cb714d2d2f
   output: dlcs/ex-stadsarchief-delft
   metadata:
     institution:
       nl: Stadsarchief Delft
       en: City Archive Delft
 items:
-  - dlcs: spiero-bk
+  - guid: fc4743c0-8176-430b-8446-e3e8de1a98cb
+    dlcs: spiero-bk
     metadata:
       label:
         en: Photos of the fire and demolition of the Faculty of Architecture
@@ -15,7 +17,8 @@ items:
         none: K.G. Spiero
       year:
         none: 2008
-  - dlcs: kaarten
+  - guid: 724bde77-94b0-4935-941f-e08d8d09ae24
+    dlcs: kaarten
     # Todo: change string1 value
     metadata:
       label:

@@ -1,6 +1,9 @@
 collection:
   guid: 3f776b61-4a0e-423d-9101-73478aecd20f
   output: dlcs/lib-reuzenarbeid
+  label:
+    nl: Trésor – Reuzenarbeid
+    en: Trésor – Reuzenarbeid
   metadata:
     institution:
       en: TU Delft Library

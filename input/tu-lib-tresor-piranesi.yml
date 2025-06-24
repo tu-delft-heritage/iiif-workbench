@@ -1,6 +1,9 @@
 collection:
   guid: 5c548510-9a87-4eed-89b9-6cec3266efbc
   output: dlcs/lib-tresor-piranesi
+  label:
+    en: Trésor - Piranesi
+    nl: Trésor - Piranesi
   metadata:
     institution:
       en: TU Delft Library

@@ -1,9 +1,12 @@
 collection:
   guid: 429a71f7-b0c3-4fab-823e-521b504f0f8e
+  label:
+    nl: Fotografie
+    en: Photography
+  summary:
+    nl: "Foto's van tentoonstellingen, depots en evenementen"
+    en: Photos of exhibitions, depots and events
   metadata:
-    label:
-      nl: Fotografie
-      en: Photography
     institution:
       en: TU Delft Library
 items:

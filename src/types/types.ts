@@ -9,7 +9,9 @@ export type MetadataValues = {
 export type CollectionDescription = {
   collection: {
     guid?: string;
-    metadata: MetadataValues;
+    label?: LanguageValue;
+    summary?: LanguageValue;
+    metadata?: MetadataValues;
   };
   items: [
     {

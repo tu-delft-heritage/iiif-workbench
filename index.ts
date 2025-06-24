@@ -9,6 +9,7 @@ import {
   fetchOclcMetadataWithCache,
   parseMetadata,
   getLabel,
+  saveYml,
 } from "./src/shared.ts";
 import { processOclcMetadata } from "./src/oclc.ts";
 import { IIIFBuilder } from "@iiif/builder";
@@ -111,6 +112,16 @@ async function writeManifests() {
 }
 
 await writeManifests();
+
+// Write collection yml
+const collectionLabel = mapping.collection.label;
+if (collectionLabel) {
+  await saveYml(`${outputDirBase}/${outputDir}/_collection.yml`, {
+    label: collectionLabel,
+    summary: mapping.collection.summary,
+  });
+}
+
 writer.flush();
 writer.end();
 

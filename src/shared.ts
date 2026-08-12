@@ -1,6 +1,5 @@
 import { objectLabels } from "./settings.ts";
 import yaml from "js-yaml";
-import { writer } from "./log.ts";
 import {
   mkdir,
   readFile,
@@ -9,7 +8,7 @@ import {
 } from "node:fs/promises";
 import { fetchOclcMetadata } from "./oclc.ts";
 
-import type { CollectionDescription, MetadataValues } from "./types/types.ts";
+import type { MetadataValues } from "./input.ts";
 import type {
   InternationalString,
   Manifest,
@@ -178,12 +177,6 @@ export function listKeysAndTypes(
       )
       .join("\n");
   } else return keys.entries();
-}
-
-export async function loadYml(path: string) {
-  const file = await readFile(path, "utf8");
-  writer.write(`Selected input file: ${path}\n`);
-  return yaml.load(file) as CollectionDescription;
 }
 
 export async function saveYml(pathWithFilename: string, json: unknown) {

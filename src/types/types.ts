@@ -1,30 +1,8 @@
-type LanguageValue = {
-  [key: string]: (string | number) | (string | number)[];
-};
-
-export type MetadataValues = {
-  [key: string]: LanguageValue;
-};
-
-export type CollectionDescription = {
-  collection: {
-    guid?: string;
-    output?: string;
-    label?: LanguageValue;
-    summary?: LanguageValue;
-    metadata?: MetadataValues;
-  };
-  items: Array<{
-    guid?: string;
-    dlcs: string | number;
-    tresor?: string;
-    oclc?: number | number[];
-    metadata?: MetadataValues;
-    fieldsToHide?: string[];
-    "first-canvas"?: number;
-    projects?: Array<Record<string, unknown>>;
-  }>;
-};
+export type {
+  CollectionDescription,
+  LanguageValue,
+  MetadataValues,
+} from "../input.ts";
 
 export type IIIFImageInformation = {
   "@context": string;

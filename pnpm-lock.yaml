@@ -26,6 +26,9 @@ importers:
       uuid:
         specifier: ^11.1.0
         version: 11.1.1
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
       '@types/js-yaml':
         specifier: ^4.0.9
@@ -207,6 +210,9 @@ packages:
     resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
     engines: {node: '>=12'}
 
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
+
 snapshots:
 
   '@fastify/busboy@2.1.1': {}
@@ -371,3 +377,5 @@ snapshots:
   uuid@11.1.1: {}
 
   yargs-parser@21.1.1: {}
+
+  zod@4.4.3: {}

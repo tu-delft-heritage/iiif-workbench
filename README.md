@@ -66,6 +66,15 @@ These flags can be combined:
 pnpm start -- input/tu-lib-tresor.yml --use-output-folder --use-guid-filenames
 ```
 
+Input YAML is validated with Zod before any output folder is cleared. The `oclc` field accepts either a single number or an array:
+
+```yaml
+oclc: 842525508
+oclc:
+  - 842525508
+  - 842552167
+```
+
 To add missing GUIDs:
 
 ```bash

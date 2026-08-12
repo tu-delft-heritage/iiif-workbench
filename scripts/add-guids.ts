@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { v4 } from "uuid";
+import { loadYml } from "../src/input.ts";
 import { closeLog } from "../src/log.ts";
-import { loadYml, saveYml } from "../src/shared.ts";
+import { saveYml } from "../src/shared.ts";
 
 const program = new Command();
 

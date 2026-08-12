@@ -21,6 +21,7 @@ import {
 } from "./src/log.ts";
 import { dlcsQueryBase, outputDirBase } from "./src/settings.ts";
 import { access, writeFile } from "node:fs/promises";
+import { basename, extname } from "node:path";
 
 import type {
   InternationalString,
@@ -36,11 +37,15 @@ type CacheOptions = {
 type RunOptions = {
   cache: CacheOptions;
   dryRun: boolean;
+  useGuidFilenames: boolean;
+  useOutputFolder: boolean;
 };
 
 type CliOptions = {
   cache: boolean;
   dryRun?: boolean;
+  useGuidFilenames?: boolean;
+  useOutputFolder?: boolean;
 };
 
 type RunStats = {
@@ -82,6 +87,11 @@ function formatError(error: unknown) {
   return error instanceof Error ? error.message : String(error);
 }
 
+function getProcessArgv() {
+  const [runtime, script, ...args] = process.argv;
+  return [runtime, script, ...args.filter((arg) => arg !== "--")];
+}
+
 async function fileExists(path: string) {
   try {
     await access(path);
@@ -99,7 +109,12 @@ function getOutputFilename(
   shelfNumber: string | undefined,
   parsedOclcNumbers: number[] | undefined,
   guid: string | undefined,
+  useGuidFilenames: boolean,
 ) {
+  if (useGuidFilenames) {
+    return guid;
+  }
+
   if (shelfNumber === "Tresorleeszaal" && parsedOclcNumbers) {
     return `${slugify(shelfNumber)}-${parsedOclcNumbers[0]}`;
   }
@@ -108,6 +123,23 @@ function getOutputFilename(
     return slugify(shelfNumber);
   }
 
+  return guid;
+}
+
+function getOutputDirectoryName(
+  collection: Awaited<ReturnType<typeof loadYml>>["collection"],
+  useOutputFolder: boolean,
+  inputPath: string,
+) {
+  if (useOutputFolder) {
+    const output = collection.output?.trim();
+    if (output) return output;
+
+    return basename(inputPath, extname(inputPath));
+  }
+
+  const guid = collection.guid?.trim();
+  if (!guid) throw new Error("Collection GUID missing!");
   return guid;
 }
 
@@ -121,10 +153,14 @@ async function processInputFile(inputPath: string, options: RunOptions) {
   const vault = builder.vault;
 
   // Create output directory
-  const outputDir = mapping.collection.guid;
-  if (!outputDir) throw new Error("Collection GUID missing!");
+  const outputDir = getOutputDirectoryName(
+    mapping.collection,
+    options.useOutputFolder,
+    inputPath,
+  );
 
   const outputPath = `${outputDirBase}/${outputDir}`;
+  console.log(`Output folder: ${outputPath}`);
   if (options.dryRun) {
     console.log(`[dry-run] Would clear or create ${outputPath}`);
   } else {
@@ -178,6 +214,7 @@ async function processInputFile(inputPath: string, options: RunOptions) {
             shelfNumber,
             parsedOclcNumbers,
             guid,
+            options.useGuidFilenames,
           );
           if (!filename) throw new Error("Item GUID missing!");
           const manifestOutputPath = `${outputPath}/${filename}.json`;
@@ -251,6 +288,14 @@ program
     "--dry-run",
     "fetch and process records without clearing output or writing files/cache",
   )
+  .option(
+    "--use-output-folder",
+    "use collection.output instead of collection.guid for the output folder",
+  )
+  .option(
+    "--use-guid-filenames",
+    "use item GUIDs for manifest filenames instead of shelf-number filenames",
+  )
   .showHelpAfterError()
   .action(async (files: string[], cliOptions: CliOptions) => {
     const dryRun = Boolean(cliOptions.dryRun);
@@ -262,6 +307,8 @@ program
         write: cliOptions.cache && !dryRun,
       },
       dryRun,
+      useGuidFilenames: Boolean(cliOptions.useGuidFilenames),
+      useOutputFolder: Boolean(cliOptions.useOutputFolder),
     };
 
     const total = emptyStats();
@@ -293,4 +340,4 @@ program
     }
   });
 
-await program.parseAsync(process.argv);
+await program.parseAsync(getProcessArgv());

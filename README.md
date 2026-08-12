@@ -5,7 +5,7 @@ This repository is used to create IIIF Manifests for TU Delft Library's [academi
 OpenAPI yml file has been converted to typescript with [OpenAPI Typescript](https://openapi-ts.dev/):
 
 ```
-npm run generate:types
+pnpm run generate:types
 ```
 
 To install dependencies:
@@ -26,6 +26,14 @@ You can process one or more input files:
 pnpm start -- input/tu-lib-tresor.yml input/tu-lib-tresor-piranesi.yml
 ```
 
+Because files are passed as normal CLI arguments, shell expansions work too:
+
+```bash
+pnpm start -- input/*.yml
+pnpm start -- input/tu-lib-*.yml
+pnpm start -- input/{tu-lib-tresor.yml,tu-lib-tresor-piranesi.yml}
+```
+
 Disable OCLC cache reads and writes:
 
 ```bash
@@ -36,6 +44,26 @@ Run without clearing output folders or writing manifests, collection files, or n
 
 ```bash
 pnpm start -- input/tu-lib-tresor.yml --dry-run
+```
+
+Use `collection.output` instead of `collection.guid` for output folders:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml --use-output-folder
+```
+
+`collection.output` is appended to the `outputDirBase` setting, so an output value like `lib-tresor` writes to `output/dlcs/lib-tresor`. If `collection.output` is empty or missing, the input filename is used instead, so `input/tu-lib-tresor.yml` writes to `output/dlcs/tu-lib-tresor`.
+
+Use item GUIDs for manifest filenames instead of the custom shelf-number filenames:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml --use-guid-filenames
+```
+
+These flags can be combined:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml --use-output-folder --use-guid-filenames
 ```
 
 To add missing GUIDs:

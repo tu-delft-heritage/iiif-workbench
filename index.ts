@@ -55,8 +55,9 @@ async function writeManifests() {
 
         let metadata: MetadataItem[] | undefined = undefined;
         let label: InternationalString | undefined = undefined;
+        let parsedOclcNumbers: number[] | undefined = undefined
         if (oclcNumbers && shelfNumber) {
-          const parsedOclcNumbers = checkArrray(oclcNumbers) as number[];
+          parsedOclcNumbers = checkArrray(oclcNumbers) as number[];
           const oclcResponses = new Array();
           for (const number of parsedOclcNumbers) {
             const resp = await fetchOclcMetadataWithCache(number);
@@ -75,23 +76,23 @@ async function writeManifests() {
             (manifest) => {
               manifest.setLabel(label);
               manifest.setMetadata(metadata);
-            }
+            },
           );
           const outputManifest = vault.toPresentation3(normalizedManifest);
-          // const filename =
-          //   shelfNumber === "Tresorleeszaal"
-          //     ? shelfNumber.toLowerCase().replaceAll(" ", "-") +
-          //       "-" +
-          //       parsedOclcNumbers[0]
-          //     : shelfNumber.toLowerCase().replaceAll(" ", "-");
-          const filename = guid;
+          const filename =
+            shelfNumber === "Tresorleeszaal" && parsedOclcNumbers
+              ? shelfNumber.toLowerCase().replaceAll(" ", "-") +
+                "-" +
+                parsedOclcNumbers[0]
+              : shelfNumber?.toLowerCase().replaceAll(" ", "-");
+          // const filename = guid;
           if (!filename) throw new Error("Item GUID missing!");
           const exists = await Bun.file(
-            `${outputDirBase}/${outputDir}/${filename}.json`
+            `${outputDirBase}/${outputDir}/${filename}.json`,
           ).exists();
           await Bun.write(
             `${outputDirBase}/${outputDir}/${filename}.json`,
-            JSON.stringify(outputManifest, null, 4)
+            JSON.stringify(outputManifest, null, 4),
           );
           // Console output
           if (exists) {

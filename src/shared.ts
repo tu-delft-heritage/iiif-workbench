@@ -40,7 +40,7 @@ export async function fetchJsonWithCache(
   id: string,
   url: string,
   type: string,
-  useCache: boolean = true
+  useCache: boolean = true,
 ) {
   if (useCache) {
     const cache = await getCache(id, type);
@@ -55,7 +55,7 @@ export async function fetchJsonWithCache(
 
 export async function fetchOclcMetadataWithCache(
   oclcNumber: number,
-  useCache: boolean = true
+  useCache: boolean = true,
 ) {
   if (useCache) {
     const cache = await getCache(oclcNumber.toString(), "oclc");
@@ -64,8 +64,8 @@ export async function fetchOclcMetadataWithCache(
     }
   }
   const resp = await fetchOclcMetadata(oclcNumber);
-  await saveJson(resp, oclcNumber.toString(), ".cache/oclc/");
-  return resp;
+  await saveJson(resp.data, oclcNumber.toString(), ".cache/oclc/");
+  return resp.data;
 }
 
 function getType(value: unknown) {
@@ -111,8 +111,8 @@ export function listKeysAndTypes(collection: any[], asTypes: boolean = false) {
           ([key, value]) =>
             key +
             (value.all ? ": " : "?: ") +
-            (value.types[0] === "array" ? "string[]" : value.types[0])
-        )
+            (value.types[0] === "array" ? "string[]" : value.types[0]),
+        ),
     ).join("\n");
   } else return keys.entries();
 }

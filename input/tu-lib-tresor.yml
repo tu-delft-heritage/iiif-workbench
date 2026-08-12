@@ -187,7 +187,7 @@ items:
     dlcs: tr-514425-v2
     tresor: TR 514425
     oclc: [635385189]
-    fieldsToHide: ["description", "notes"]
+    skipMetadata: ["Physical description", "Notes"]
   - guid: d0d7c0fa-35e6-4b00-a867-8912f79fb111
     dlcs: tr-523205
     tresor: TR 523205

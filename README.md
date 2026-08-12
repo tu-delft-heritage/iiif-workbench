@@ -75,6 +75,26 @@ oclc:
   - 842552167
 ```
 
+OCLC metadata fields without values are omitted. To skip a generated OCLC
+metadata field, use the English or Dutch IIIF metadata label:
+
+```yaml
+skipMetadata: Notes
+skipMetadata:
+  - Physical description
+  - Notes
+```
+
+Items can combine OCLC metadata with additional custom metadata. Custom metadata
+is appended after the generated OCLC fields:
+
+```yaml
+oclc: 842525508
+metadata:
+  notes:
+    en: Additional local note
+```
+
 To add missing GUIDs:
 
 ```bash

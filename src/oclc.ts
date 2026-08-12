@@ -59,29 +59,159 @@ export async function fetchOclcMetadata(oclcNumber: number) {
   });
 }
 
-export function buildOclcMetadata(
+export type OclcMetadataOptions = {
+  skipMetadata?: string[];
+};
+
+type OclcMetadataData = {
+  shelfNumber: string;
+  oclcLinks: string[];
+  titles: string[];
+  contributors: string[];
+  publishers: string[];
+  years: string[];
+  objectName?: InternationalString;
+  descriptions: string[];
+  notes: string[];
+};
+
+type OclcMetadataField = {
+  label:
+    | InternationalString
+    | ((data: OclcMetadataData) => InternationalString);
+  getValue: (data: OclcMetadataData) => InternationalString | undefined;
+};
+
+function createLabel(en: string, nl: string): InternationalString {
+  return {
+    en: [en],
+    nl: [nl],
+  };
+}
+
+function createMetadataValue(
+  values: string[],
+  options: { unique?: boolean } = {},
+): InternationalString | undefined {
+  const cleanedValues = values.map((value) => value.trim()).filter(Boolean);
+  const finalValues = options.unique
+    ? [...new Set(cleanedValues)]
+    : cleanedValues;
+
+  if (!finalValues.length) {
+    return undefined;
+  }
+
+  return { none: finalValues };
+}
+
+function hasMetadataValue(
+  value: InternationalString | undefined,
+): value is InternationalString {
+  return Boolean(
+    value &&
+      Object.values(value).some((values) =>
+        values?.some((item) => item.trim()),
+      ),
+  );
+}
+
+function getMetadataLabelValues(label: InternationalString) {
+  return Object.values(label)
+    .flat()
+    .filter((value): value is string => Boolean(value));
+}
+
+function normalizeMetadataLabel(label: string) {
+  return label.trim().toLowerCase();
+}
+
+function createSkippedMetadataLabelSet(labels: string[] | undefined) {
+  return new Set(labels?.map(normalizeMetadataLabel));
+}
+
+function shouldSkipMetadataItem(
+  label: InternationalString,
+  skippedLabels: Set<string>,
+) {
+  return getMetadataLabelValues(label).some((value) =>
+    skippedLabels.has(normalizeMetadataLabel(value)),
+  );
+}
+
+const oclcMetadataFields: OclcMetadataField[] = [
+  {
+    label: createLabel("Title", "Titel"),
+    getValue: (data) => createMetadataValue(data.titles),
+  },
+  {
+    label: (data) =>
+      createLabel(
+        data.contributors.length <= 1 ? "Author" : "Authors",
+        data.contributors.length <= 1 ? "Auteur" : "Auteurs",
+      ),
+    getValue: (data) =>
+      createMetadataValue(data.contributors, { unique: true }),
+  },
+  {
+    label: createLabel("Publication", "Publicatie"),
+    getValue: (data) => createMetadataValue(data.publishers, { unique: true }),
+  },
+  {
+    label: createLabel("Year", "Jaar"),
+    getValue: (data) => createMetadataValue(data.years, { unique: true }),
+  },
+  {
+    label: createLabel("Object name", "Objectnaam"),
+    getValue: (data) => data.objectName,
+  },
+  {
+    label: createLabel("Physical description", "Fysieke beschrijving"),
+    getValue: (data) => createMetadataValue(data.descriptions),
+  },
+  {
+    label: createLabel("Notes", "Opmerkingen"),
+    getValue: (data) => createMetadataValue(data.notes),
+  },
+  {
+    label: (data) =>
+      createLabel(
+        data.oclcLinks.length <= 1 ? "OCLC number" : "OCLC numbers",
+        data.oclcLinks.length <= 1 ? "OCLC nummer" : "OCLC nummers",
+      ),
+    getValue: (data) => createMetadataValue(data.oclcLinks),
+  },
+  {
+    label: createLabel("Shelf number", "Plaatsnummer"),
+    getValue: (data) =>
+      createMetadataValue([data.shelfNumber.replaceAll("-", " ")]),
+  },
+];
+
+function getWorldCatUrl(identifier: number | string | undefined) {
+  return identifier ? `${worldCatBaseUrl}${identifier}` : worldCatBaseUrl;
+}
+
+function collectOclcMetadata(
   responses: SuccessResponse[],
   shelfNumber: string,
-): MetadataItem[] {
-  const oclcLinks: string[] = [];
-  const titles: string[] = [];
-  const contributors: string[] = [];
-  const publishers: string[] = [];
-  const years: string[] = [];
-  const descriptions: string[] = [];
-  const notes: string[] = [];
-  let objectName: InternationalString = { none: ["n/a"] };
-
-  // Todo: process language:
-  //     "language": {
-  //       "itemLanguage": "dut",
-  //       "catalogingLanguage": "dut"
-  //   },
+): OclcMetadataData {
+  const data: OclcMetadataData = {
+    shelfNumber,
+    oclcLinks: [],
+    titles: [],
+    contributors: [],
+    publishers: [],
+    years: [],
+    descriptions: [],
+    notes: [],
+  };
 
   if (responses.length > 1) {
-    const urls = responses.map(
-      (response) => worldCatBaseUrl + response.identifier?.oclcNumber,
-    );
+    const urls = responses
+      .map((response) => response.identifier?.oclcNumber)
+      .filter((identifier): identifier is number => Boolean(identifier))
+      .map(getWorldCatUrl);
     writer.write(
       `${shelfNumber} heeft meerdere OCLC nummers (${urls.join(", ")})\n`,
     );
@@ -89,14 +219,14 @@ export function buildOclcMetadata(
 
   for (const response of responses) {
     const identifier = response.identifier?.oclcNumber;
-    const worldCatUrl = worldCatBaseUrl + identifier;
+    const worldCatUrl = getWorldCatUrl(identifier);
     if (identifier) {
-      oclcLinks.push(`<a href="${worldCatUrl}">${identifier}</a>`);
+      data.oclcLinks.push(`<a href="${worldCatUrl}">${identifier}</a>`);
     }
     if (response.title?.mainTitles) {
       response.title.mainTitles.forEach((item) => {
         if (item.text) {
-          titles.push(item.text);
+          data.titles.push(item.text);
         }
       });
     }
@@ -123,7 +253,7 @@ export function buildOclcMetadata(
           name = name.concat(" (", item.creatorNotes.join(", "), ")");
         }
         if (name) {
-          contributors.push(name);
+          data.contributors.push(name);
         }
       });
     } else {
@@ -136,13 +266,13 @@ export function buildOclcMetadata(
           item.publicationPlace,
         ].filter(Boolean);
         if (publication.length) {
-          publishers.push(publication.join(", "));
+          data.publishers.push(publication.join(", "));
         }
       });
     }
     if (response.date?.publicationDate) {
       const content = response.date.publicationDate;
-      years.push(content);
+      data.years.push(content);
       if (content.length < 4 || content.includes("?")) {
         writer.write(
           `${shelfNumber} heeft als jaartal "${content}" (${worldCatUrl})\n`,
@@ -153,14 +283,14 @@ export function buildOclcMetadata(
       const content = response.description.summaries
         .map((item) => item.text)
         .filter((item): item is string => Boolean(item));
-      descriptions.push(...content);
+      data.descriptions.push(...content);
     }
     // Sometimes physicalDescription can be found in bibliographies property
     if (response.description?.bibliographies) {
       const content = response.description.bibliographies
         .map((item) => item.text)
         .filter((item): item is string => Boolean(item));
-      descriptions.push(...content);
+      data.descriptions.push(...content);
       writer.write(
         `${shelfNumber} bevat de volgende informatie onder "Bibliografieën": "${content.join(
           ", ",
@@ -168,7 +298,7 @@ export function buildOclcMetadata(
       );
     }
     if (response.description?.physicalDescription) {
-      descriptions.push(response.description.physicalDescription);
+      data.descriptions.push(response.description.physicalDescription);
     }
     if (response.description?.contents) {
       writer.write(
@@ -179,7 +309,7 @@ export function buildOclcMetadata(
     if (response.note?.generalNotes) {
       response.note.generalNotes.forEach((item) => {
         if (item.text) {
-          notes.push(item.text);
+          data.notes.push(item.text);
         }
       });
     }
@@ -187,7 +317,7 @@ export function buildOclcMetadata(
       const parsedFormat =
         formats[response.format.generalFormat as keyof typeof formats];
       if (parsedFormat) {
-        objectName = parsedFormat;
+        data.objectName = parsedFormat;
       } else {
         writer.write(
           `${shelfNumber} heeft een onbekend formaat "${response.format.generalFormat}" (${worldCatUrl})\n`,
@@ -196,68 +326,29 @@ export function buildOclcMetadata(
     }
   }
 
-  return [
-    {
-      label: {
-        en: ["Title"],
-        nl: ["Titel"],
-      },
-      value: { none: titles.length ? titles : ["n/a"] },
-    },
-    {
-      label: {
-        en: contributors.length <= 1 ? ["Author"] : ["Authors"],
-        nl: contributors.length <= 1 ? ["Auteur"] : ["Auteurs"],
-      },
-      value: {
-        none: contributors.length ? [...new Set(contributors)] : ["n/a"],
-      },
-    },
-    {
-      label: {
-        en: ["Publication"],
-        nl: ["Publicatie"],
-      },
-      value: { none: publishers.length ? [...new Set(publishers)] : ["n/a"] },
-    },
-    {
-      label: {
-        en: ["Year"],
-        nl: ["Jaar"],
-      },
-      value: { none: years.length ? [...new Set(years)] : ["n/a"] },
-    },
-    {
-      label: {
-        en: ["Object name"],
-        nl: ["Objectnaam"],
-      },
-      value: objectName,
-    },
-    {
-      label: {
-        en: ["Physical description"],
-        nl: ["Fysieke beschrijving"],
-      },
-      value: { none: descriptions.length ? descriptions : ["n/a"] },
-    },
-    {
-      label: {
-        en: ["Notes"],
-        nl: ["Opmerkingen"],
-      },
-      value: { none: notes.length ? notes : ["n/a"] },
-    },
-    {
-      label: {
-        en: oclcLinks.length <= 1 ? ["OCLC number"] : ["OCLC numbers"],
-        nl: oclcLinks.length <= 1 ? ["OCLC nummer"] : ["OCLC nummers"],
-      },
-      value: { none: oclcLinks.length ? oclcLinks : ["n/a"] },
-    },
-    {
-      label: { en: ["Shelf number"], nl: ["Plaatsnummer"] },
-      value: { none: [shelfNumber.replaceAll("-", " ")] },
-    },
-  ];
+  return data;
+}
+
+export function buildOclcMetadata(
+  responses: SuccessResponse[],
+  shelfNumber: string,
+  options: OclcMetadataOptions = {},
+): MetadataItem[] {
+  const data = collectOclcMetadata(responses, shelfNumber);
+  const skippedLabels = createSkippedMetadataLabelSet(options.skipMetadata);
+
+  return oclcMetadataFields.flatMap((field) => {
+    const label =
+      typeof field.label === "function" ? field.label(data) : field.label;
+    const value = field.getValue(data);
+
+    if (
+      !hasMetadataValue(value) ||
+      shouldSkipMetadataItem(label, skippedLabels)
+    ) {
+      return [];
+    }
+
+    return [{ label, value }];
+  });
 }

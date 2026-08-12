@@ -156,6 +156,7 @@ export async function generateManifestsForInputFile(
       oclc: oclcNumbers,
       guid,
       metadata: metadataValues,
+      skipMetadata,
     } = item;
     if (dlcs || dlcs === 0) {
       try {
@@ -177,10 +178,17 @@ export async function generateManifestsForInputFile(
             );
             oclcResponses.push(response);
           }
-          metadata = buildOclcMetadata(oclcResponses, shelfNumber);
-          label = getTitleLabel(metadata);
-        } else if (metadataValues) {
-          metadata = buildManualMetadata(metadataValues);
+          metadata = buildOclcMetadata(oclcResponses, shelfNumber, {
+            skipMetadata,
+          });
+        }
+        if (metadataValues) {
+          const manualMetadata = buildManualMetadata(metadataValues);
+          metadata = metadata
+            ? [...metadata, ...manualMetadata]
+            : manualMetadata;
+        }
+        if (metadata) {
           label = getTitleLabel(metadata);
         }
         if (metadata && label) {

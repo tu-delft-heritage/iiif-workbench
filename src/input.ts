@@ -35,6 +35,12 @@ const oclcSchema = z
   .union([oclcNumberSchema, z.array(oclcNumberSchema).nonempty()])
   .transform((value) => (Array.isArray(value) ? value : [value]));
 
+const metadataLabelSchema = z.string().trim().min(1);
+
+const metadataLabelsSchema = z
+  .union([metadataLabelSchema, z.array(metadataLabelSchema).nonempty()])
+  .transform((value) => (Array.isArray(value) ? value : [value]));
+
 const collectionSchema = z
   .object({
     guid: z.string().optional(),
@@ -54,7 +60,7 @@ const itemSchema = z
     tresor: z.string().optional(),
     oclc: oclcSchema.optional(),
     metadata: metadataValuesSchema.optional(),
-    fieldsToHide: z.array(z.string()).optional(),
+    skipMetadata: metadataLabelsSchema.optional(),
     "first-canvas": z.number().int().nonnegative().optional(),
     projects: z.array(z.record(z.string(), z.unknown())).optional(),
   })

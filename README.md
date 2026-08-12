@@ -5,21 +5,25 @@ This repository is used to create IIIF Manifests for TU Delft Library's [academi
 OpenAPI yml file has been converted to typescript with [OpenAPI Typescript](https://openapi-ts.dev/):
 
 ```
-bun openapi-typescript ./src/open-api-schema.yml -o ./src/open-api-schema.ts
+npm run generate:types
 ```
 
 To install dependencies:
 
 ```bash
-bun install
+npm install
 ```
 
 To run:
 
 ```bash
-bun run index.ts
+npm start
 ```
 
----
+To typecheck:
 
-This project was created using `bun init` in bun v1.0.23. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+```bash
+npm run typecheck
+```
+
+This project uses Node.js to run erasable TypeScript directly. Use Node.js 24.12.0 or newer.

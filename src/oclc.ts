@@ -3,11 +3,7 @@ import { writer } from "./log.ts";
 import { formats } from "./formats.ts";
 
 import type { paths } from "./types/openapi-schema.ts";
-
-type MetadataValue = {
-  "en": string[],
-  "nl": string[]
-}
+import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
 
 type SuccessResponse =
   paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];
@@ -16,7 +12,7 @@ const worldCatBase = "https://tudelft.on.worldcat.org/oclc/";
 let accessToken: string | undefined = undefined;
 
 async function getToken() {
-  const apiKey = Bun.env.OCLC_SEARCH_API_TOKEN;
+  const apiKey = process.env.OCLC_SEARCH_API_TOKEN;
   if (!apiKey) {
     throw new Error("No API key found in environmental variables");
   }
@@ -65,16 +61,16 @@ export async function fetchOclcMetadata(oclcNumber: number) {
 
 export function processOclcMetadata(
   respArray: SuccessResponse[],
-  shelfNumber: string
-) {
-  const oclcNumber = new Array();
-  const title = new Array();
-  const contributor = new Array();
-  const publisher = new Array();
-  const year = new Array();
-  const description = new Array();
-  const notes = new Array();
-  let format: undefined | MetadataValue  = undefined
+  shelfNumber: string,
+): MetadataItem[] {
+  const oclcNumber: string[] = [];
+  const title: string[] = [];
+  const contributor: string[] = [];
+  const publisher: string[] = [];
+  const year: string[] = [];
+  const description: string[] = [];
+  const notes: string[] = [];
+  let format: InternationalString = { none: ["n/a"] };
 
   // Todo: process language:
   //     "language": {
@@ -90,15 +86,22 @@ export function processOclcMetadata(
   }
 
   for (const resp of respArray) {
-    const url = worldCatBase + resp.identifier?.oclcNumber;
-    oclcNumber.push(`<a href="${url}">${resp.identifier?.oclcNumber}</a>`);
+    const identifier = resp.identifier?.oclcNumber;
+    const url = worldCatBase + identifier;
+    if (identifier) {
+      oclcNumber.push(`<a href="${url}">${identifier}</a>`);
+    }
     if (resp.title?.mainTitles) {
-      resp.title.mainTitles.forEach((item) => title.push(item.text));
+      resp.title.mainTitles.forEach((item) => {
+        if (item.text) {
+          title.push(item.text);
+        }
+      });
     }
     // Alternative: resp.contributor.statementOfResponsibility
     if (resp.contributor?.creators) {
       resp.contributor.creators.forEach((item) => {
-        let name = null;
+        let name: string | null = null;
         if (item.nonPersonName?.text) {
           name = item.nonPersonName?.text;
         } else if (item.firstName?.text && item.secondName?.text) {
@@ -117,15 +120,23 @@ export function processOclcMetadata(
         if (name && item.creatorNotes) {
           name = name.concat(" (", item.creatorNotes.join(", "), ")");
         }
-        contributor.push(name);
+        if (name) {
+          contributor.push(name);
+        }
       });
     } else {
       writer.write(`${shelfNumber} heeft geen auteur (${url})\n`);
     }
     if (resp.publishers) {
-      resp.publishers.forEach((item) =>
-        publisher.push(item.publisherName?.text + ", " + item.publicationPlace)
-      );
+      resp.publishers.forEach((item) => {
+        const publication = [
+          item.publisherName?.text,
+          item.publicationPlace,
+        ].filter(Boolean);
+        if (publication.length) {
+          publisher.push(publication.join(", "));
+        }
+      });
     }
     if (resp.date?.publicationDate) {
       const content = resp.date.publicationDate;
@@ -137,13 +148,17 @@ export function processOclcMetadata(
       }
     }
     if (resp.description?.summaries) {
-      const content = resp.description.summaries.map((item) => item.text);
-      content.forEach((item) => description.push(item));
+      const content = resp.description.summaries
+        .map((item) => item.text)
+        .filter((item): item is string => Boolean(item));
+      description.push(...content);
     }
     // Sometimes physicalDescription can be found in bibliographies property
     if (resp.description?.bibliographies) {
-      const content = resp.description.bibliographies.map((item) => item.text);
-      content.forEach((item) => description.push(item));
+      const content = resp.description.bibliographies
+        .map((item) => item.text)
+        .filter((item): item is string => Boolean(item));
+      description.push(...content);
       writer.write(
         `${shelfNumber} bevat de volgende informatie onder "Bibliografieën": "${content.join(
           ", "
@@ -158,11 +173,22 @@ export function processOclcMetadata(
     }
     // Contains references to other parts of the same volume
     if (resp.note?.generalNotes) {
-      resp.note.generalNotes.forEach((item) => notes.push(item.text));
+      resp.note.generalNotes.forEach((item) => {
+        if (item.text) {
+          notes.push(item.text);
+        }
+      });
     }
     if (resp.format?.generalFormat) {
-      const parsedFormat = formats[resp.format.generalFormat];
-      format = parsedFormat
+      const parsedFormat =
+        formats[resp.format.generalFormat as keyof typeof formats];
+      if (parsedFormat) {
+        format = parsedFormat;
+      } else {
+        writer.write(
+          `${shelfNumber} heeft een onbekend formaat "${resp.format.generalFormat}" (${url})\n`,
+        );
+      }
     }
   }
 

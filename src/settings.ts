@@ -1,3 +1,5 @@
+import type { InternationalString } from "@iiif/presentation-3";
+
 export const cacheDir = ".cache/";
 export const dlcsImageBase = "https://dlc.services/iiif-img/v3/7/";
 export const dlcsQueryBase = `https://dlc.services/iiif-resource/v3/7/string1string2string3/`;
@@ -56,7 +58,7 @@ export const objectLabels = {
     en: ["Permalink"],
     nl: ["Permalink"],
   },
-};
+} satisfies Record<string, InternationalString>;
 
 export const collectionLabels = {
   institution: {
@@ -67,4 +69,4 @@ export const collectionLabels = {
     en: ["Collection"],
     nl: ["Collectie"],
   },
-};
+} satisfies Record<string, InternationalString>;

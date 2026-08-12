@@ -1,23 +1,39 @@
 import { objectLabels } from "./settings.ts";
-import { Glob } from "bun";
-import { createSelection } from "bun-promptx";
 import yaml from "js-yaml";
 import { writer } from "./log.ts";
-import { readdir, mkdir, rmdir } from "node:fs/promises";
+import {
+  mkdir,
+  readFile,
+  readdir,
+  rm,
+  writeFile,
+} from "node:fs/promises";
+import { createInterface } from "node:readline/promises";
+import { stdin as input, stdout as output } from "node:process";
 import { fetchOclcMetadata } from "./oclc.ts";
 
 import type { CollectionDescription, MetadataValues } from "./types/types.ts";
-import type { Manifest, MetadataItem } from "@iiif/presentation-3";
+import type {
+  InternationalString,
+  Manifest,
+  MetadataItem,
+} from "@iiif/presentation-3";
 
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export async function fetchJson(url: string) {
-  return fetch(url).then((response) => response.json());
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(
+      `Could not fetch ${url}: ${response.status} ${response.statusText}`,
+    );
+  }
+  return response.json();
 }
 
-export function checkArrray(input: (number | string) | (number | string)[]) {
+export function checkArrray<T>(input: T | T[]) {
   if (Array.isArray(input)) {
     return input;
   } else {
@@ -25,15 +41,29 @@ export function checkArrray(input: (number | string) | (number | string)[]) {
   }
 }
 
-async function getCache(id: string, type: string) {
-  const file = Bun.file(`.cache/${type}/${id}.json`);
-  if (await file.exists()) {
-    return file.json();
-  } else return null;
+function isNoEntry(error: unknown) {
+  return (
+    error instanceof Error &&
+    "code" in error &&
+    (error as NodeJS.ErrnoException).code === "ENOENT"
+  );
 }
 
-export function saveJson(json: any, filename: string, path: string) {
-  return Bun.write(`${path}/${filename}.json`, JSON.stringify(json, null, 4));
+async function getCache(id: string, type: string) {
+  try {
+    const file = await readFile(`.cache/${type}/${id}.json`, "utf8");
+    return JSON.parse(file) as unknown;
+  } catch (error) {
+    if (isNoEntry(error)) {
+      return null;
+    }
+    throw error;
+  }
+}
+
+export async function saveJson(json: unknown, filename: string, path: string) {
+  await mkdir(path, { recursive: true });
+  return writeFile(`${path}/${filename}.json`, JSON.stringify(json, null, 4));
 }
 
 export async function fetchJsonWithCache(
@@ -64,6 +94,10 @@ export async function fetchOclcMetadataWithCache(
     }
   }
   const resp = await fetchOclcMetadata(oclcNumber);
+  if (!resp.data) {
+    const status = resp.response.status;
+    throw new Error(`No OCLC metadata found for ${oclcNumber} (${status})`);
+  }
   await saveJson(resp.data, oclcNumber.toString(), ".cache/oclc/");
   return resp.data;
 }
@@ -76,8 +110,17 @@ function getType(value: unknown) {
   }
 }
 
-export function listKeysAndTypes(collection: any[], asTypes: boolean = false) {
-  const keys = new Map();
+type KeyDescription = {
+  count: number;
+  types: string[];
+  all?: boolean;
+};
+
+export function listKeysAndTypes(
+  collection: Record<string, unknown>[],
+  asTypes: boolean = false,
+) {
+  const keys = new Map<string, KeyDescription>();
   const totalRecords = collection.length;
   // Get keys and types for keys
   for (const record of collection) {
@@ -104,87 +147,124 @@ export function listKeysAndTypes(collection: any[], asTypes: boolean = false) {
   }
   if (asTypes) {
     // Will not output valid TypeScript but a helpful start!
-    return Array.from(
-      keys
-        .entries()
-        .map(
-          ([key, value]) =>
-            key +
-            (value.all ? ": " : "?: ") +
-            (value.types[0] === "array" ? "string[]" : value.types[0]),
-        ),
-    ).join("\n");
+    return Array.from(keys.entries())
+      .map(
+        ([key, value]) =>
+          key +
+          (value.all ? ": " : "?: ") +
+          (value.types[0] === "array" ? "string[]" : value.types[0]),
+      )
+      .join("\n");
   } else return keys.entries();
 }
 
-export async function selectFile(globPattern: string) {
-  // Listing files in input folder
-  const inputGlob = new Glob(globPattern);
-  const inputFiles = new Array();
+function globToRegExp(pattern: string) {
+  return new RegExp(
+    `^${pattern
+      .replaceAll(".", "\\.")
+      .replaceAll("*", ".*")
+      .replaceAll("?", ".")}$`,
+  );
+}
 
-  for await (const file of inputGlob.scan(".")) {
-    inputFiles.push({ text: file.split("/")[1] });
+export async function selectFile(globPattern: string) {
+  const pathParts = globPattern.split("/");
+  const filenamePattern = pathParts.pop();
+  const directory = pathParts.join("/") || ".";
+  if (!filenamePattern) {
+    throw new Error(`Invalid file pattern: ${globPattern}`);
   }
+
+  const matcher = globToRegExp(filenamePattern);
+  const inputFiles = (await readdir(directory))
+    .filter((file) => matcher.test(file))
+    .sort();
 
   if (inputFiles.length === 0) {
     throw new Error("No input files found");
   }
 
-  // Prompt user for file
-  const { selectedIndex } = createSelection(inputFiles, {
-    headerText: "Select input file: ",
-    perPage: 10,
+  inputFiles.forEach((file, index) => {
+    console.log(`${index + 1}. ${file}`);
   });
 
-  if (selectedIndex === null) throw new Error("Please select an input file");
+  const rl = createInterface({ input, output });
 
-  const path = globPattern.split("/").slice(0, -1).join("/");
-  const filename = inputFiles[selectedIndex].text;
-  return path + "/" + filename;
+  try {
+    const answer = await rl.question("Select input file: ");
+    const selectedIndex = Number.parseInt(answer, 10) - 1;
+    const filename = inputFiles[selectedIndex];
+
+    if (!filename) {
+      throw new Error("Please select an input file");
+    }
+
+    return `${directory}/${filename}`;
+  } finally {
+    rl.close();
+  }
 }
 
 export async function loadYml(path: string) {
-  const file = await Bun.file(path).text();
+  const file = await readFile(path, "utf8");
   writer.write(`Selected input file: ${path}\n`);
   return yaml.load(file) as CollectionDescription;
 }
 
-export async function saveYml(pathWithFilename: string, json: any) {
+export async function saveYml(pathWithFilename: string, json: unknown) {
   const ymlString = yaml.dump(json);
-  await Bun.write(pathWithFilename, ymlString);
+  await writeFile(pathWithFilename, ymlString);
+}
+
+type ResourceWithService = {
+  service?: unknown[];
+};
+
+function removeFirstService(resource: unknown) {
+  if (!resource || typeof resource !== "object" || !("service" in resource)) {
+    return;
+  }
+
+  const service = (resource as ResourceWithService).service;
+  if (Array.isArray(service)) {
+    service.shift();
+  }
 }
 
 export function cleanManifest(manifest: Manifest) {
   // Remove V2 service
-  manifest.thumbnail?.[0].service.shift();
-  manifest.items.map((canvas) => {
+  removeFirstService(manifest.thumbnail?.[0]);
+  manifest.items.forEach((canvas) => {
     // Remove V2 service
-    canvas?.thumbnail?.[0].service.shift();
-    canvas?.items?.[0].items?.[0].body?.service.shift();
+    removeFirstService(canvas.thumbnail?.[0]);
+    const body = canvas.items?.[0]?.items?.[0]?.body;
+    if (Array.isArray(body)) {
+      body.forEach(removeFirstService);
+    } else {
+      removeFirstService(body);
+    }
     // Remove canvas metadata
     delete canvas.metadata;
   });
 }
 
 export async function clearOrCreateOutputDir(outputDir: string) {
-  try {
-    await readdir(outputDir);
-    await rmdir(outputDir, { recursive: true });
-  } catch {}
-  await mkdir(outputDir);
+  await rm(outputDir, { recursive: true, force: true });
+  await mkdir(outputDir, { recursive: true });
 }
 
 export function parseMetadata(props: MetadataValues): MetadataItem[] {
-  const metadata = new Array();
+  const metadata: MetadataItem[] = [];
   for (const [key, label] of Object.entries(objectLabels)) {
     const value = props[key];
     if (value) {
+      const parsedValue: InternationalString = {};
       for (const lang in value) {
-        value[lang] = checkArrray(value[lang]).map(String);
+        parsedValue[lang] = checkArrray(value[lang]).map(String);
       }
       metadata.push({
         label,
-        value,
+        value: parsedValue,
       });
     }
   }

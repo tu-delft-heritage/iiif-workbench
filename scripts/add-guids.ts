@@ -1,4 +1,4 @@
-import { selectFile, loadYml, saveYml } from "./src/shared";
+import { selectFile, loadYml, saveYml } from "../src/shared.ts";
 import { v4 } from "uuid";
 
 const path = await selectFile("input/*.yml");
@@ -18,4 +18,4 @@ yml.items.forEach((object, index) => {
 // Not overwriting existing file in order to preserve comments, etc
 const outputPath = path.replace(".yml", "-guids.yml");
 
-saveYml(outputPath, yml);
+await saveYml(outputPath, yml);

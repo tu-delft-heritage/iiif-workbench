@@ -1,5 +1,4 @@
 import {
-  sleep,
   fetchJson,
   checkArrray,
   selectFile,
@@ -13,8 +12,9 @@ import {
 } from "./src/shared.ts";
 import { processOclcMetadata } from "./src/oclc.ts";
 import { IIIFBuilder } from "@iiif/builder";
-import { date, writer } from "./src/log.ts";
+import { closeLog, date } from "./src/log.ts";
 import { dlcsQueryBase, outputDirBase } from "./src/settings.ts";
+import { access, writeFile } from "node:fs/promises";
 
 import type {
   InternationalString,
@@ -33,10 +33,23 @@ const vault = builder.vault;
 const outputDir = mapping.collection.guid;
 if (!outputDir) throw new Error("Collection GUID missing!");
 
-clearOrCreateOutputDir(`${outputDirBase}/${outputDir}`);
+await clearOrCreateOutputDir(`${outputDirBase}/${outputDir}`);
+
+async function fileExists(path: string) {
+  try {
+    await access(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function slugify(value: string) {
+  return value.toLowerCase().replaceAll(" ", "-");
+}
 
 async function writeManifests() {
-  for (let item of mapping.items) {
+  for (const item of mapping.items) {
     const {
       tresor: shelfNumber,
       dlcs,
@@ -55,10 +68,10 @@ async function writeManifests() {
 
         let metadata: MetadataItem[] | undefined = undefined;
         let label: InternationalString | undefined = undefined;
-        let parsedOclcNumbers: number[] | undefined = undefined
+        let parsedOclcNumbers: number[] | undefined = undefined;
         if (oclcNumbers && shelfNumber) {
-          parsedOclcNumbers = checkArrray(oclcNumbers) as number[];
-          const oclcResponses = new Array();
+          parsedOclcNumbers = checkArrray(oclcNumbers);
+          const oclcResponses = [];
           for (const number of parsedOclcNumbers) {
             const resp = await fetchOclcMetadataWithCache(number);
             oclcResponses.push(resp);
@@ -70,28 +83,28 @@ async function writeManifests() {
           label = getLabel(metadata);
         }
         if (metadata && label) {
+          const finalMetadata = metadata;
+          const finalLabel = label;
           // Set label and metadata
           const normalizedManifest = builder.editManifest(
             manifestId,
             (manifest) => {
-              manifest.setLabel(label);
-              manifest.setMetadata(metadata);
+              manifest.setLabel(finalLabel);
+              manifest.setMetadata(finalMetadata);
             },
           );
           const outputManifest = vault.toPresentation3(normalizedManifest);
           const filename =
             shelfNumber === "Tresorleeszaal" && parsedOclcNumbers
-              ? shelfNumber.toLowerCase().replaceAll(" ", "-") +
-                "-" +
-                parsedOclcNumbers[0]
-              : shelfNumber?.toLowerCase().replaceAll(" ", "-");
-          // const filename = guid;
+              ? `${slugify(shelfNumber)}-${parsedOclcNumbers[0]}`
+              : shelfNumber
+                ? slugify(shelfNumber)
+                : guid;
           if (!filename) throw new Error("Item GUID missing!");
-          const exists = await Bun.file(
-            `${outputDirBase}/${outputDir}/${filename}.json`,
-          ).exists();
-          await Bun.write(
-            `${outputDirBase}/${outputDir}/${filename}.json`,
+          const outputPath = `${outputDirBase}/${outputDir}/${filename}.json`;
+          const exists = await fileExists(outputPath);
+          await writeFile(
+            outputPath,
             JSON.stringify(outputManifest, null, 4),
           );
           // Console output
@@ -123,8 +136,7 @@ if (collectionLabel) {
   });
 }
 
-writer.flush();
-writer.end();
+await closeLog();
 
 console.log(`Done. ${mapping.items.length} files written.`);
 console.log(`Log: ${date}.txt`);

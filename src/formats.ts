@@ -1,3 +1,5 @@
+import type { InternationalString } from "@iiif/presentation-3";
+
 // From: https://help-nl.oclc.org/Discovery_and_Reference/WorldCat_Discovery/Search_results/Format_display_in_search_results?sl=nl
 export const formats = {
   Archv: {
@@ -21,7 +23,7 @@ export const formats = {
     en: ["Map"],
     nl: ["Kaart"]
   },
-};
+} satisfies Record<string, InternationalString>;
 
 // Other formats
 // ArtChapter: "Article",

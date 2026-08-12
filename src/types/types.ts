@@ -9,19 +9,25 @@ export type MetadataValues = {
 export type CollectionDescription = {
   collection: {
     guid?: string;
+    output?: string;
+    prefix?: string;
+    dlcs?: {
+      space?: string;
+    };
     label?: LanguageValue;
     summary?: LanguageValue;
     metadata?: MetadataValues;
   };
-  items: [
-    {
-      guid?: string;
-      dlcs: string | number;
-      tresor?: string;
-      oclc?: number | number[];
-      metadata?: MetadataValues;
-    }
-  ];
+  items: Array<{
+    guid?: string;
+    dlcs: string | number;
+    tresor?: string;
+    oclc?: number | number[];
+    metadata?: MetadataValues;
+    fieldsToHide?: string[];
+    "first-canvas"?: number;
+    projects?: Array<Record<string, unknown>>;
+  }>;
 };
 
 export type IIIFImageInformation = {

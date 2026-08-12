@@ -1,22 +1,26 @@
 {
   "name": "iiif-workbench",
-  "module": "index.ts",
   "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/js-yaml": "^4.0.9"
+  "scripts": {
+    "start": "node index.ts",
+    "add-guids": "node scripts/add-guids.ts",
+    "typecheck": "tsc --noEmit",
+    "generate:types": "openapi-typescript ./src/types/openapi-schema.yml -o ./src/types/openapi-schema.ts"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+  "engines": {
+    "node": ">=24.12.0"
+  },
+  "devDependencies": {
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^24.0.0",
+    "openapi-typescript": "^6.7.5",
+    "typescript": "^5.8.0"
   },
   "dependencies": {
     "@iiif/builder": "^2.0.1",
-    "@iiif/helpers": "^1.2.18",
-    "@iiif/parser": "^2.1.3",
-    "bun-promptx": "^0.2.0",
+    "commander": "^15.0.0",
     "js-yaml": "^4.1.0",
     "openapi-fetch": "^0.9.5",
-    "openapi-typescript": "^6.7.5",
     "uuid": "^11.1.0"
   }
 }

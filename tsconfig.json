@@ -2,14 +2,15 @@
   "compilerOptions": {
     "lib": ["ESNext"],
     "target": "ESNext",
-    "module": "ESNext",
+    "module": "NodeNext",
     "moduleDetection": "force",
-    "jsx": "react-jsx",
-    "allowJs": true,
+    "types": ["node"],
 
-    /* Bundler mode */
-    "moduleResolution": "bundler",
+    /* Node.js can execute erasable TypeScript directly. */
+    "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true,
+    "rewriteRelativeImportExtensions": true,
+    "erasableSyntaxOnly": true,
     "verbatimModuleSyntax": true,
     "noEmit": true,
 

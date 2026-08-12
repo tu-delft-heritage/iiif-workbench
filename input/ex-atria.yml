@@ -7,7 +7,7 @@ items:
   - guid: 4fb3c8dd-983a-4d2d-84a1-879b7e0a85a6
     dlcs: ned22-1989
     metadata:
-      label:
+      title:
         nl: De Technische Universiteit, een mannenwereld
       format:
         en: Book
@@ -20,14 +20,14 @@ items:
         none: 1989
       publisher:
         none: 'Delft: Studium Generale TU Delft'
-      inventory-number:
+      inventory_number:
         none: NED 22 1989 - B
       permalink:
         none: https://hdl.handle.net/11653/book103591
   - guid: 8df3abe7-63b5-4ece-ae44-3751a4507cc3
     dlcs: ned22-1984
     metadata:
-      label:
+      title:
         nl: Vrouwen die techniek studeren... hoe apart
       format:
         en: Book
@@ -37,14 +37,14 @@ items:
         none: 1984
       publisher:
         none: 'Delft: Technische Hogeschool Delft'
-      inventory-number:
+      inventory_number:
         none: NED 22 1984 - C
       permalink:
         none: https://hdl.handle.net/11653/book2206
   - guid: b1e7e603-a258-4e8e-83c0-d2a783058631
     dlcs: ned72-1985
     metadata:
-      label:
+      title:
         nl: 'THD-vrouwendag 1985 : lezingen - vraagstelling - forum'
       format:
         en: Book
@@ -54,7 +54,7 @@ items:
         none: 1985
       publisher:
         none: 'Delft: Technische Hogeschool Delft'
-      inventory-number:
+      inventory_number:
         none: NED 72 1985 - B
       permalink:
         none: https://hdl.handle.net/11653/book72863

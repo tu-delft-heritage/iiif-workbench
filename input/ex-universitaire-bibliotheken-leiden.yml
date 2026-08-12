@@ -8,11 +8,11 @@ items:
   - guid: d9d935ed-321a-4dfa-91bb-bbdc66c4a279
     dlcs: kitlv
     metadata:
-      label:
+      title:
         en: Various images related to Bandung technical college
       collection:
         none: KITLV
-      inventory-number:
+      inventory_number:
         none:
           - KITLV 11869
           - KITLV 11910

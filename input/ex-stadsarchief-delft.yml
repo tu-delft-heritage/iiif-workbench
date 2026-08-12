@@ -8,7 +8,7 @@ items:
   - guid: fc4743c0-8176-430b-8446-e3e8de1a98cb
     dlcs: spiero-bk
     metadata:
-      label:
+      title:
         en: Photos of the fire and demolition of the Faculty of Architecture
       format:
         en: Photo
@@ -20,7 +20,7 @@ items:
     dlcs: kaarten
     comment: "Todo: change string1 value"
     metadata:
-      label:
+      title:
         en: City plan of Delft and extension plans for the Wippolder, 1900-1921
       format:
         en: Map

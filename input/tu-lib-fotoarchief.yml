@@ -10,7 +10,7 @@ items:
   - guid: 8f2cfbc4-e0ce-4fa6-b005-79e6a5699b73
     dlcs: bouw-geodesie
     metadata:
-      label:
+      title:
         en: Construction of the Faculty of Geodesy
       format:
         en: Photo
@@ -19,28 +19,28 @@ items:
   - dlcs: otb-76-4
     skip: true
     metadata:
-      label:
+      title:
         none: 76-4
       collection:
         nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
   - dlcs: otb-77-5
     skip: true
     metadata:
-      label:
+      title:
         none: 77-5
       collection:
         nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
   - dlcs: otb-78-10
     skip: true
     metadata:
-      label:
+      title:
         none: 78-10
       collection:
         nl: Fotoarchief OTB – Research for the Built Environment, Faculty of Architecture and the Built Environment
   - guid: fdd36563-62bd-4cf2-aed4-16f99beb3eac
     dlcs: repository
     metadata:
-      label:
+      title:
         en: Various photos of the campus of TU Delft
       format:
         en: Photo

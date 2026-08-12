@@ -18,7 +18,7 @@ items:
           Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs,
           1841-1864; de Polytechnische School etc.; de Technische Hogeschool
           etc. (3.12.08.01)
-      inventory-number:
+      inventory_number:
         none: 523
       permalink:
         none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
@@ -35,14 +35,14 @@ items:
           Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs,
           1841-1864; de Polytechnische School etc.; de Technische Hogeschool
           etc. (3.12.08.01)
-      inventory-number:
+      inventory_number:
         none: 524
       permalink:
         none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
   - guid: dbd33af9-298b-456c-864f-05ee8d68a1db
     dlcs: 526/3.12.08.01
     metadata:
-      label:
+      title:
         nl: >-
           Stukken betreffende het verstrekken van Marshallhulp voor nieuwbouw,
           verbouw en het aanschaffen van de nodige apparatuur, 1948-1951.
@@ -52,14 +52,14 @@ items:
           Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs,
           1841-1864; de Polytechnische School etc.; de Technische Hogeschool
           etc. (3.12.08.01)
-      inventory-number:
+      inventory_number:
         none: 526
       permalink:
         none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
   - guid: 7a0760b6-f651-429f-93f8-03c88feb85fe
     dlcs: 527/3.12.08.01
     metadata:
-      label:
+      title:
         nl: >-
           Stukken betreffende de huisvesting van de Technische Hogeschool, met
           aanvullingen en opmerkingen door de afdelingen, 1949-1955.
@@ -69,14 +69,14 @@ items:
           Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs,
           1841-1864; de Polytechnische School etc.; de Technische Hogeschool
           etc. (3.12.08.01)
-      inventory-number:
+      inventory_number:
         none: 527
       permalink:
         none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
   - guid: 2591220a-056a-454f-82af-98a2f9e94d39
     dlcs: 1486/3.12.08.01
     metadata:
-      label:
+      title:
         nl: >-
           Memories betreffende het situatieplan van de gebouwen, gericht aan het
           College van Curatoren; afschrift met twee foto's van een maquette voor
@@ -87,14 +87,14 @@ items:
           Koninklijke Akademie ter Opleiding van Burgerlijke Ingenieurs,
           1841-1864; de Polytechnische School etc.; de Technische Hogeschool
           etc. (3.12.08.01)
-      inventory-number:
+      inventory_number:
         none: 1486
       permalink:
         none: http://proxy.handle.net/10648/f2d0c4a7-7493-464f-9f71-e0a2c0980618
   - guid: b9fb80d4-deb0-4593-923f-c444b6d91722
     dlcs: 864-899/4.KIVI
     metadata:
-      label:
+      title:
         nl: >-
           Bouwtekeningen van de Indische Technische Hogeschool te Bandoeng,
           ontworpen door H. Maclaine Pont, getekend door Witteveen, uitgegeven
@@ -111,6 +111,6 @@ items:
           4.KIVI Inventaris van de verzameling atlassen, kaarten, tekeningen,
           prenten en foto's van het Koninklijk Instituut van Ingenieurs (KIVI)
           [opgericht in 1847], over de periode 1606-1976
-      inventory-number:
+      inventory_number:
         none: 864-899
       permalink: http://hdl.handle.net/10648/502713ef-3ed0-494e-a74a-3ce9b90c0be0

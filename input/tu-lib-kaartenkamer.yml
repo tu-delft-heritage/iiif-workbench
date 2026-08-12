@@ -11,7 +11,7 @@ items:
     dlcs: gidskaartjes-edit
     comment: "Nog controleren: kaartenkamer/delft en kaartenkamer/den-haag"
     metadata:
-      label:
+      title:
         nl: Gidskaartjes van de campus van de TU Delft
         en: Guide maps of the TU Delft campus
       year:
@@ -19,7 +19,7 @@ items:
   - guid: f21adf56-e87a-4ffb-9e7d-df62a557b0cd
     dlcs: kaarten-campus
     metadata:
-      label:
+      title:
         nl: Diverse kaarten van de campus van de Technische Hogeschool Delft
         en: Various map of the Delft Technical College campus
       year:
@@ -28,7 +28,7 @@ items:
     comment: "Bestaat niet, wel kaarten-publicaties; deze verwijderen en vervangen voor Delta Archief?"
     dlcs: kaarten-publicaties-integraal
     metadata:
-      label:
+      title:
         nl: Het maken van drie-dimensionale kaarten
       journal:
         none: Delft Integraal 1986.3/4
@@ -36,7 +36,7 @@ items:
     comment: "Bestaat niet, wel kaarten-publicaties"
     dlcs: kaarten-publicaties-cvb
     metadata:
-      label:
+      title:
         nl: Toekomst TU Wijk
       contributor:
         none: Facilitair Bedrijf TU Delft
@@ -47,7 +47,7 @@ items:
   - guid: d019e4bd-ade1-4bef-90cd-df9517ac2837
     dlcs: 1712-kruikius
     metadata:
-      label:
+      title:
         nl: "'t Hooge Heemraedschap van Delflant"
       contributor:
         nl: Nicolaes & Jacob Kruikius

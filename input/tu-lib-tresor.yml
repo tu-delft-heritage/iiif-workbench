@@ -193,7 +193,7 @@ items:
     tresor: TR 514425
     oclc: 635385189
     label: Sphaera mundi
-    skipMetadata: [ "Physical description", "Notes" ]
+    skipMetadata: [physical_description, notes]
   - guid: d0d7c0fa-35e6-4b00-a867-8912f79fb111
     dlcs: tr-523205
     tresor: TR 523205

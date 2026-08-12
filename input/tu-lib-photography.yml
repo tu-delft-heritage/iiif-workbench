@@ -13,7 +13,7 @@ items:
   - guid: ec078729-f33f-4166-be14-1ab7c0a7da4d
     dlcs: geertje-van-achterberg/2020-depots-museumcollectie
     metadata:
-      label:
+      title:
         en: Impressions of the three depots for the Special Collections of TU Delft Library
         nl: Een indruk van de drie depots voor de Bijzondere Collecties van de TU Delft Library
       format:
@@ -25,7 +25,7 @@ items:
   - guid: 7f8af037-9cd4-4ded-8865-7476f6c94628
     dlcs: geertje-van-achterberg/2020-library-bandung
     metadata:
-      label:
+      title:
         en: Photos of "Irrigation Knowledge" and "Bandoeng - Bandung" exhibitions at TU Delft Library
         nl: Foto"s van de tentoonstellingen "Irrigation Knowledge" en "Bandoeng - Bandung" bij de TU Delft Library
       format:
@@ -37,7 +37,7 @@ items:
   - guid: 79d6915f-b1ea-40b6-91b6-0a56b9fede57
     dlcs: geertje-van-achterberg/2020-tresor
     metadata:
-      label:
+      title:
         en: Impressions of the Trésor
       format:
         en: Photo
@@ -48,7 +48,7 @@ items:
   - guid: ad9914a2-9975-4ac2-81e3-6dbec9c20576
     dlcs: geertje-van-achterberg/2021-inventing-creativity
     metadata:
-      label:
+      title:
         en: Inventing Creativity exhibition at TU Delft Library
       format:
         en: Photo
@@ -59,7 +59,7 @@ items:
   - guid: f80b01c5-6bdb-45b5-9704-989247d1e93c
     dlcs: geertje-van-achterberg/2024-cvb-02-democratisering
     metadata:
-      label:
+      title:
         en: Democratization exhibition at the TU Delft Executive Board's offices
       format:
         en: Photo
@@ -70,7 +70,7 @@ items:
   - guid: 36a0f349-2e4b-4adf-83d6-2466d0f33660
     dlcs: johannes-schwartz/2018-library-01-afterlife-of-satellites
     metadata:
-      label:
+      title:
         en: Photos of the "Afterlife of Satellites" exhibition at TU Delft Library
       format:
         en: Photo
@@ -81,7 +81,7 @@ items:
   - guid: 024bf679-255b-42a1-98c5-88f05c1c86ae
     dlcs: johannes-schwartz/2018-erfgoed-chemische-technologie
     metadata:
-      label:
+      title:
         en: Photos of the empty Chemical Engineering building
       format:
         en: Photo
@@ -92,7 +92,7 @@ items:
   - guid: 1fc0bccf-4a53-43ae-a9ce-a461c275591a
     dlcs: johannes-schwartz/2019-sc-optics-for-all
     metadata:
-      label:
+      title:
         en: Photos of the "Optics for All" exhibition at TU Delft Science Centre
       format:
         en: Photo
@@ -103,7 +103,7 @@ items:
   - guid: 146181de-bca0-48b0-a4f1-5a578965c5c5
     dlcs: johannes-schwartz/2017-aula-rise-of-a-campus
     metadata:
-      label:
+      title:
         en: Photos of the "Rise of a Campus" exhibition at TU Delft Aula
       format:
         en: Photo
@@ -114,7 +114,7 @@ items:
   - guid: 86596cc0-2a9f-48e4-bf1e-49a52b8fc467
     dlcs: johannes-schwartz/2018-erfgoed-slingeruurwerk
     metadata:
-      label:
+      title:
         en: Photos of the pendulum clock by Strasser & Rohde on display at the depot of Stichting De Hollandse Cirkel (Kanaalweg 4)
       format:
         en: Photo
@@ -125,7 +125,7 @@ items:
   - guid: 5f7888d0-03fa-483f-a9b9-db5432fec44c
     dlcs: johannes-schwartz/2017-teaching-lab-01
     metadata:
-      label:
+      title:
         en: Photos of the "Mathematical Plaster Models" exhibition curated by Annoesjka Cabo at Teaching Lab
       format:
         en: Photo
@@ -136,7 +136,7 @@ items:
   - guid: 2865c3e9-bcd3-412d-8659-f6ffad859d64
     dlcs: johannes-schwartz/2018-teaching-lab-02
     metadata:
-      label:
+      title:
         en: Photos of "The Golden Calf" exhibition curated by Bart Root at Teaching Lab
       format:
         en: Photo
@@ -147,7 +147,7 @@ items:
   - guid: 25971986-c627-42b4-9acd-d2fafd5e8da6
     dlcs: johannes-schwartz/2018-teaching-lab-03
     metadata:
-      label:
+      title:
         en: Photos of the "Object-based Learning" exhibition curated by Charlotte van Wijk at Teaching Lab
       format:
         en: Photo
@@ -158,7 +158,7 @@ items:
   - guid: 78193c4a-d399-4a0c-85f8-d2686d312fa1
     dlcs: johannes-schwartz/2018-aula-the-age-of-standards
     metadata:
-      label:
+      title:
         en: Photos of "The Age of Standards" exhibition at TU Delft Aula
       format:
         en: Photo
@@ -169,7 +169,7 @@ items:
   - guid: afd03440-7bfc-41fc-9e98-97ba28da7e1a
     dlcs: johannes-schwartz/2019-extern-vanaf-het-hoogste-punt
     metadata:
-      label:
+      title:
         en: Photos of the "From the highest point" exhibition at Panorama Mesdag (The Hague)
       format:
         en: Photo
@@ -180,7 +180,7 @@ items:
   - guid: 24dc0fbb-3d6d-4485-934d-df6f14c9eef0
     dlcs: johannes-schwartz/2022-diaraam
     metadata:
-      label:
+      title:
         en: Window with display of glass slides at TU Delft Library
       format:
         en: Photo
@@ -191,7 +191,7 @@ items:
   - guid: b12add3f-5e6f-4ac3-8d76-cc81ce0a0341
     dlcs: johannes-schwartz/2022-atomic-reactions
     metadata:
-      label:
+      title:
         en: Atomic Reactions exhibition at TU Delft Library
       format:
         en: Photo
@@ -202,7 +202,7 @@ items:
   - guid: 5c2f7508-7eed-4c95-9d65-a37e1e319920
     dlcs: johannes-schwartz/2022-cvb-01-novieten
     metadata:
-      label:
+      title:
         en: Novices exhibition at the TU Delft Executive Board's offices
       format:
         en: Photo

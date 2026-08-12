@@ -11,6 +11,9 @@ importers:
       '@iiif/builder':
         specifier: ^2.0.1
         version: 2.0.1
+      '@iiif/presentation-3':
+        specifier: ^2.2.3
+        version: 2.2.3
       commander:
         specifier: ^15.0.0
         version: 15.0.0

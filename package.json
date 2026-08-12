@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@iiif/builder": "^2.0.1",
+    "@iiif/presentation-3": "^2.2.3",
     "commander": "^15.0.0",
     "js-yaml": "^4.1.0",
     "openapi-fetch": "^0.9.5",

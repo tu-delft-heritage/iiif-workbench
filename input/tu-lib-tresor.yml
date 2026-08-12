@@ -147,11 +147,12 @@ items:
   #       nl: Kaarten en tekeningen van de Pekalenwerken in Nederlands-Indië
 
   # Kaartenproject 2008
-  - guid: 43982d23-1cf9-42ad-8fdb-d933338b20c2
-    tresor: TR 514425
-    dlcs: tr-514425
-    oclc:
-      - 842524767
+  # New version below
+  # - guid: 43982d23-1cf9-42ad-8fdb-d933338b20c2
+  #   tresor: TR 514425
+  #   dlcs: tr-514425
+  #   oclc:
+  #     - 842524767
   - guid: 3320a95c-fdde-469a-87f0-54e4e7dda546
     tresor: TR 2984343
     dlcs: tr-2984343
@@ -178,3 +179,25 @@ items:
     dlcs: 905462128
     oclc:
       - 905462128
+  # Fotoatelier 2026
+  - guid: b73a487a-3e14-467d-b074-94df2be62b35
+    dlcs: tr-502418
+    tresor: TR 502418
+    oclc: [842525230]
+  - guid: 8ccfee5a-31f9-44a6-be13-ea5deac10e6d
+    dlcs: tr-514425-v2
+    tresor: TR 514425
+    oclc: [635385189]
+    fieldsToHide: ["description", "notes"]
+  - guid: d0d7c0fa-35e6-4b00-a867-8912f79fb111
+    dlcs: tr-523205
+    tresor: TR 523205
+    oclc: [842530797]
+  - guid: a190e163-16f8-4419-ab3f-576923052e5c
+    dlcs: trk-9801117
+    tresor: TRK 9801117
+    oclc: [906848585]
+  - guid: ed333349-0b4d-4ccb-a01c-01a888f5b8c1
+    dlcs: trk-9801414
+    tresor: TRK 9801414
+    oclc: [68849586]

@@ -1,8 +1,5 @@
 collection:
   guid: 4abb584e-e48c-4d31-839e-0562b9f257a9
-  output: dlcs/lib-fotoarchief
-  dlcs:
-    space: fotoarchief
   metadata:
     institution:
       en: TU Delft Library

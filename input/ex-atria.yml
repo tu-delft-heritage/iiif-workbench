@@ -1,9 +1,5 @@
 collection:
   guid: a9139d13-ef2f-4f3e-b9aa-0c77ac8c76b9
-  output: dlcs/ex-atria
-  dlcs:
-    space: atria
-  prefix: ex-atria
   metadata:
     institution:
       none: Atria, Kennisinstituut voor Emancipatie en Vrouwengeschiedenis

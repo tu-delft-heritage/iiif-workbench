@@ -1,7 +1,5 @@
 collection:
   guid: 537f4a35-6755-4298-9617-4447d6aff759
-  output: dlcs/ex-aviodrome
-  prefix: aviodrome
   metadata:
     institution:
       none: Aviodrome

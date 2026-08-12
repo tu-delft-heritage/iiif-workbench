@@ -4,6 +4,11 @@ import { formats } from "./formats.ts";
 
 import type { paths } from "./types/openapi-schema.ts";
 
+type MetadataValue = {
+  "en": string[],
+  "nl": string[]
+}
+
 type SuccessResponse =
   paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];
 
@@ -69,7 +74,7 @@ export function processOclcMetadata(
   const year = new Array();
   const description = new Array();
   const notes = new Array();
-  const format = new Array();
+  let format: undefined | MetadataValue  = undefined
 
   // Todo: process language:
   //     "language": {
@@ -156,8 +161,8 @@ export function processOclcMetadata(
       resp.note.generalNotes.forEach((item) => notes.push(item.text));
     }
     if (resp.format?.generalFormat) {
-      const betterFormat = formats[resp.format.generalFormat];
-      format.push(betterFormat);
+      const parsedFormat = formats[resp.format.generalFormat];
+      format = parsedFormat
     }
   }
 
@@ -195,7 +200,7 @@ export function processOclcMetadata(
         en: ["Object name"],
         nl: ["Objectnaam"],
       },
-      value: { none: format.length ? [...new Set(format)] : ["n/a"] },
+      value: format,
     },
     {
       label: {

@@ -35,11 +35,29 @@ pnpm start -- input/tu-lib-*.yml
 pnpm start -- input/{tu-lib-tresor.yml,tu-lib-tresor-piranesi.yml}
 ```
 
-Disable OCLC cache reads and writes:
+Disable OCLC and DLCS cache reads and writes:
 
 ```bash
 pnpm start -- input/tu-lib-tresor.yml --no-cache
 ```
+
+Delete local cache files:
+
+```bash
+pnpm start -- clear-cache
+pnpm start -- clear-cache dlcs
+pnpm start -- clear-cache oclc --dry-run
+```
+
+Force DLCS to refresh its server-side cache for skeleton manifests:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml --purge-dlcs-cache
+```
+
+This bypasses local DLCS cache reads and appends a `cacheBust` query parameter
+using the current time. The refreshed DLCS response is cached locally unless
+`--no-cache` or `--dry-run` is also used.
 
 Run without clearing output folders or writing manifests, collection files, or new cache files:
 

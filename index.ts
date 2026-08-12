@@ -3,10 +3,12 @@ import { Command } from "commander";
 import {
   runAddGuidsCli,
   runAddOclcLabelsCli,
+  runClearCacheCli,
   runGenerateCli,
   normalizeProcessArgv,
   type AddOclcLabelsCliOptions,
   type CliOptions,
+  type ClearCacheCliOptions,
   type InputEditCliOptions,
 } from "./src/cli.ts";
 
@@ -14,10 +16,14 @@ const program = new Command();
 
 function addGenerateOptions(command: Command) {
   return command
-    .option("--no-cache", "disable OCLC cache reads and writes")
+    .option("--no-cache", "disable OCLC and DLCS cache reads and writes")
     .option(
       "--dry-run",
       "fetch and process records without clearing output or writing files/cache",
+    )
+    .option(
+      "--purge-dlcs-cache",
+      "append a timestamp query parameter to DLCS manifest requests",
     )
     .option(
       "--use-output-folder",
@@ -69,6 +75,24 @@ addInputEditOptions(
 ).action((files: string[], cliOptions: InputEditCliOptions) =>
   runAddGuidsCli(files, cliOptions),
 );
+
+program
+  .command("clear-cache")
+  .alias("delete-cache")
+  .description("Delete local OCLC and DLCS cache files.")
+  .argument("[types...]", "cache type(s) to delete: all, dlcs, or oclc")
+  .option("--dry-run", "show what would be deleted without deleting files")
+  .action(
+    (
+      types: string[],
+      _cliOptions: ClearCacheCliOptions,
+      command: Command,
+    ) =>
+      runClearCacheCli(
+        types,
+        command.optsWithGlobals() as ClearCacheCliOptions,
+      ),
+  );
 
 addInputEditOptions(
   program

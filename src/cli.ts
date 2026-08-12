@@ -16,10 +16,16 @@ import {
   addOclcLabelsToInputFile,
   emptyInputEditStats,
 } from "./input-editor.ts";
+import {
+  cacheTypes,
+  clearCache,
+  type CacheType,
+} from "./shared.ts";
 
 export type CliOptions = {
   cache: boolean;
   dryRun?: boolean;
+  purgeDlcsCache?: boolean;
   useGuidFilenames?: boolean;
   useOutputFolder?: boolean;
 };
@@ -34,9 +40,39 @@ export type AddOclcLabelsCliOptions = InputEditCliOptions & {
   overwrite?: boolean;
 };
 
+export type ClearCacheCliOptions = {
+  dryRun?: boolean;
+};
+
 export function normalizeProcessArgv(argv: string[]) {
   const [runtime, script, ...args] = argv;
   return [runtime, script, ...args.filter((arg) => arg !== "--")];
+}
+
+function formatCacheTypes() {
+  return ["all", ...cacheTypes].join(", ");
+}
+
+function isCacheType(value: string): value is CacheType {
+  return cacheTypes.includes(value as CacheType);
+}
+
+function resolveCacheTypes(targets: string[]): CacheType[] {
+  const normalizedTargets = targets.map((target) => target.toLowerCase());
+  if (!normalizedTargets.length || normalizedTargets.includes("all")) {
+    return [...cacheTypes];
+  }
+
+  const invalidTargets = normalizedTargets.filter(
+    (target) => !isCacheType(target),
+  );
+  if (invalidTargets.length) {
+    throw new Error(
+      `Unknown cache type "${invalidTargets.join(", ")}". Expected one of: ${formatCacheTypes()}`,
+    );
+  }
+
+  return [...new Set(normalizedTargets.filter(isCacheType))];
 }
 
 export async function runGenerateCli(files: string[], cliOptions: CliOptions) {
@@ -49,6 +85,7 @@ export async function runGenerateCli(files: string[], cliOptions: CliOptions) {
       write: cliOptions.cache && !dryRun,
     },
     dryRun,
+    purgeDlcsCache: Boolean(cliOptions.purgeDlcsCache),
     useGuidFilenames: Boolean(cliOptions.useGuidFilenames),
     useOutputFolder: Boolean(cliOptions.useOutputFolder),
   };
@@ -109,6 +146,43 @@ export async function runAddGuidsCli(
   if (total.errors > 0) {
     process.exitCode = 1;
   }
+}
+
+export async function runClearCacheCli(
+  targets: string[],
+  cliOptions: ClearCacheCliOptions,
+) {
+  const dryRun = Boolean(cliOptions.dryRun);
+  let types: CacheType[];
+
+  try {
+    types = resolveCacheTypes(targets);
+  } catch (err) {
+    console.error(formatError(err));
+    process.exitCode = 1;
+    return;
+  }
+
+  const results = await clearCache(types, { dryRun });
+  const totalFiles = results.reduce((total, result) => total + result.files, 0);
+
+  for (const result of results) {
+    if (dryRun) {
+      console.log(
+        `[dry-run] Would delete ${result.files} cache file(s) from ${result.path}`,
+      );
+    } else if (result.deleted) {
+      console.log(
+        `Deleted ${result.files} cache file(s) from ${result.path}`,
+      );
+    } else {
+      console.log(`No cache files found in ${result.path}`);
+    }
+  }
+
+  console.log(
+    `${dryRun ? "Would delete" : "Deleted"} ${totalFiles} cache file(s) across ${results.length} cache type(s).`,
+  );
 }
 
 export async function runAddOclcLabelsCli(

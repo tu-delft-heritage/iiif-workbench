@@ -2,9 +2,9 @@ import { IIIFBuilder } from "@iiif/builder";
 import { access, writeFile } from "node:fs/promises";
 import { basename, extname } from "node:path";
 import {
-  fetchJson,
   cleanManifest,
   clearOrCreateOutputDir,
+  fetchDlcsManifestWithCache,
   fetchOclcMetadataWithCache,
   saveYaml,
 } from "./shared.ts";
@@ -34,6 +34,7 @@ export type CacheOptions = {
 export type RunOptions = {
   cache: CacheOptions;
   dryRun: boolean;
+  purgeDlcsCache: boolean;
   useGuidFilenames: boolean;
   useOutputFolder: boolean;
 };
@@ -194,7 +195,12 @@ export async function generateManifestsForInputFile(
     if (dlcs || dlcs === 0) {
       try {
         const manifestId = dlcsQueryBase + dlcs;
-        const skeletonManifest = (await fetchJson(manifestId)) as Manifest;
+        const skeletonManifest = (await fetchDlcsManifestWithCache(
+          dlcs,
+          manifestId,
+          options.cache,
+          { purgeServerCache: options.purgeDlcsCache },
+        )) as Manifest;
         cleanManifest(skeletonManifest);
         vault.load(manifestId, skeletonManifest);
 

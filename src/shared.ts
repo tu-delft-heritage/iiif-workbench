@@ -1,13 +1,19 @@
 import {
   mkdir,
+  readdir,
   readFile,
   rm,
   writeFile,
 } from "node:fs/promises";
 import { stringify } from "yaml";
 import { fetchOclcMetadata } from "./oclc.ts";
+import { cacheDir } from "./settings.ts";
 
 import type { Manifest } from "@iiif/presentation-3";
+
+export const cacheTypes = ["dlcs", "oclc"] as const;
+
+export type CacheType = (typeof cacheTypes)[number];
 
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -31,9 +37,21 @@ function isNoEntry(error: unknown) {
   );
 }
 
+function getCacheFilename(id: string) {
+  return encodeURIComponent(id);
+}
+
+function getCachePath(id: string, type: string) {
+  return `${cacheDir}${type}/${getCacheFilename(id)}.json`;
+}
+
+function getCacheDirectory(type: CacheType) {
+  return `${cacheDir}${type}`;
+}
+
 async function getCache(id: string, type: string) {
   try {
-    const file = await readFile(`.cache/${type}/${id}.json`, "utf8");
+    const file = await readFile(getCachePath(id, type), "utf8");
     return JSON.parse(file) as unknown;
   } catch (error) {
     if (isNoEntry(error)) {
@@ -62,9 +80,75 @@ function normalizeCacheOptions(options: boolean | CacheOptions = true) {
   };
 }
 
+async function saveCache(id: string, type: string, json: unknown) {
+  await mkdir(`${cacheDir}${type}`, { recursive: true });
+  await writeFile(getCachePath(id, type), JSON.stringify(json, null, 4));
+}
+
+async function countCacheFiles(path: string): Promise<number> {
+  try {
+    const entries = await readdir(path, { withFileTypes: true });
+    const nestedCounts = await Promise.all(
+      entries.map((entry) => {
+        if (entry.isDirectory()) {
+          return countCacheFiles(`${path}/${entry.name}`);
+        }
+        return Promise.resolve(entry.isFile() ? 1 : 0);
+      }),
+    );
+
+    return nestedCounts.reduce((total, count) => total + count, 0);
+  } catch (error) {
+    if (isNoEntry(error)) {
+      return 0;
+    }
+    throw error;
+  }
+}
+
+export type ClearCacheOptions = {
+  dryRun: boolean;
+};
+
+export type ClearCacheResult = {
+  type: CacheType;
+  path: string;
+  files: number;
+  deleted: boolean;
+};
+
+export async function clearCache(
+  types: CacheType[],
+  options: ClearCacheOptions,
+) {
+  const results: ClearCacheResult[] = [];
+
+  for (const type of types) {
+    const path = getCacheDirectory(type);
+    const files = await countCacheFiles(path);
+    if (!options.dryRun && files > 0) {
+      await rm(path, { recursive: true, force: true });
+    }
+    results.push({
+      deleted: !options.dryRun && files > 0,
+      files,
+      path,
+      type,
+    });
+  }
+
+  return results;
+}
+
 export async function saveJson(json: unknown, filename: string, path: string) {
   await mkdir(path, { recursive: true });
   return writeFile(`${path}/${filename}.json`, JSON.stringify(json, null, 4));
+}
+
+function addCacheBustingQueryParam(url: string) {
+  const parsedUrl = new URL(url);
+  parsedUrl.searchParams.set("cacheBust", Date.now().toString());
+  return parsedUrl.toString();
 }
 
 export async function fetchJsonWithCache(
@@ -72,19 +156,34 @@ export async function fetchJsonWithCache(
   url: string,
   type: string,
   cacheOptions: boolean | CacheOptions = true,
+  fetchOptions: { cacheBust?: boolean } = {},
 ) {
   const cache = normalizeCacheOptions(cacheOptions);
-  if (cache.read) {
+  if (cache.read && !fetchOptions.cacheBust) {
     const cached = await getCache(id, type);
     if (cached) {
       return cached;
     }
   }
-  const resp = await fetch(url).then((resp) => resp.json());
+  const fetchUrl = fetchOptions.cacheBust
+    ? addCacheBustingQueryParam(url)
+    : url;
+  const resp = await fetchJson(fetchUrl);
   if (cache.write) {
-    await saveJson(resp, id, `.cache/${type}/`);
+    await saveCache(id, type, resp);
   }
   return resp;
+}
+
+export async function fetchDlcsManifestWithCache(
+  dlcsId: string | number,
+  url: string,
+  cacheOptions: boolean | CacheOptions = true,
+  options: { purgeServerCache?: boolean } = {},
+) {
+  return fetchJsonWithCache(String(dlcsId), url, "dlcs", cacheOptions, {
+    cacheBust: options.purgeServerCache,
+  });
 }
 
 export async function fetchOclcMetadataWithCache(
@@ -104,7 +203,7 @@ export async function fetchOclcMetadataWithCache(
     throw new Error(`No OCLC metadata found for ${oclcNumber} (${status})`);
   }
   if (cache.write) {
-    await saveJson(resp.data, oclcNumber.toString(), ".cache/oclc/");
+    await saveCache(oclcNumber.toString(), "oclc", resp.data);
   }
   return resp.data;
 }

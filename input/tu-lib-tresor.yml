@@ -9,12 +9,13 @@ collection:
     collection:
       none: Trésor
 items:
+
   # Existing objects from erfgoed.tudelft.nl
   - guid: 2df6729c-3f9a-476f-8b6f-464f0ec12e2d
     tresor: TRT-784
     dlcs: MMAD01
-    oclc:
-      - 845604339
+    oclc: 845604339
+    label: Almanak der Delftsche Vrouwelijke Studenten Vereeniging
     comment: "Todo: patch DLCS properties"
   - guid: 4542a96a-c8ec-4d66-abf7-45d9b4813ba5
     tresor: TR-3057129
@@ -22,125 +23,127 @@ items:
     oclc:
       - 842089525
       - 841717187
+    label: "Almanak 1904-1994/2004 Delftsche Vrouwelijke Studenten Vereeniging"
   - guid: ab236903-aa3e-46df-ac67-e879b3c85625
     tresor: TRD-112
     dlcs: technische-hogeschool-delft-aula
-    oclc:
-      - 842075173
+    oclc: 842075173
+    label: "Doos met verschillende publicaties van en over de Technische Hogeschool"
   - guid: acc7d09c-1a6f-431d-91c9-406e03edde8b
     tresor: TXF-952A16
     dlcs: txf952A16
-    oclc:
-      - 840592995
+    oclc: 840592995
+    label: De Polytechnische School
   - guid: 010d6983-2f27-48d7-baa7-ec15d14c4826
     tresor: Tresorleeszaal
     dlcs: 64319573
-    oclc:
-      - 64319573
+    oclc: 64319573
+    label: De Technische Hoogeschool te Delft van 1905 tot 1930
     comment: "Fout in creatorNotes"
   - guid: b64f4ae1-53d7-4e21-820e-e4284f102e60
     tresor: Tresorleeszaal
     dlcs: 838925847
-    oclc:
-      - 838925847
+    oclc: 838925847
+    label: Elektrotechniek in bouw
   - guid: a73c3301-be42-4bce-a29e-32a67585fb9a
     tresor: TXF-18197
     dlcs: txf18197
-    oclc:
-      - 64182517
+    oclc: 64182517
+    label: "Gedenkschrift van de Koninklijke Academie en van de Polytechnische School"
   - guid: 589b8059-8528-4a0e-81ad-a57da5225325
     tresor: Tresorleeszaal
     dlcs: 905858846
-    oclc:
-      - 905858846
+    oclc: 905858846
+    label: "Het gebouw der Bouwkunde"
   - guid: 407b87c7-5d3a-43c0-a13d-517767cdbc86
     tresor: Tresorleeszaal
     dlcs: 841918558
-    oclc:
-      - 841918558
+    oclc: 841918558
+    label: Lustrumuitgave Prometheus 1954-1959
   - guid: 55c95226-ebd8-4655-bb17-1f36af430a48
     tresor: Tresorleeszaal
     dlcs: 72665213-1925
-    oclc:
-      - 72665213
+    oclc: 72665213
+    label: "Technische Hoogeschool te Delft: Programma der lessen"
   - guid: 477d11d1-4add-49da-8f48-8cee06f08dd9
     tresor: Tresorleeszaal
     dlcs: 68976673
-    oclc:
-      - 68976673
+    oclc: 68976673
+    label: "Vrouwen in techniek: 90 jaar Delftse vrouwelijke ingenieurs"
     comment: "Fout in creatorNotes"
   - guid: 8af31150-db5c-4c54-bd34-da15e91be8d6
     tresor: TR 540202
     dlcs: TR-540202
-    oclc:
-      - 841756583
+    oclc: 841756583
+    label: Hulde den kunstenaar, den hoogleeraar, den geschiedvorscher 1864-1889
   - tresor: TRK 9209204
     dlcs: trk-9209204
-    oclc: [842545703]
+    oclc: 842545703
     comment: "Metadata niet correct"
     skip: true
+
   # Fotoalbums
   - guid: dceb23dd-d9b3-4724-bdc6-d59232fd805f
     tresor: TRK 9811201
     dlcs: TRK-9811201
-    oclc:
-      - 840600146
+    oclc: 840600146
+    label: Album met photographieen van de Technische Hoogeschool te Delft
   - guid: c81cce2d-bf5f-47e1-846a-f91c835c4c5e
     tresor: TR 2988225
     dlcs: TR-2988225
-    oclc:
-      - 840594332
+    oclc: 840594332
+    label: Photographieen van voorwerpen enz., die zich bevinden in de Afdeeling Decoratieve Kunst
   - guid: 1e8df57f-f428-4797-8a84-b14def91d54a
     tresor: TRK 9811202
     dlcs: trk-9811202
-    oclc:
-      - 840493169
+    oclc: 840493169
+    label: "Delft: verzameling photographieen van stadsgezichten"
   - guid: 4933b591-d218-4167-af14-ea7f5973cc19
     tresor: TRK 9806213
     dlcs: trk-9806213
-    oclc:
-      - 1085541704
+    oclc: 1085541704
+    label: "Fotoreportage van Blinjoe: tinsmederij"
   - guid: 12e486f5-2c4e-44c3-a3b7-f162ae026f0a
     tresor: TRK 9806215
     dlcs: trk-9806215
-    oclc:
-      - 1143214906
+    oclc: 1143214906
+    label: "Technische Hogeschool Delft: rectores magnifici 1905-1955"
   - guid: 3457e8ef-11c8-450f-81bc-b8838219610f
     tresor: TRK 9806214
     dlcs: trk-9806214
-    oclc:
-      - 1143215179
+    oclc: 1143215179
+    label: "Technische Hogeschool Delft: rectores magnifici 1955-1997"
   - guid: 4a5fbc63-0104-40e0-a9a5-c1c8aac353a4
     tresor: TRK 9806309
     dlcs: trk-9806309
-    oclc:
-      - 911056836
+    oclc: 911056836
+    label: "Technische Hoogeschool"
   - guid: 1b1df7da-8def-464b-85a3-1261fa5add27
     tresor: TR 3072156
     dlcs: tr-3072156
-    oclc:
-      - 842118846
+    oclc: 842118846
+    label: Hoogleraren der Afdeling Bouwkunde
   - guid: 58f74dda-b90a-4bb6-a060-0fee4d31bf7d
     tresor: TRG 9302 R 06
     dlcs: trg-9302-r-06
-    oclc:
-      - 1417317487
+    oclc: 1417317487
+    label: "Fotoalbum van exepeditie Krakatau (1883-1886)"
   - guid: 05e75414-e40d-4597-9906-d79212c9a439
     tresor: TRG 9105 G 10
     dlcs: trg-9105-g-10
-    oclc:
-      - 1410098495
+    oclc: 1410098495
+    label: Fotoalbum van of voor Sebastiaan Hoogewerff
+
   # Maps
   - guid: 2fd58702-bc61-4e83-bb3e-21908778a245
     tresor: TRK 9812103
     dlcs: trk-9812103
-    oclc:
-      - 842530782
+    oclc: 842530782
+    label: Civitates orbis terrarum. Liber primus-sextus
   - tresor: TRL 9.3
     dlcs: trl-9.3
-    metadata:
-      label:
-        nl: Kaarten en tekeningen van de Pekalenwerken in Nederlands-Indië
+    label:
+      nl: Kaarten en tekeningen van de Pekalenwerken in Nederlands-Indië
     skip: true
     comment: "No OCLC number"
 
@@ -148,55 +151,61 @@ items:
   - guid: 43982d23-1cf9-42ad-8fdb-d933338b20c2
     tresor: TR 514425
     dlcs: tr-514425
-    oclc:
-      - 842524767
-    skip: true,
+    oclc: 842524767
+    skip: true
     comment: "New scan added below"
   - guid: 3320a95c-fdde-469a-87f0-54e4e7dda546
     tresor: TR 2984343
     dlcs: tr-2984343
-    oclc:
-      - 63820402
+    oclc: 63820402
+    label: Het leggend Waterrad
+
   # GMS 2024
   - guid: b01c847f-22d2-4393-a99f-16fad8ddf11d
     tresor: Tresorleeszaal
     dlcs: 839007461
-    oclc:
-      - 839007461
+    oclc: 839007461
+    label: De huisvesting van de afdeling Bouwkunde aan de T.H. te Delft vanaf 1843-1971
   - guid: b455e77f-b3b3-4b71-8f0e-655abbba7d6f
     tresor: TR 2980745
     dlcs: 841075233
-    oclc:
-      - 841075233
+    oclc: 841075233
+    label: "Het huis van ouds genaamd Portugal te Delft"
   - guid: f2214f9e-acf8-47de-852b-f0539bf0d07f
     tresor: TRK 9819521
     dlcs: 840551651
-    oclc:
-      - 840551651
+    oclc: 840551651
+    label: Voorgestelde modellen eener teekenmethode bij het wapen van de genie
   - guid: e892ae6b-8581-486f-8e81-9561fade10f1
     tresor: TR 3021410
     dlcs: 905462128
-    oclc:
-      - 905462128
+    oclc: 905462128
+    label: Gedenkboek van het verzet der Delftsche studenten en docenten gedurende de jaren 1940-1945
+ 
   # Fotoatelier 2026
   - guid: b73a487a-3e14-467d-b074-94df2be62b35
     dlcs: tr-502418
     tresor: TR 502418
-    oclc: [842525230]
+    oclc: 842525230
+    label: Houtkunde
   - guid: 8ccfee5a-31f9-44a6-be13-ea5deac10e6d
     dlcs: tr-514425-v2
     tresor: TR 514425
-    oclc: [635385189]
-    skipMetadata: ["Physical description", "Notes"]
+    oclc: 635385189
+    label: Sphaera mundi
+    skipMetadata: [ "Physical description", "Notes" ]
   - guid: d0d7c0fa-35e6-4b00-a867-8912f79fb111
     dlcs: tr-523205
     tresor: TR 523205
-    oclc: [842530797]
+    oclc: 842530797
+    label: "Novo teatro di machine et edificii per varie et sicure operationi"
   - guid: a190e163-16f8-4419-ab3f-576923052e5c
     dlcs: trk-9801117
     tresor: TRK 9801117
-    oclc: [906848585]
+    oclc: 906848585
+    label: "Perspective"
   - guid: ed333349-0b4d-4ccb-a01c-01a888f5b8c1
     dlcs: trk-9801414
     tresor: TRK 9801414
-    oclc: [68849586]
+    oclc: 68849586
+    label: "L'arte di restituire à Roma la tralasciata nauigatione del suo Teuere"

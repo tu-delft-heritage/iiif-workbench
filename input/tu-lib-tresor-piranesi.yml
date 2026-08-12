@@ -13,22 +13,27 @@ items:
     tresor: TRG 9413 G 02
     dlcs: piranesi/TRG-9413-G02
     oclc: 842525508
+    label: Vasi, candelabri, cippi, sarcofagi, tripodi, lucerne ed ornamenti antichi
   - guid: 219d769e-ae19-4fbe-9947-51855c6033b5
     tresor: TRG 9413 G 03
     dlcs: piranesi/TRG-9413-G03
     oclc: 842552167
+    label: Antichità d'Albano e di Castel Gandolfo
   - guid: 7fc20a9a-2981-4746-9c52-f39e7f88b9b5
     tresor: TRG 9413 G 04
     dlcs: piranesi/TRG-9413-G04
     oclc: 1190868492
+    label: Di due speloche ornate dagli antichi alla riva del Lago Albano
   - guid: 3b293468-c430-4e5a-9ef4-61a58f9a960d
     tresor: TRG 9413 G 05
     dlcs: piranesi/TRG-9413-G05
     oclc: 842552166
+    label: Delle antichitá di Cora
   - guid: 5c239105-52aa-42e1-91af-c5570f182103
     tresor: TRG 9413 G 06
     dlcs: piranesi/TRG-9413-G06
     oclc: 842546045
+    label: Descrizione e disegno dell 'Emissario del Lago Albano
   - tresor: "2003"
     skip: true
     dlcs: piranesi/2003

@@ -12,50 +12,50 @@ items:
   - guid: 4913ab3b-3340-4f58-a99a-9962582655ee
     tresor: TRG 9403 E 02
     dlcs: maskerades/trg-9403-e-02
-    oclc:
-      - 65902380
+    oclc: 65902380
+    label: "Gecostumeerde optocht gehouden door de leden van het Delftsche Studentencorps, op den 8 Juli 1873"
   - guid: 4c166845-72eb-4851-9844-8fabd07e3954
     tresor: TRG 9403 E 03
     dlcs: maskerades/trg-9403-e-03
-    oclc:
-      - 65902377
+    oclc: 65902377
+    label: "Gecostumeerde optocht gehouden door de leden van het Delftsch Studentencorps, 9 Juli 1878"
   - guid: 0d4fc7f7-6720-430d-920e-aac57a106307
     tresor: TRG 9403 E 04
     dlcs: maskerades/trg-9403-e-04
-    oclc:
-      - 65122733
+    oclc: 65122733
+    label: Tafereelen uit het leven van Lorenzo de' Medici
   - guid: f2a7bb03-b1f9-472c-a8ed-66013220de6a
     tresor: TRG 9403 G 03
     dlcs: maskerades/trg-9403-g-03
-    oclc:
-      - 522022005
+    oclc: 522022005
+    label: "Maskerade: de ommetocht van Nikephoros II Phokas binnen Byzantium"
   - guid: db5fe8dd-22a7-46e4-88a5-35c3e0bc5ea4
     tresor: TRG 9403 G 04
     dlcs: maskerades/trg-9403-g-04
-    oclc:
-      - 69024098
+    oclc: 69024098
+    label: "Historisch overzicht van de maskerade voorstellende: de ommetocht van Nikephoros II Phocas binnen Byzanthium"
   - guid: 79ad2084-c803-4237-a05d-ff74fa61c6a4
     tresor: TRG 9403 G 05
     dlcs: maskerades/trg-9403-g-05
-    oclc:
-      - 69024098
+    oclc: 69024098
+    label: "Historisch overzicht van de maskerade voorstellende: de ommetocht van Nikephoros II Phocas binnen Byzanthium"
   - guid: aa45b362-a633-458a-8956-8f6accb380ef
     tresor: TRG 9403 P 02
     dlcs: maskerades/trg-9403-p-02
-    oclc:
-      - 841357958
+    oclc: 841357958
+    label: "Maskerade, voorstellende de intocht der verbonden edelen binnen Brussel op 3 april 1566"
   - guid: 711bd30d-2a1b-4772-aa65-f66d027889af
     tresor: TRG 9403 P 06
     dlcs: maskerades/trg-9403-p-06
-    oclc:
-      - 67348487
+    oclc: 67348487
+    label: Vierde Lustrum der Koninklijke Academie te Delft, Anno 1862
   - guid: 82e269a9-a3a7-4d40-af82-6fbafa97c10d
     tresor: TRG 9403 P 07
     dlcs: maskerades/trg-9403-p-07
-    oclc:
-      - 64500041
+    oclc: 64500041
+    label: Gecostumeerde optogt, gehouden door de leden van het Delftsche Studenten-corps den 5den Mei 1857
   - guid: ee5b642c-b296-4b63-8783-46fb1e6e869d
     tresor: TRG 9809 E 03
     dlcs: maskerades/trk-9809-e-03
-    oclc:
-      - 840592757
+    oclc: 840592757
+    label: De maskerade der Delftsche studenten bij gelegenheid van het XIIe lustrum 1908

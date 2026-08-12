@@ -171,15 +171,15 @@ export function processOclcMetadata(
     },
     {
       label: {
-        en: contributor.length <= 1 ? ["Contributor"] : ["Contributors"],
-        nl: contributor.length <= 1 ? ["Maker"] : ["Makers"],
+        en: contributor.length <= 1 ? ["Author"] : ["Authors"],
+        nl: contributor.length <= 1 ? ["Auteur"] : ["Auteurs"],
       },
       value: { none: contributor.length ? [...new Set(contributor)] : ["n/a"] },
     },
     {
       label: {
-        en: ["Publisher"],
-        nl: ["Uitgever"],
+        en: ["Publication"],
+        nl: ["Publicatie"],
       },
       value: { none: publisher.length ? [...new Set(publisher)] : ["n/a"] },
     },
@@ -192,34 +192,34 @@ export function processOclcMetadata(
     },
     {
       label: {
-        en: ["Format"],
-        nl: ["Formaat"],
+        en: ["Object name"],
+        nl: ["Objectnaam"],
       },
       value: { none: format.length ? [...new Set(format)] : ["n/a"] },
     },
     {
       label: {
-        en: ["Description"],
-        nl: ["Omschrijving"],
+        en: ["Physical description"],
+        nl: ["Fysieke beschrijving"],
       },
       value: { none: description.length ? description : ["n/a"] },
     },
     {
       label: {
         en: ["Notes"],
-        nl: ["Noot"],
+        nl: ["Opmerkingen"],
       },
       value: { none: notes.length ? notes : ["n/a"] },
     },
     {
       label: {
-        en: oclcNumber.length <= 1 ? ["OCLC Number"] : ["OCLC Numbers"],
+        en: oclcNumber.length <= 1 ? ["OCLC number"] : ["OCLC numbers"],
         nl: oclcNumber.length <= 1 ? ["OCLC nummer"] : ["OCLC nummers"],
       },
       value: { none: oclcNumber.length ? oclcNumber : ["n/a"] },
     },
     {
-      label: { en: ["Shelf Number"], nl: ["Plaatsnummer"] },
+      label: { en: ["Shelf number"], nl: ["Plaatsnummer"] },
       value: { none: [shelfNumber.replaceAll("-", " ")] },
     },
   ];

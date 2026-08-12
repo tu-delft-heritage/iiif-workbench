@@ -1,5 +1,5 @@
-import yaml from "js-yaml";
 import { readFile } from "node:fs/promises";
+import { parse } from "yaml";
 import { z } from "zod";
 import { writer } from "./log.ts";
 
@@ -32,14 +32,22 @@ const oclcNumberSchema = z.union([
 ]);
 
 const oclcSchema = z
-  .union([oclcNumberSchema, z.array(oclcNumberSchema).nonempty()])
-  .transform((value) => (Array.isArray(value) ? value : [value]));
+  .union([oclcNumberSchema, z.array(oclcNumberSchema).nonempty(), z.null()])
+  .transform((value) => {
+    if (value === null) {
+      return undefined;
+    }
+
+    return Array.isArray(value) ? value : [value];
+  });
 
 const metadataLabelSchema = z.string().trim().min(1);
 
 const metadataLabelsSchema = z
   .union([metadataLabelSchema, z.array(metadataLabelSchema).nonempty()])
   .transform((value) => (Array.isArray(value) ? value : [value]));
+
+const commentSchema = z.union([z.string(), z.array(z.string()).nonempty()]);
 
 const collectionSchema = z
   .object({
@@ -58,9 +66,12 @@ const itemSchema = z
     guid: z.string().optional(),
     dlcs: z.union([z.string(), z.number()]),
     tresor: z.string().optional(),
+    label: languageValueSchema.optional(),
     oclc: oclcSchema.optional(),
     metadata: metadataValuesSchema.optional(),
     skipMetadata: metadataLabelsSchema.optional(),
+    comment: commentSchema.optional(),
+    skip: z.boolean().optional(),
     "first-canvas": z.number().int().nonnegative().optional(),
     projects: z.array(z.record(z.string(), z.unknown())).optional(),
   })
@@ -102,5 +113,5 @@ export function parseInputConfig(input: unknown, sourcePath?: string) {
 export async function loadYaml(path: string) {
   const file = await readFile(path, "utf8");
   writer.write(`Selected input file: ${path}\n`);
-  return parseInputConfig(yaml.load(file), path);
+  return parseInputConfig(parse(file), path);
 }

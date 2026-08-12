@@ -9,6 +9,7 @@ import {
   buildManualMetadata,
   getTitleLabel,
   saveYaml,
+  toInternationalString,
 } from "./shared.ts";
 import { loadYaml } from "./input.ts";
 import { buildOclcMetadata } from "./oclc.ts";
@@ -41,6 +42,7 @@ export type RunStats = {
   wouldCreate: number;
   wouldOverwrite: number;
   skipped: number;
+  skippedByConfig: number;
   errors: number;
 };
 
@@ -53,6 +55,7 @@ export function emptyStats(): RunStats {
     wouldCreate: 0,
     wouldOverwrite: 0,
     skipped: 0,
+    skippedByConfig: 0,
     errors: 0,
   };
 }
@@ -65,6 +68,7 @@ export function addStats(total: RunStats, next: RunStats) {
   total.wouldCreate += next.wouldCreate;
   total.wouldOverwrite += next.wouldOverwrite;
   total.skipped += next.skipped;
+  total.skippedByConfig += next.skippedByConfig;
   total.errors += next.errors;
 }
 
@@ -123,6 +127,21 @@ function getOutputDirectoryName(
   return guid;
 }
 
+function describeItem(item: InputConfig["items"][number]) {
+  if (item.tresor) return item.tresor;
+  if (item.dlcs || item.dlcs === 0) return String(item.dlcs);
+  if (item.guid) return item.guid;
+  return "unknown item";
+}
+
+function formatComment(comment: InputConfig["items"][number]["comment"]) {
+  if (!comment) {
+    return "";
+  }
+
+  return `: ${Array.isArray(comment) ? comment.join("; ") : comment}`;
+}
+
 export async function generateManifestsForInputFile(
   inputPath: string,
   options: RunOptions,
@@ -155,9 +174,19 @@ export async function generateManifestsForInputFile(
       dlcs,
       oclc: oclcNumbers,
       guid,
+      label: itemLabel,
       metadata: metadataValues,
       skipMetadata,
     } = item;
+    if (item.skip) {
+      stats.skipped++;
+      stats.skippedByConfig++;
+      console.log(
+        `Skipped ${describeItem(item)} because skip is true${formatComment(item.comment)}`,
+      );
+      continue;
+    }
+
     if (dlcs || dlcs === 0) {
       try {
         const manifestId = dlcsQueryBase + dlcs;
@@ -189,7 +218,9 @@ export async function generateManifestsForInputFile(
             : manualMetadata;
         }
         if (metadata) {
-          label = getTitleLabel(metadata);
+          label = itemLabel
+            ? toInternationalString(itemLabel)
+            : getTitleLabel(metadata);
         }
         if (metadata && label) {
           const finalMetadata = metadata;
@@ -268,7 +299,7 @@ export async function generateManifestsForInputFile(
   }
 
   console.log(
-    `Done ${inputPath}: ${stats.items} items, ${stats.processed} manifests processed, ${stats.skipped} skipped, ${stats.errors} errors.`,
+    `Done ${inputPath}: ${stats.items} items, ${stats.processed} manifests processed, ${stats.skipped} skipped (${stats.skippedByConfig} by config), ${stats.errors} errors.`,
   );
 
   return stats;

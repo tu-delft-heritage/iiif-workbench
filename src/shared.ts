@@ -1,14 +1,14 @@
 import { objectLabels } from "./settings.ts";
-import yaml from "js-yaml";
 import {
   mkdir,
   readFile,
   rm,
   writeFile,
 } from "node:fs/promises";
+import { stringify } from "yaml";
 import { fetchOclcMetadata } from "./oclc.ts";
 
-import type { MetadataValues } from "./input.ts";
+import type { LanguageValue, MetadataValues } from "./input.ts";
 import type {
   InternationalString,
   Manifest,
@@ -180,7 +180,7 @@ export function listKeysAndTypes(
 }
 
 export async function saveYaml(pathWithFilename: string, json: unknown) {
-  const yamlString = yaml.dump(json);
+  const yamlString = stringify(json, { lineWidth: 0 });
   await writeFile(pathWithFilename, yamlString);
 }
 
@@ -221,18 +221,22 @@ export async function clearOrCreateOutputDir(outputDir: string) {
   await mkdir(outputDir, { recursive: true });
 }
 
+export function toInternationalString(value: LanguageValue) {
+  const internationalString: InternationalString = {};
+  for (const [lang, langValue] of Object.entries(value)) {
+    internationalString[lang] = toArray(langValue).map(String);
+  }
+  return internationalString;
+}
+
 export function buildManualMetadata(props: MetadataValues): MetadataItem[] {
   const metadata: MetadataItem[] = [];
   for (const [key, label] of Object.entries(objectLabels)) {
     const value = props[key];
     if (value) {
-      const parsedValue: InternationalString = {};
-      for (const lang in value) {
-        parsedValue[lang] = toArray(value[lang]).map(String);
-      }
       metadata.push({
         label,
-        value: parsedValue,
+        value: toInternationalString(value),
       });
     }
   }

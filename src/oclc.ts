@@ -7,6 +7,7 @@ import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
 
 type SuccessResponse =
   paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];
+export type OclcMetadataResponse = SuccessResponse;
 
 const worldCatBaseUrl = "https://tudelft.on.worldcat.org/oclc/";
 let accessToken: string | undefined = undefined;
@@ -57,6 +58,16 @@ export async function fetchOclcMetadata(oclcNumber: number) {
       path: { oclcNumber },
     },
   });
+}
+
+export function getOclcTitles(response: OclcMetadataResponse) {
+  return (response.title?.mainTitles ?? [])
+    .map((item) => item.text?.trim())
+    .filter((title): title is string => Boolean(title));
+}
+
+export function getFirstOclcTitle(responses: OclcMetadataResponse[]) {
+  return responses.flatMap(getOclcTitles)[0];
 }
 
 export type OclcMetadataOptions = {
@@ -223,13 +234,7 @@ function collectOclcMetadata(
     if (identifier) {
       data.oclcLinks.push(`<a href="${worldCatUrl}">${identifier}</a>`);
     }
-    if (response.title?.mainTitles) {
-      response.title.mainTitles.forEach((item) => {
-        if (item.text) {
-          data.titles.push(item.text);
-        }
-      });
-    }
+    data.titles.push(...getOclcTitles(response));
     // Alternative: response.contributor.statementOfResponsibility
     if (response.contributor?.creators) {
       response.contributor.creators.forEach((item) => {

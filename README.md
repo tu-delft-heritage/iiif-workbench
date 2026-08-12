@@ -18,6 +18,7 @@ To run:
 
 ```bash
 pnpm start -- input/tu-lib-tresor.yml
+pnpm start -- generate input/tu-lib-tresor.yml
 ```
 
 You can process one or more input files:
@@ -75,6 +76,22 @@ oclc:
   - 842552167
 ```
 
+An item can be marked as intentionally skipped. Skipped items are reported by
+the CLI and are not used to generate manifests:
+
+```yaml
+skip: true
+comment: No OCLC number
+```
+
+Use item-level `label` to override the manifest label while keeping full OCLC
+title metadata intact:
+
+```yaml
+oclc: 842525508
+label: Short display title
+```
+
 OCLC metadata fields without values are omitted. To skip a generated OCLC
 metadata field, use the English or Dutch IIIF metadata label:
 
@@ -99,6 +116,20 @@ To add missing GUIDs:
 
 ```bash
 pnpm run add-guids -- input/tu-lib-tresor.yml
+pnpm start -- add-guids input/tu-lib-tresor.yml
+pnpm start -- add-guids input/tu-lib-tresor.yml --write
+```
+
+Input-editing commands are dry runs unless `--write` is provided. They preserve
+YAML comments when writing. Items marked with `skip: true` are ignored unless
+`--include-skipped` is provided.
+
+To add item labels from OCLC titles:
+
+```bash
+pnpm start -- add-oclc-labels input/tu-lib-tresor-piranesi.yml
+pnpm start -- add-oclc-labels input/tu-lib-tresor-piranesi.yml --write
+pnpm start -- add-oclc-labels input/tu-lib-tresor-piranesi.yml --overwrite --write
 ```
 
 To typecheck:

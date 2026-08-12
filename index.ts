@@ -45,11 +45,11 @@ program
 
 addGenerateOptions(program)
   .argument("[files...]", "input YAML file(s) to process")
-  .action((files: string[], cliOptions: CliOptions) => {
+  .action((files: string[], _cliOptions: CliOptions, command: Command) => {
     if (!files.length) {
       program.help();
     }
-    return runGenerateCli(files, cliOptions);
+    return runGenerateCli(files, command.optsWithGlobals() as CliOptions);
   });
 
 addGenerateOptions(
@@ -57,8 +57,8 @@ addGenerateOptions(
     .command("generate")
     .description("Generate IIIF manifests from input YAML files.")
     .argument("<files...>", "input YAML file(s) to process"),
-).action((files: string[], cliOptions: CliOptions) =>
-  runGenerateCli(files, cliOptions),
+).action((files: string[], _cliOptions: CliOptions, command: Command) =>
+  runGenerateCli(files, command.optsWithGlobals() as CliOptions),
 );
 
 addInputEditOptions(
@@ -77,8 +77,16 @@ addInputEditOptions(
     .argument("<files...>", "input YAML file(s) to update")
     .option("--no-cache", "disable OCLC cache reads and writes")
     .option("--overwrite", "replace existing item labels"),
-).action((files: string[], cliOptions: AddOclcLabelsCliOptions) =>
-  runAddOclcLabelsCli(files, cliOptions),
+).action(
+  (
+    files: string[],
+    _cliOptions: AddOclcLabelsCliOptions,
+    command: Command,
+  ) =>
+    runAddOclcLabelsCli(
+      files,
+      command.optsWithGlobals() as AddOclcLabelsCliOptions,
+    ),
 );
 
 await program.parseAsync(normalizeProcessArgv(process.argv));

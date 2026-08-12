@@ -6,7 +6,7 @@ export const dlcsQueryBase = `https://dlc.services/iiif-resource/v3/7/string1str
 export const outputDirBase = "output/dlcs";
 
 export const objectLabels = {
-  label: {
+  title: {
     en: ["Title"],
     nl: ["Titel"],
   },
@@ -14,9 +14,13 @@ export const objectLabels = {
     en: ["Maker"],
     nl: ["Maker"],
   },
+  author: {
+    en: ["Author"],
+    nl: ["Auteur"]
+  },
   publisher: {
-    en: ["Publisher"],
-    nl: ["Uitgever"],
+    en: ["Publication"],
+    nl: ["Publicatie"],
   },
   collection: {
     en: ["Archive"],
@@ -31,16 +35,20 @@ export const objectLabels = {
     nl: ["Jaar"],
   },
   format: {
-    en: ["Format"],
-    nl: ["Formaat"],
+    en: ["Object name"],
+    nl: ["Objectnaam"],
   },
   description: {
     en: ["Description"],
     nl: ["Beschrijving"],
   },
+  physical_description: {
+    en: ["Physical description"],
+    nl: ["Fysieke beschrijving"],
+  },
   notes: {
     en: ["Notes"],
-    nl: ["Noot"],
+    nl: ["Opmerkingen"],
   },
   rights: {
     en: ["Rights"],
@@ -53,6 +61,10 @@ export const objectLabels = {
   inventory_number: {
     en: ["Inventory number"],
     nl: ["Inventarisnummer"],
+  },
+  shelf_number: {
+    en: ["Shelf number"],
+    nl: ["Plaatsnummer"]
   },
   permalink: {
     en: ["Permalink"],

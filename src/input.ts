@@ -2,6 +2,7 @@ import { readFile } from "node:fs/promises";
 import { parse } from "yaml";
 import { z } from "zod";
 import { writer } from "./log.ts";
+import { formatMetadataKeys, isMetadataKey } from "./metadata.ts";
 
 const scalarSchema = z.union([z.string(), z.number()]);
 const scalarOrArraySchema = z.union([scalarSchema, z.array(scalarSchema)]);
@@ -20,7 +21,24 @@ export const languageValueSchema = z
     return value;
   });
 
-export const metadataValuesSchema = z.record(z.string(), languageValueSchema);
+export const metadataValuesSchema = z
+  .record(z.string(), languageValueSchema)
+  .superRefine((metadataValues, ctx) => {
+    for (const key of Object.keys(metadataValues)) {
+      if (!isMetadataKey(key)) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: `Unknown metadata slug "${key}". Expected one of: ${formatMetadataKeys()}`,
+          path: [key],
+        });
+      }
+    }
+  });
+
+const collectionMetadataValuesSchema = z.record(
+  z.string(),
+  languageValueSchema,
+);
 
 const oclcNumberSchema = z.union([
   z.number().int().positive(),
@@ -41,10 +59,16 @@ const oclcSchema = z
     return Array.isArray(value) ? value : [value];
   });
 
-const metadataLabelSchema = z.string().trim().min(1);
+const metadataSlugSchema = z
+  .string()
+  .trim()
+  .min(1)
+  .refine(isMetadataKey, {
+    message: `Expected one of: ${formatMetadataKeys()}`,
+  });
 
-const metadataLabelsSchema = z
-  .union([metadataLabelSchema, z.array(metadataLabelSchema).nonempty()])
+const metadataSlugsSchema = z
+  .union([metadataSlugSchema, z.array(metadataSlugSchema).nonempty()])
   .transform((value) => (Array.isArray(value) ? value : [value]));
 
 const commentSchema = z.union([z.string(), z.array(z.string()).nonempty()]);
@@ -57,7 +81,7 @@ const collectionSchema = z
     dlcs: z.record(z.string(), z.unknown()).optional(),
     label: languageValueSchema.optional(),
     summary: languageValueSchema.optional(),
-    metadata: metadataValuesSchema.optional(),
+    metadata: collectionMetadataValuesSchema.optional(),
   })
   .passthrough();
 
@@ -69,7 +93,7 @@ const itemSchema = z
     label: languageValueSchema.optional(),
     oclc: oclcSchema.optional(),
     metadata: metadataValuesSchema.optional(),
-    skipMetadata: metadataLabelsSchema.optional(),
+    skipMetadata: metadataSlugsSchema.optional(),
     comment: commentSchema.optional(),
     skip: z.boolean().optional(),
     "first-canvas": z.number().int().nonnegative().optional(),

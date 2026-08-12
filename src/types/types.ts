@@ -3,6 +3,10 @@ export type {
   LanguageValue,
   MetadataValues,
 } from "../input.ts";
+export type {
+  MetadataKey,
+  MetadataValueMap,
+} from "../metadata.ts";
 
 export type IIIFImageInformation = {
   "@context": string;

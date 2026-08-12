@@ -1,9 +1,11 @@
 import createClient, { type Middleware } from "openapi-fetch";
 import { writer } from "./log.ts";
-import { formats } from "./formats.ts";
+import { formatLabels } from "./formats.ts";
+import { hasMetadataValue, isMetadataKey } from "./metadata.ts";
 
 import type { paths } from "./types/openapi-schema.ts";
-import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
+import type { InternationalString } from "@iiif/presentation-3";
+import type { MetadataKey, MetadataValueMap } from "./metadata.ts";
 
 type SuccessResponse =
   paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];
@@ -74,149 +76,62 @@ export type OclcMetadataOptions = {
   skipMetadata?: string[];
 };
 
-type OclcMetadataData = {
-  shelfNumber: string;
-  oclcLinks: string[];
-  titles: string[];
-  contributors: string[];
-  publishers: string[];
-  years: string[];
-  objectName?: InternationalString;
-  descriptions: string[];
-  notes: string[];
-};
-
-type OclcMetadataField = {
-  label:
-    | InternationalString
-    | ((data: OclcMetadataData) => InternationalString);
-  getValue: (data: OclcMetadataData) => InternationalString | undefined;
-};
-
-function createLabel(en: string, nl: string): InternationalString {
-  return {
-    en: [en],
-    nl: [nl],
-  };
-}
+type OclcMetadataSourceValue =
+  | string[]
+  | InternationalString
+  | undefined;
 
 function createMetadataValue(
   values: string[],
-  options: { unique?: boolean } = {},
 ): InternationalString | undefined {
   const cleanedValues = values.map((value) => value.trim()).filter(Boolean);
-  const finalValues = options.unique
-    ? [...new Set(cleanedValues)]
-    : cleanedValues;
+  const uniqueValues = [...new Set(cleanedValues)];
 
-  if (!finalValues.length) {
+  if (!uniqueValues.length) {
     return undefined;
   }
 
-  return { none: finalValues };
+  return { none: uniqueValues };
 }
 
-function hasMetadataValue(
-  value: InternationalString | undefined,
-): value is InternationalString {
-  return Boolean(
-    value &&
-      Object.values(value).some((values) =>
-        values?.some((item) => item.trim()),
-      ),
-  );
+function createSkippedMetadataKeySet(keys: string[] | undefined) {
+  return new Set(keys?.filter(isMetadataKey));
 }
 
-function getMetadataLabelValues(label: InternationalString) {
-  return Object.values(label)
-    .flat()
-    .filter((value): value is string => Boolean(value));
+function toMetadataValue(value: OclcMetadataSourceValue) {
+  return Array.isArray(value) ? createMetadataValue(value) : value;
 }
 
-function normalizeMetadataLabel(label: string) {
-  return label.trim().toLowerCase();
-}
-
-function createSkippedMetadataLabelSet(labels: string[] | undefined) {
-  return new Set(labels?.map(normalizeMetadataLabel));
-}
-
-function shouldSkipMetadataItem(
-  label: InternationalString,
-  skippedLabels: Set<string>,
+function getOclcMetadataEntries(
+  metadataValues: Partial<Record<MetadataKey, OclcMetadataSourceValue>>,
 ) {
-  return getMetadataLabelValues(label).some((value) =>
-    skippedLabels.has(normalizeMetadataLabel(value)),
-  );
+  return Object.entries(metadataValues) as [
+    MetadataKey,
+    OclcMetadataSourceValue,
+  ][];
 }
-
-const oclcMetadataFields: OclcMetadataField[] = [
-  {
-    label: createLabel("Title", "Titel"),
-    getValue: (data) => createMetadataValue(data.titles),
-  },
-  {
-    label: (data) =>
-      createLabel(
-        data.contributors.length <= 1 ? "Author" : "Authors",
-        data.contributors.length <= 1 ? "Auteur" : "Auteurs",
-      ),
-    getValue: (data) =>
-      createMetadataValue(data.contributors, { unique: true }),
-  },
-  {
-    label: createLabel("Publication", "Publicatie"),
-    getValue: (data) => createMetadataValue(data.publishers, { unique: true }),
-  },
-  {
-    label: createLabel("Year", "Jaar"),
-    getValue: (data) => createMetadataValue(data.years, { unique: true }),
-  },
-  {
-    label: createLabel("Object name", "Objectnaam"),
-    getValue: (data) => data.objectName,
-  },
-  {
-    label: createLabel("Physical description", "Fysieke beschrijving"),
-    getValue: (data) => createMetadataValue(data.descriptions),
-  },
-  {
-    label: createLabel("Notes", "Opmerkingen"),
-    getValue: (data) => createMetadataValue(data.notes),
-  },
-  {
-    label: (data) =>
-      createLabel(
-        data.oclcLinks.length <= 1 ? "OCLC number" : "OCLC numbers",
-        data.oclcLinks.length <= 1 ? "OCLC nummer" : "OCLC nummers",
-      ),
-    getValue: (data) => createMetadataValue(data.oclcLinks),
-  },
-  {
-    label: createLabel("Shelf number", "Plaatsnummer"),
-    getValue: (data) =>
-      createMetadataValue([data.shelfNumber.replaceAll("-", " ")]),
-  },
-];
 
 function getWorldCatUrl(identifier: number | string | undefined) {
   return identifier ? `${worldCatBaseUrl}${identifier}` : worldCatBaseUrl;
 }
 
-function collectOclcMetadata(
+export function buildOclcMetadataValues(
   responses: SuccessResponse[],
   shelfNumber: string,
-): OclcMetadataData {
-  const data: OclcMetadataData = {
-    shelfNumber,
-    oclcLinks: [],
-    titles: [],
-    contributors: [],
-    publishers: [],
-    years: [],
-    descriptions: [],
-    notes: [],
-  };
+  options: OclcMetadataOptions = {},
+): MetadataValueMap {
+  const skippedKeys = createSkippedMetadataKeySet(options.skipMetadata);
+  const oclcMetadataValues = {
+    title: [] as string[],
+    author: [] as string[],
+    publisher: [] as string[],
+    year: [] as string[],
+    format: undefined as InternationalString | undefined,
+    physical_description: [] as string[],
+    notes: [] as string[],
+    oclc_number: [] as string[],
+    shelf_number: [shelfNumber.replaceAll("-", " ")],
+  } satisfies Partial<Record<MetadataKey, OclcMetadataSourceValue>>;
 
   if (responses.length > 1) {
     const urls = responses
@@ -232,9 +147,11 @@ function collectOclcMetadata(
     const identifier = response.identifier?.oclcNumber;
     const worldCatUrl = getWorldCatUrl(identifier);
     if (identifier) {
-      data.oclcLinks.push(`<a href="${worldCatUrl}">${identifier}</a>`);
+      oclcMetadataValues.oclc_number.push(
+        `<a href="${worldCatUrl}">${identifier}</a>`,
+      );
     }
-    data.titles.push(...getOclcTitles(response));
+    oclcMetadataValues.title.push(...getOclcTitles(response));
     // Alternative: response.contributor.statementOfResponsibility
     if (response.contributor?.creators) {
       response.contributor.creators.forEach((item) => {
@@ -258,7 +175,7 @@ function collectOclcMetadata(
           name = name.concat(" (", item.creatorNotes.join(", "), ")");
         }
         if (name) {
-          data.contributors.push(name);
+          oclcMetadataValues.author.push(name);
         }
       });
     } else {
@@ -271,13 +188,13 @@ function collectOclcMetadata(
           item.publicationPlace,
         ].filter(Boolean);
         if (publication.length) {
-          data.publishers.push(publication.join(", "));
+          oclcMetadataValues.publisher.push(publication.join(", "));
         }
       });
     }
     if (response.date?.publicationDate) {
       const content = response.date.publicationDate;
-      data.years.push(content);
+      oclcMetadataValues.year.push(content);
       if (content.length < 4 || content.includes("?")) {
         writer.write(
           `${shelfNumber} heeft als jaartal "${content}" (${worldCatUrl})\n`,
@@ -288,14 +205,14 @@ function collectOclcMetadata(
       const content = response.description.summaries
         .map((item) => item.text)
         .filter((item): item is string => Boolean(item));
-      data.descriptions.push(...content);
+      oclcMetadataValues.physical_description.push(...content);
     }
     // Sometimes physicalDescription can be found in bibliographies property
     if (response.description?.bibliographies) {
       const content = response.description.bibliographies
         .map((item) => item.text)
         .filter((item): item is string => Boolean(item));
-      data.descriptions.push(...content);
+      oclcMetadataValues.physical_description.push(...content);
       writer.write(
         `${shelfNumber} bevat de volgende informatie onder "Bibliografieën": "${content.join(
           ", ",
@@ -303,7 +220,9 @@ function collectOclcMetadata(
       );
     }
     if (response.description?.physicalDescription) {
-      data.descriptions.push(response.description.physicalDescription);
+      oclcMetadataValues.physical_description.push(
+        response.description.physicalDescription,
+      );
     }
     if (response.description?.contents) {
       writer.write(
@@ -314,15 +233,17 @@ function collectOclcMetadata(
     if (response.note?.generalNotes) {
       response.note.generalNotes.forEach((item) => {
         if (item.text) {
-          data.notes.push(item.text);
+          oclcMetadataValues.notes.push(item.text);
         }
       });
     }
     if (response.format?.generalFormat) {
       const parsedFormat =
-        formats[response.format.generalFormat as keyof typeof formats];
+        formatLabels[
+          response.format.generalFormat as keyof typeof formatLabels
+        ];
       if (parsedFormat) {
-        data.objectName = parsedFormat;
+        oclcMetadataValues.format = parsedFormat;
       } else {
         writer.write(
           `${shelfNumber} heeft een onbekend formaat "${response.format.generalFormat}" (${worldCatUrl})\n`,
@@ -331,29 +252,12 @@ function collectOclcMetadata(
     }
   }
 
-  return data;
-}
-
-export function buildOclcMetadata(
-  responses: SuccessResponse[],
-  shelfNumber: string,
-  options: OclcMetadataOptions = {},
-): MetadataItem[] {
-  const data = collectOclcMetadata(responses, shelfNumber);
-  const skippedLabels = createSkippedMetadataLabelSet(options.skipMetadata);
-
-  return oclcMetadataFields.flatMap((field) => {
-    const label =
-      typeof field.label === "function" ? field.label(data) : field.label;
-    const value = field.getValue(data);
-
-    if (
-      !hasMetadataValue(value) ||
-      shouldSkipMetadataItem(label, skippedLabels)
-    ) {
-      return [];
-    }
-
-    return [{ label, value }];
-  });
+  return Object.fromEntries(
+    getOclcMetadataEntries(oclcMetadataValues)
+      .filter(([key]) => !skippedKeys.has(key))
+      .map(([key, value]) => [key, toMetadataValue(value)] as const)
+      .filter((entry): entry is [MetadataKey, InternationalString] =>
+        hasMetadataValue(entry[1]),
+      ),
+  ) as MetadataValueMap;
 }

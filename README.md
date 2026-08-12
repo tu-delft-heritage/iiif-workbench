@@ -85,7 +85,8 @@ comment: No OCLC number
 ```
 
 Use item-level `label` to override the manifest label while keeping full OCLC
-title metadata intact:
+title metadata intact. If `label` is missing, the manifest label falls back to
+metadata `title`:
 
 ```yaml
 oclc: 842525508
@@ -93,23 +94,26 @@ label: Short display title
 ```
 
 OCLC metadata fields without values are omitted. To skip a generated OCLC
-metadata field, use the English or Dutch IIIF metadata label:
+metadata field, use the metadata slug from `objectLabels`:
 
 ```yaml
-skipMetadata: Notes
+skipMetadata: notes
 skipMetadata:
-  - Physical description
-  - Notes
+  - physical_description
+  - notes
 ```
 
-Items can combine OCLC metadata with additional custom metadata. Custom metadata
-is appended after the generated OCLC fields:
+Items can combine OCLC metadata with additional custom metadata. Final metadata
+order follows `objectLabels` in `src/settings.ts`. Custom metadata is applied
+after generated OCLC fields, so a matching slug overrides the OCLC value:
 
 ```yaml
 oclc: 842525508
 metadata:
-  notes:
-    en: Additional local note
+  title:
+    en: Manually corrected full title
+  author:
+    none: Manually corrected author
 ```
 
 To add missing GUIDs:

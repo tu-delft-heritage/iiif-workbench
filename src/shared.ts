@@ -1,4 +1,3 @@
-import { objectLabels } from "./settings.ts";
 import {
   mkdir,
   readFile,
@@ -8,12 +7,7 @@ import {
 import { stringify } from "yaml";
 import { fetchOclcMetadata } from "./oclc.ts";
 
-import type { LanguageValue, MetadataValues } from "./input.ts";
-import type {
-  InternationalString,
-  Manifest,
-  MetadataItem,
-} from "@iiif/presentation-3";
+import type { Manifest } from "@iiif/presentation-3";
 
 export function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -27,14 +21,6 @@ export async function fetchJson(url: string) {
     );
   }
   return response.json();
-}
-
-export function toArray<T>(input: T | T[]) {
-  if (Array.isArray(input)) {
-    return input;
-  } else {
-    return [input];
-  }
 }
 
 function isNoEntry(error: unknown) {
@@ -219,30 +205,4 @@ export function cleanManifest(manifest: Manifest) {
 export async function clearOrCreateOutputDir(outputDir: string) {
   await rm(outputDir, { recursive: true, force: true });
   await mkdir(outputDir, { recursive: true });
-}
-
-export function toInternationalString(value: LanguageValue) {
-  const internationalString: InternationalString = {};
-  for (const [lang, langValue] of Object.entries(value)) {
-    internationalString[lang] = toArray(langValue).map(String);
-  }
-  return internationalString;
-}
-
-export function buildManualMetadata(props: MetadataValues): MetadataItem[] {
-  const metadata: MetadataItem[] = [];
-  for (const [key, label] of Object.entries(objectLabels)) {
-    const value = props[key];
-    if (value) {
-      metadata.push({
-        label,
-        value: toInternationalString(value),
-      });
-    }
-  }
-  return metadata;
-}
-
-export function getTitleLabel(metadata: MetadataItem[]) {
-  return metadata.find(({ label }) => label?.en?.[0] === "Title")?.value;
 }

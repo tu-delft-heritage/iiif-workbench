@@ -6,13 +6,16 @@ import {
   cleanManifest,
   clearOrCreateOutputDir,
   fetchOclcMetadataWithCache,
-  buildManualMetadata,
-  getTitleLabel,
   saveYaml,
-  toInternationalString,
 } from "./shared.ts";
+import {
+  buildManualMetadataValues,
+  buildMetadataItems,
+  getTitleMetadataValue,
+  toInternationalString,
+} from "./metadata.ts";
 import { loadYaml } from "./input.ts";
-import { buildOclcMetadata } from "./oclc.ts";
+import { buildOclcMetadataValues } from "./oclc.ts";
 import { dlcsQueryBase, outputDirBase } from "./settings.ts";
 
 import type {
@@ -21,6 +24,7 @@ import type {
   MetadataItem,
 } from "@iiif/presentation-3";
 import type { InputConfig } from "./input.ts";
+import type { MetadataValueMap } from "./metadata.ts";
 
 export type CacheOptions = {
   read: boolean;
@@ -197,9 +201,12 @@ export async function generateManifestsForInputFile(
         let metadata: MetadataItem[] | undefined = undefined;
         let label: InternationalString | undefined = undefined;
         let oclcNumbersForFilename: number[] | undefined = undefined;
+        let metadataValuesBySlug: MetadataValueMap = {};
         if (oclcNumbers && shelfNumber) {
           oclcNumbersForFilename = oclcNumbers;
-          const oclcResponses: Parameters<typeof buildOclcMetadata>[0] = [];
+          const oclcResponses: Parameters<
+            typeof buildOclcMetadataValues
+          >[0] = [];
           for (const number of oclcNumbersForFilename) {
             const response = await fetchOclcMetadataWithCache(
               number,
@@ -207,22 +214,27 @@ export async function generateManifestsForInputFile(
             );
             oclcResponses.push(response);
           }
-          metadata = buildOclcMetadata(oclcResponses, shelfNumber, {
-            skipMetadata,
-          });
+          metadataValuesBySlug = buildOclcMetadataValues(
+            oclcResponses,
+            shelfNumber,
+            {
+              skipMetadata,
+            },
+          );
         }
         if (metadataValues) {
-          const manualMetadata = buildManualMetadata(metadataValues);
-          metadata = metadata
-            ? [...metadata, ...manualMetadata]
-            : manualMetadata;
+          metadataValuesBySlug = {
+            ...metadataValuesBySlug,
+            ...buildManualMetadataValues(metadataValues),
+          };
         }
-        if (metadata) {
+        metadata = buildMetadataItems(metadataValuesBySlug);
+        if (metadata.length) {
           label = itemLabel
             ? toInternationalString(itemLabel)
-            : getTitleLabel(metadata);
+            : getTitleMetadataValue(metadataValuesBySlug);
         }
-        if (metadata && label) {
+        if (metadata.length && label) {
           const finalMetadata = metadata;
           const finalLabel = label;
           const normalizedManifest = builder.editManifest(

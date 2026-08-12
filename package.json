@@ -5,7 +5,7 @@
     "iiif-workbench": "./index.ts"
   },
   "scripts": {
-    "start": "node index.ts",
+    "start": "node --env-file-if-exists=.env index.ts",
     "add-guids": "node scripts/add-guids.ts",
     "typecheck": "tsc --noEmit",
     "generate:types": "openapi-typescript ./src/types/openapi-schema.yml -o ./src/types/openapi-schema.ts"

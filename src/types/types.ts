@@ -10,10 +10,6 @@ export type CollectionDescription = {
   collection: {
     guid?: string;
     output?: string;
-    prefix?: string;
-    dlcs?: {
-      space?: string;
-    };
     label?: LanguageValue;
     summary?: LanguageValue;
     metadata?: MetadataValues;

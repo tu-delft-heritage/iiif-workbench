@@ -29,10 +29,12 @@ items:
     tresor: TRG 9413 G 06
     dlcs: piranesi/TRG-9413-G06
     oclc: 842546045
-  # - tresor: "2003"
-  #   dlcs: piranesi/2003
-  #   oclc:
-  # # Niet Piranesi
-  # - tresor: "2010"
-  #   dlcs: piranesi/2010
-  #   oclc:
+  - tresor: "2003"
+    skip: true
+    dlcs: piranesi/2003
+    oclc:
+  - tresor: "2010"
+    skip: true
+    comment: "Niet piranesi"
+    dlcs: piranesi/2010
+    oclc:

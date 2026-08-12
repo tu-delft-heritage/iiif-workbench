@@ -217,12 +217,12 @@ items:
         canvas: 0
         year:
           - 1871
-  - # New images were added in second batch
-    guid: d25ec23d-c066-4e0c-9e1c-bc9055f6f9d6
+  - guid: d25ec23d-c066-4e0c-9e1c-bc9055f6f9d6
     tresor: TRG-9301-K-01
     dlcs: reuzenarbeid/TRG-9301-K-01
     oclc:
       - 1299148289
+    comment: 'New images were added in second batch'
     first-canvas: 160
     projects:
       - project: Verbetering kanaal Gent naar Terneuzen
@@ -441,14 +441,14 @@ items:
           - 1884
           - 1885
           - 1888
-  - # New images added in second batch
-    guid: f62ba576-bc42-4b05-ab70-10d0c4045478
+  - guid: f62ba576-bc42-4b05-ab70-10d0c4045478
     tresor: TRG-9302-M-01
     dlcs: reuzenarbeid/TRG-9302-M-01
     oclc:
       - 1237803161
       - 1237803643
     first-canvas: 323
+    comment: "New images added in second batch"
     projects:
       - project: Kanaalgedeelte Schotdeuren - Gorichem
         photographers: Johann Georg Hameter

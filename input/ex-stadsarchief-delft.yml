@@ -18,7 +18,7 @@ items:
         none: 2008
   - guid: 724bde77-94b0-4935-941f-e08d8d09ae24
     dlcs: kaarten
-    # Todo: change string1 value
+    comment: "Todo: change string1 value"
     metadata:
       label:
         en: City plan of Delft and extension plans for the Wippolder, 1900-1921

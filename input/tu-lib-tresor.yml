@@ -12,10 +12,10 @@ items:
   # Existing objects from erfgoed.tudelft.nl
   - guid: 2df6729c-3f9a-476f-8b6f-464f0ec12e2d
     tresor: TRT-784
-    # Todo: patch DLCS properties
     dlcs: MMAD01
     oclc:
       - 845604339
+    comment: "Todo: patch DLCS properties"
   - guid: 4542a96a-c8ec-4d66-abf7-45d9b4813ba5
     tresor: TR-3057129
     dlcs: 841717187
@@ -34,10 +34,10 @@ items:
       - 840592995
   - guid: 010d6983-2f27-48d7-baa7-ec15d14c4826
     tresor: Tresorleeszaal
-    # Fout in creatorNotes
     dlcs: 64319573
     oclc:
       - 64319573
+    comment: "Fout in creatorNotes"
   - guid: b64f4ae1-53d7-4e21-820e-e4284f102e60
     tresor: Tresorleeszaal
     dlcs: 838925847
@@ -65,22 +65,20 @@ items:
       - 72665213
   - guid: 477d11d1-4add-49da-8f48-8cee06f08dd9
     tresor: Tresorleeszaal
-    # Fout in creatorNotes
-    # description > summaries
-    # description > bibliographies
     dlcs: 68976673
     oclc:
       - 68976673
+    comment: "Fout in creatorNotes"
   - guid: 8af31150-db5c-4c54-bd34-da15e91be8d6
     tresor: TR 540202
     dlcs: TR-540202
     oclc:
       - 841756583
-  # Metadata niet correct
-  # - tresor: TRK 9209204
-  #   dlcs: trk-9209204
-  #   oclc: [842545703]
-
+  - tresor: TRK 9209204
+    dlcs: trk-9209204
+    oclc: [842545703]
+    comment: "Metadata niet correct"
+    skip: true
   # Fotoalbums
   - guid: dceb23dd-d9b3-4724-bdc6-d59232fd805f
     tresor: TRK 9811201
@@ -138,20 +136,22 @@ items:
     dlcs: trk-9812103
     oclc:
       - 842530782
-  # No OCLC number
-  # - tresor: TRL 9.3
-  #   dlcs: trl-9.3
-  #   metadata:
-  #     label:
-  #       nl: Kaarten en tekeningen van de Pekalenwerken in Nederlands-Indië
+  - tresor: TRL 9.3
+    dlcs: trl-9.3
+    metadata:
+      label:
+        nl: Kaarten en tekeningen van de Pekalenwerken in Nederlands-Indië
+    skip: true
+    comment: "No OCLC number"
 
   # Kaartenproject 2008
-  # New version below
-  # - guid: 43982d23-1cf9-42ad-8fdb-d933338b20c2
-  #   tresor: TR 514425
-  #   dlcs: tr-514425
-  #   oclc:
-  #     - 842524767
+  - guid: 43982d23-1cf9-42ad-8fdb-d933338b20c2
+    tresor: TR 514425
+    dlcs: tr-514425
+    oclc:
+      - 842524767
+    skip: true,
+    comment: "New scan added below"
   - guid: 3320a95c-fdde-469a-87f0-54e4e7dda546
     tresor: TR 2984343
     dlcs: tr-2984343

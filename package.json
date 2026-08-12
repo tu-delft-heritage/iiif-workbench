@@ -1,6 +1,9 @@
 {
   "name": "iiif-workbench",
   "type": "module",
+  "bin": {
+    "iiif-workbench": "./index.ts"
+  },
   "scripts": {
     "start": "node index.ts",
     "add-guids": "node scripts/add-guids.ts",

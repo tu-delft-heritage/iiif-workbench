@@ -1,21 +1,40 @@
-import { selectFile, loadYml, saveYml } from "../src/shared.ts";
+#!/usr/bin/env node
+import { Command } from "commander";
 import { v4 } from "uuid";
+import { closeLog } from "../src/log.ts";
+import { loadYml, saveYml } from "../src/shared.ts";
 
-const path = await selectFile("input/*.yml");
-const yml = await loadYml(path);
+const program = new Command();
 
-// Adding missing guid to "start" of objects
-if (!yml.collection.guid) {
-  yml.collection = { guid: v4(), ...yml.collection };
-}
+program
+  .name("add-guids")
+  .description("Add missing collection and item GUIDs to input YAML files.")
+  .argument("<files...>", "input YAML file(s) to update")
+  .showHelpAfterError()
+  .action(async (files: string[]) => {
+    try {
+      for (const path of files) {
+        const yml = await loadYml(path);
 
-yml.items.forEach((object, index) => {
-  if (!object.guid) {
-    yml.items[index] = { guid: v4(), ...object };
-  }
-});
+        if (!yml.collection.guid) {
+          yml.collection = { guid: v4(), ...yml.collection };
+        }
 
-// Not overwriting existing file in order to preserve comments, etc
-const outputPath = path.replace(".yml", "-guids.yml");
+        yml.items.forEach((object, index) => {
+          if (!object.guid) {
+            yml.items[index] = { guid: v4(), ...object };
+          }
+        });
 
-await saveYml(outputPath, yml);
+        // Not overwriting existing file in order to preserve comments, etc.
+        const outputPath = path.replace(".yml", "-guids.yml");
+
+        await saveYml(outputPath, yml);
+        console.log(`Wrote ${outputPath}`);
+      }
+    } finally {
+      await closeLog();
+    }
+  });
+
+await program.parseAsync(process.argv);

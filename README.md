@@ -11,19 +11,43 @@ npm run generate:types
 To install dependencies:
 
 ```bash
-npm install
+pnpm install
 ```
 
 To run:
 
 ```bash
-npm start
+pnpm start -- input/tu-lib-tresor.yml
+```
+
+You can process one or more input files:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml input/tu-lib-tresor-piranesi.yml
+```
+
+Disable OCLC cache reads and writes:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml --no-cache
+```
+
+Run without clearing output folders or writing manifests, collection files, or new cache files:
+
+```bash
+pnpm start -- input/tu-lib-tresor.yml --dry-run
+```
+
+To add missing GUIDs:
+
+```bash
+pnpm run add-guids -- input/tu-lib-tresor.yml
 ```
 
 To typecheck:
 
 ```bash
-npm run typecheck
+pnpm run typecheck
 ```
 
 This project uses Node.js to run erasable TypeScript directly. Use Node.js 24.12.0 or newer.

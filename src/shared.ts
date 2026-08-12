@@ -4,12 +4,9 @@ import { writer } from "./log.ts";
 import {
   mkdir,
   readFile,
-  readdir,
   rm,
   writeFile,
 } from "node:fs/promises";
-import { createInterface } from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
 import { fetchOclcMetadata } from "./oclc.ts";
 
 import type { CollectionDescription, MetadataValues } from "./types/types.ts";
@@ -61,6 +58,25 @@ async function getCache(id: string, type: string) {
   }
 }
 
+type CacheOptions = {
+  read?: boolean;
+  write?: boolean;
+};
+
+function normalizeCacheOptions(options: boolean | CacheOptions = true) {
+  if (typeof options === "boolean") {
+    return {
+      read: options,
+      write: options,
+    };
+  }
+
+  return {
+    read: options.read ?? true,
+    write: options.write ?? true,
+  };
+}
+
 export async function saveJson(json: unknown, filename: string, path: string) {
   await mkdir(path, { recursive: true });
   return writeFile(`${path}/${filename}.json`, JSON.stringify(json, null, 4));
@@ -70,27 +86,31 @@ export async function fetchJsonWithCache(
   id: string,
   url: string,
   type: string,
-  useCache: boolean = true,
+  cacheOptions: boolean | CacheOptions = true,
 ) {
-  if (useCache) {
-    const cache = await getCache(id, type);
-    if (cache) {
-      return cache;
+  const cache = normalizeCacheOptions(cacheOptions);
+  if (cache.read) {
+    const cached = await getCache(id, type);
+    if (cached) {
+      return cached;
     }
   }
   const resp = await fetch(url).then((resp) => resp.json());
-  await saveJson(resp, id, `.cache/${type}/`);
+  if (cache.write) {
+    await saveJson(resp, id, `.cache/${type}/`);
+  }
   return resp;
 }
 
 export async function fetchOclcMetadataWithCache(
   oclcNumber: number,
-  useCache: boolean = true,
+  cacheOptions: boolean | CacheOptions = true,
 ) {
-  if (useCache) {
-    const cache = await getCache(oclcNumber.toString(), "oclc");
-    if (cache) {
-      return cache;
+  const cache = normalizeCacheOptions(cacheOptions);
+  if (cache.read) {
+    const cached = await getCache(oclcNumber.toString(), "oclc");
+    if (cached) {
+      return cached;
     }
   }
   const resp = await fetchOclcMetadata(oclcNumber);
@@ -98,7 +118,9 @@ export async function fetchOclcMetadataWithCache(
     const status = resp.response.status;
     throw new Error(`No OCLC metadata found for ${oclcNumber} (${status})`);
   }
-  await saveJson(resp.data, oclcNumber.toString(), ".cache/oclc/");
+  if (cache.write) {
+    await saveJson(resp.data, oclcNumber.toString(), ".cache/oclc/");
+  }
   return resp.data;
 }
 
@@ -156,53 +178,6 @@ export function listKeysAndTypes(
       )
       .join("\n");
   } else return keys.entries();
-}
-
-function globToRegExp(pattern: string) {
-  return new RegExp(
-    `^${pattern
-      .replaceAll(".", "\\.")
-      .replaceAll("*", ".*")
-      .replaceAll("?", ".")}$`,
-  );
-}
-
-export async function selectFile(globPattern: string) {
-  const pathParts = globPattern.split("/");
-  const filenamePattern = pathParts.pop();
-  const directory = pathParts.join("/") || ".";
-  if (!filenamePattern) {
-    throw new Error(`Invalid file pattern: ${globPattern}`);
-  }
-
-  const matcher = globToRegExp(filenamePattern);
-  const inputFiles = (await readdir(directory))
-    .filter((file) => matcher.test(file))
-    .sort();
-
-  if (inputFiles.length === 0) {
-    throw new Error("No input files found");
-  }
-
-  inputFiles.forEach((file, index) => {
-    console.log(`${index + 1}. ${file}`);
-  });
-
-  const rl = createInterface({ input, output });
-
-  try {
-    const answer = await rl.question("Select input file: ");
-    const selectedIndex = Number.parseInt(answer, 10) - 1;
-    const filename = inputFiles[selectedIndex];
-
-    if (!filename) {
-      throw new Error("Please select an input file");
-    }
-
-    return `${directory}/${filename}`;
-  } finally {
-    rl.close();
-  }
 }
 
 export async function loadYml(path: string) {

@@ -8,7 +8,7 @@ import type { InternationalString, MetadataItem } from "@iiif/presentation-3";
 type SuccessResponse =
   paths["/bibs/{oclcNumber}"]["get"]["responses"][200]["content"]["application/json"];
 
-const worldCatBase = "https://tudelft.on.worldcat.org/oclc/";
+const worldCatBaseUrl = "https://tudelft.on.worldcat.org/oclc/";
 let accessToken: string | undefined = undefined;
 
 async function getToken() {
@@ -59,18 +59,18 @@ export async function fetchOclcMetadata(oclcNumber: number) {
   });
 }
 
-export function processOclcMetadata(
-  respArray: SuccessResponse[],
+export function buildOclcMetadata(
+  responses: SuccessResponse[],
   shelfNumber: string,
 ): MetadataItem[] {
-  const oclcNumber: string[] = [];
-  const title: string[] = [];
-  const contributor: string[] = [];
-  const publisher: string[] = [];
-  const year: string[] = [];
-  const description: string[] = [];
+  const oclcLinks: string[] = [];
+  const titles: string[] = [];
+  const contributors: string[] = [];
+  const publishers: string[] = [];
+  const years: string[] = [];
+  const descriptions: string[] = [];
   const notes: string[] = [];
-  let format: InternationalString = { none: ["n/a"] };
+  let objectName: InternationalString = { none: ["n/a"] };
 
   // Todo: process language:
   //     "language": {
@@ -78,29 +78,31 @@ export function processOclcMetadata(
   //       "catalogingLanguage": "dut"
   //   },
 
-  if (respArray.length > 1) {
-    const urls = respArray.map((i) => worldCatBase + i.identifier?.oclcNumber);
+  if (responses.length > 1) {
+    const urls = responses.map(
+      (response) => worldCatBaseUrl + response.identifier?.oclcNumber,
+    );
     writer.write(
-      `${shelfNumber} heeft meerdere OCLC nummers (${urls.join(", ")})\n`
+      `${shelfNumber} heeft meerdere OCLC nummers (${urls.join(", ")})\n`,
     );
   }
 
-  for (const resp of respArray) {
-    const identifier = resp.identifier?.oclcNumber;
-    const url = worldCatBase + identifier;
+  for (const response of responses) {
+    const identifier = response.identifier?.oclcNumber;
+    const worldCatUrl = worldCatBaseUrl + identifier;
     if (identifier) {
-      oclcNumber.push(`<a href="${url}">${identifier}</a>`);
+      oclcLinks.push(`<a href="${worldCatUrl}">${identifier}</a>`);
     }
-    if (resp.title?.mainTitles) {
-      resp.title.mainTitles.forEach((item) => {
+    if (response.title?.mainTitles) {
+      response.title.mainTitles.forEach((item) => {
         if (item.text) {
-          title.push(item.text);
+          titles.push(item.text);
         }
       });
     }
-    // Alternative: resp.contributor.statementOfResponsibility
-    if (resp.contributor?.creators) {
-      resp.contributor.creators.forEach((item) => {
+    // Alternative: response.contributor.statementOfResponsibility
+    if (response.contributor?.creators) {
+      response.contributor.creators.forEach((item) => {
         let name: string | null = null;
         if (item.nonPersonName?.text) {
           name = item.nonPersonName?.text;
@@ -109,84 +111,86 @@ export function processOclcMetadata(
         } else if (item.firstName?.text) {
           name = item.firstName?.text;
           writer.write(
-            `${shelfNumber} heeft een auteur met alleen een voornaam (${url})\n`
+            `${shelfNumber} heeft een auteur met alleen een voornaam (${worldCatUrl})\n`,
           );
         } else if (item.secondName?.text) {
           name = item.secondName?.text;
           writer.write(
-            `${shelfNumber} heeft een auteur met alleen een achternaam (${url})\n`
+            `${shelfNumber} heeft een auteur met alleen een achternaam (${worldCatUrl})\n`,
           );
         }
         if (name && item.creatorNotes) {
           name = name.concat(" (", item.creatorNotes.join(", "), ")");
         }
         if (name) {
-          contributor.push(name);
+          contributors.push(name);
         }
       });
     } else {
-      writer.write(`${shelfNumber} heeft geen auteur (${url})\n`);
+      writer.write(`${shelfNumber} heeft geen auteur (${worldCatUrl})\n`);
     }
-    if (resp.publishers) {
-      resp.publishers.forEach((item) => {
+    if (response.publishers) {
+      response.publishers.forEach((item) => {
         const publication = [
           item.publisherName?.text,
           item.publicationPlace,
         ].filter(Boolean);
         if (publication.length) {
-          publisher.push(publication.join(", "));
+          publishers.push(publication.join(", "));
         }
       });
     }
-    if (resp.date?.publicationDate) {
-      const content = resp.date.publicationDate;
-      year.push(content);
+    if (response.date?.publicationDate) {
+      const content = response.date.publicationDate;
+      years.push(content);
       if (content.length < 4 || content.includes("?")) {
         writer.write(
-          `${shelfNumber} heeft als jaartal "${content}" (${url})\n`
+          `${shelfNumber} heeft als jaartal "${content}" (${worldCatUrl})\n`,
         );
       }
     }
-    if (resp.description?.summaries) {
-      const content = resp.description.summaries
+    if (response.description?.summaries) {
+      const content = response.description.summaries
         .map((item) => item.text)
         .filter((item): item is string => Boolean(item));
-      description.push(...content);
+      descriptions.push(...content);
     }
     // Sometimes physicalDescription can be found in bibliographies property
-    if (resp.description?.bibliographies) {
-      const content = resp.description.bibliographies
+    if (response.description?.bibliographies) {
+      const content = response.description.bibliographies
         .map((item) => item.text)
         .filter((item): item is string => Boolean(item));
-      description.push(...content);
+      descriptions.push(...content);
       writer.write(
         `${shelfNumber} bevat de volgende informatie onder "Bibliografieën": "${content.join(
-          ", "
-        )}" (${url})\n`
+          ", ",
+        )}" (${worldCatUrl})\n`,
       );
     }
-    if (resp.description?.physicalDescription) {
-      description.push(resp.description.physicalDescription);
+    if (response.description?.physicalDescription) {
+      descriptions.push(response.description.physicalDescription);
     }
-    if (resp.description?.contents) {
-      writer.write(`${shelfNumber} bevat informatie onder "Inhoud" (${url})\n`);
+    if (response.description?.contents) {
+      writer.write(
+        `${shelfNumber} bevat informatie onder "Inhoud" (${worldCatUrl})\n`,
+      );
     }
     // Contains references to other parts of the same volume
-    if (resp.note?.generalNotes) {
-      resp.note.generalNotes.forEach((item) => {
+    if (response.note?.generalNotes) {
+      response.note.generalNotes.forEach((item) => {
         if (item.text) {
           notes.push(item.text);
         }
       });
     }
-    if (resp.format?.generalFormat) {
+    if (response.format?.generalFormat) {
       const parsedFormat =
-        formats[resp.format.generalFormat as keyof typeof formats];
+        formats[response.format.generalFormat as keyof typeof formats];
       if (parsedFormat) {
-        format = parsedFormat;
+        objectName = parsedFormat;
       } else {
         writer.write(
-          `${shelfNumber} heeft een onbekend formaat "${resp.format.generalFormat}" (${url})\n`,
+          `${shelfNumber} heeft een onbekend formaat "${response.format.generalFormat}" (${worldCatUrl})\n`,
         );
       }
     }
@@ -198,42 +202,44 @@ export function processOclcMetadata(
         en: ["Title"],
         nl: ["Titel"],
       },
-      value: { none: title.length ? title : ["n/a"] },
+      value: { none: titles.length ? titles : ["n/a"] },
     },
     {
       label: {
-        en: contributor.length <= 1 ? ["Author"] : ["Authors"],
-        nl: contributor.length <= 1 ? ["Auteur"] : ["Auteurs"],
+        en: contributors.length <= 1 ? ["Author"] : ["Authors"],
+        nl: contributors.length <= 1 ? ["Auteur"] : ["Auteurs"],
       },
-      value: { none: contributor.length ? [...new Set(contributor)] : ["n/a"] },
+      value: {
+        none: contributors.length ? [...new Set(contributors)] : ["n/a"],
+      },
     },
     {
       label: {
         en: ["Publication"],
         nl: ["Publicatie"],
       },
-      value: { none: publisher.length ? [...new Set(publisher)] : ["n/a"] },
+      value: { none: publishers.length ? [...new Set(publishers)] : ["n/a"] },
     },
     {
       label: {
         en: ["Year"],
         nl: ["Jaar"],
       },
-      value: { none: year.length ? [...new Set(year)] : ["n/a"] },
+      value: { none: years.length ? [...new Set(years)] : ["n/a"] },
     },
     {
       label: {
         en: ["Object name"],
         nl: ["Objectnaam"],
       },
-      value: format,
+      value: objectName,
     },
     {
       label: {
         en: ["Physical description"],
         nl: ["Fysieke beschrijving"],
       },
-      value: { none: description.length ? description : ["n/a"] },
+      value: { none: descriptions.length ? descriptions : ["n/a"] },
     },
     {
       label: {
@@ -244,10 +250,10 @@ export function processOclcMetadata(
     },
     {
       label: {
-        en: oclcNumber.length <= 1 ? ["OCLC number"] : ["OCLC numbers"],
-        nl: oclcNumber.length <= 1 ? ["OCLC nummer"] : ["OCLC nummers"],
+        en: oclcLinks.length <= 1 ? ["OCLC number"] : ["OCLC numbers"],
+        nl: oclcLinks.length <= 1 ? ["OCLC nummer"] : ["OCLC nummers"],
       },
-      value: { none: oclcNumber.length ? oclcNumber : ["n/a"] },
+      value: { none: oclcLinks.length ? oclcLinks : ["n/a"] },
     },
     {
       label: { en: ["Shelf number"], nl: ["Plaatsnummer"] },

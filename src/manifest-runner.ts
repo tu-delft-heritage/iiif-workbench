@@ -6,12 +6,12 @@ import {
   cleanManifest,
   clearOrCreateOutputDir,
   fetchOclcMetadataWithCache,
-  parseMetadata,
-  getLabel,
-  saveYml,
+  buildManualMetadata,
+  getTitleLabel,
+  saveYaml,
 } from "./shared.ts";
-import { loadYml } from "./input.ts";
-import { processOclcMetadata } from "./oclc.ts";
+import { loadYaml } from "./input.ts";
+import { buildOclcMetadata } from "./oclc.ts";
 import { dlcsQueryBase, outputDirBase } from "./settings.ts";
 
 import type {
@@ -19,7 +19,7 @@ import type {
   Manifest,
   MetadataItem,
 } from "@iiif/presentation-3";
-import type { CollectionDescription } from "./input.ts";
+import type { InputConfig } from "./input.ts";
 
 export type CacheOptions = {
   read: boolean;
@@ -87,7 +87,7 @@ function slugify(value: string) {
 
 function getOutputFilename(
   shelfNumber: string | undefined,
-  parsedOclcNumbers: number[] | undefined,
+  oclcNumbers: number[] | undefined,
   guid: string | undefined,
   useGuidFilenames: boolean,
 ) {
@@ -95,8 +95,8 @@ function getOutputFilename(
     return guid;
   }
 
-  if (shelfNumber === "Tresorleeszaal" && parsedOclcNumbers) {
-    return `${slugify(shelfNumber)}-${parsedOclcNumbers[0]}`;
+  if (shelfNumber === "Tresorleeszaal" && oclcNumbers) {
+    return `${slugify(shelfNumber)}-${oclcNumbers[0]}`;
   }
 
   if (shelfNumber) {
@@ -107,7 +107,7 @@ function getOutputFilename(
 }
 
 function getOutputDirectoryName(
-  collection: CollectionDescription["collection"],
+  collection: InputConfig["collection"],
   useOutputFolder: boolean,
   inputPath: string,
 ) {
@@ -123,30 +123,33 @@ function getOutputDirectoryName(
   return guid;
 }
 
-export async function processInputFile(inputPath: string, options: RunOptions) {
-  const mapping = await loadYml(inputPath);
+export async function generateManifestsForInputFile(
+  inputPath: string,
+  options: RunOptions,
+) {
+  const inputConfig = await loadYaml(inputPath);
   const stats = emptyStats();
-  stats.items = mapping.items.length;
+  stats.items = inputConfig.items.length;
 
   // For parsing IIIF Manifests and converting to version 3.
   const builder = new IIIFBuilder();
   const vault = builder.vault;
 
-  const outputDir = getOutputDirectoryName(
-    mapping.collection,
+  const outputDirectoryName = getOutputDirectoryName(
+    inputConfig.collection,
     options.useOutputFolder,
     inputPath,
   );
 
-  const outputPath = `${outputDirBase}/${outputDir}`;
-  console.log(`Output folder: ${outputPath}`);
+  const outputDirectoryPath = `${outputDirBase}/${outputDirectoryName}`;
+  console.log(`Output folder: ${outputDirectoryPath}`);
   if (options.dryRun) {
-    console.log(`[dry-run] Would clear or create ${outputPath}`);
+    console.log(`[dry-run] Would clear or create ${outputDirectoryPath}`);
   } else {
-    await clearOrCreateOutputDir(outputPath);
+    await clearOrCreateOutputDir(outputDirectoryPath);
   }
 
-  for (const item of mapping.items) {
+  for (const item of inputConfig.items) {
     const {
       tresor: shelfNumber,
       dlcs,
@@ -163,19 +166,22 @@ export async function processInputFile(inputPath: string, options: RunOptions) {
 
         let metadata: MetadataItem[] | undefined = undefined;
         let label: InternationalString | undefined = undefined;
-        let parsedOclcNumbers: number[] | undefined = undefined;
+        let oclcNumbersForFilename: number[] | undefined = undefined;
         if (oclcNumbers && shelfNumber) {
-          parsedOclcNumbers = oclcNumbers;
-          const oclcResponses: Parameters<typeof processOclcMetadata>[0] = [];
-          for (const number of parsedOclcNumbers) {
-            const resp = await fetchOclcMetadataWithCache(number, options.cache);
-            oclcResponses.push(resp);
+          oclcNumbersForFilename = oclcNumbers;
+          const oclcResponses: Parameters<typeof buildOclcMetadata>[0] = [];
+          for (const number of oclcNumbersForFilename) {
+            const response = await fetchOclcMetadataWithCache(
+              number,
+              options.cache,
+            );
+            oclcResponses.push(response);
           }
-          metadata = processOclcMetadata(oclcResponses, shelfNumber);
-          label = getLabel(metadata);
+          metadata = buildOclcMetadata(oclcResponses, shelfNumber);
+          label = getTitleLabel(metadata);
         } else if (metadataValues) {
-          metadata = parseMetadata(metadataValues);
-          label = getLabel(metadata);
+          metadata = buildManualMetadata(metadataValues);
+          label = getTitleLabel(metadata);
         }
         if (metadata && label) {
           const finalMetadata = metadata;
@@ -188,37 +194,42 @@ export async function processInputFile(inputPath: string, options: RunOptions) {
             },
           );
           const outputManifest = vault.toPresentation3(normalizedManifest);
-          const filename = getOutputFilename(
+          const manifestFilename = getOutputFilename(
             shelfNumber,
-            parsedOclcNumbers,
+            oclcNumbersForFilename,
             guid,
             options.useGuidFilenames,
           );
-          if (!filename) throw new Error("Item GUID missing!");
-          const manifestOutputPath = `${outputPath}/${filename}.json`;
-          const exists = await fileExists(manifestOutputPath);
+          if (!manifestFilename) throw new Error("Item GUID missing!");
+          const manifestOutputPath =
+            `${outputDirectoryPath}/${manifestFilename}.json`;
+          const manifestExists = await fileExists(manifestOutputPath);
 
           stats.processed++;
           if (options.dryRun) {
-            if (exists) {
+            if (manifestExists) {
               stats.wouldOverwrite++;
             } else {
               stats.wouldCreate++;
             }
             console.log(
-              `[dry-run] Would ${exists ? "overwrite" : "create"} ${manifestOutputPath}`,
+              `[dry-run] Would ${manifestExists ? "overwrite" : "create"} ${manifestOutputPath}`,
             );
           } else {
             await writeFile(
               manifestOutputPath,
               JSON.stringify(outputManifest, null, 4),
             );
-            if (exists) {
+            if (manifestExists) {
               stats.overwritten++;
-              console.log(`Existing file ${filename}.json was overwritten`);
+              console.log(
+                `Existing file ${manifestFilename}.json was overwritten`,
+              );
             } else {
               stats.created++;
-              console.log(`File ${filename}.json has been created successfully`);
+              console.log(
+                `File ${manifestFilename}.json has been created successfully`,
+              );
             }
           }
         } else {
@@ -235,15 +246,15 @@ export async function processInputFile(inputPath: string, options: RunOptions) {
     }
   }
 
-  const collectionLabel = mapping.collection.label;
+  const collectionLabel = inputConfig.collection.label;
   if (collectionLabel) {
-    const collectionOutputPath = `${outputPath}/_collection.yml`;
+    const collectionOutputPath = `${outputDirectoryPath}/_collection.yml`;
     if (options.dryRun) {
       console.log(`[dry-run] Would write ${collectionOutputPath}`);
     } else {
-      await saveYml(collectionOutputPath, {
+      await saveYaml(collectionOutputPath, {
         label: collectionLabel,
-        summary: mapping.collection.summary,
+        summary: inputConfig.collection.summary,
       });
     }
   }

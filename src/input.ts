@@ -9,7 +9,11 @@ const scalarOrArraySchema = z.union([scalarSchema, z.array(scalarSchema)]);
 export const languageValueSchema = z
   .union([z.record(z.string(), scalarOrArraySchema), scalarOrArraySchema])
   .transform((value) => {
-    if (typeof value === "string" || typeof value === "number" || Array.isArray(value)) {
+    if (
+      typeof value === "string" ||
+      typeof value === "number" ||
+      Array.isArray(value)
+    ) {
       return { none: value };
     }
 
@@ -56,7 +60,7 @@ const itemSchema = z
   })
   .passthrough();
 
-export const collectionDescriptionSchema = z
+export const inputConfigSchema = z
   .object({
     collection: collectionSchema,
     items: z.array(itemSchema),
@@ -65,35 +69,32 @@ export const collectionDescriptionSchema = z
 
 export type LanguageValue = z.output<typeof languageValueSchema>;
 export type MetadataValues = z.output<typeof metadataValuesSchema>;
-export type CollectionDescription = z.output<typeof collectionDescriptionSchema>;
+export type InputConfig = z.output<typeof inputConfigSchema>;
 
 function formatPath(path: PropertyKey[]) {
   return path.length ? path.join(".") : "<root>";
 }
 
-function formatZodError(error: z.ZodError) {
+function formatInputValidationError(error: z.ZodError) {
   return error.issues
     .map((issue) => `${formatPath(issue.path)}: ${issue.message}`)
     .join("\n");
 }
 
-export function parseCollectionDescription(
-  input: unknown,
-  sourcePath?: string,
-) {
-  const result = collectionDescriptionSchema.safeParse(input);
+export function parseInputConfig(input: unknown, sourcePath?: string) {
+  const result = inputConfigSchema.safeParse(input);
   if (result.success) {
     return result.data;
   }
 
   const source = sourcePath ? ` in ${sourcePath}` : "";
   throw new Error(
-    `Invalid input YAML${source}:\n${formatZodError(result.error)}`,
+    `Invalid input YAML${source}:\n${formatInputValidationError(result.error)}`,
   );
 }
 
-export async function loadYml(path: string) {
+export async function loadYaml(path: string) {
   const file = await readFile(path, "utf8");
   writer.write(`Selected input file: ${path}\n`);
-  return parseCollectionDescription(yaml.load(file), path);
+  return parseInputConfig(yaml.load(file), path);
 }

@@ -29,7 +29,7 @@ export async function fetchJson(url: string) {
   return response.json();
 }
 
-export function checkArrray<T>(input: T | T[]) {
+export function toArray<T>(input: T | T[]) {
   if (Array.isArray(input)) {
     return input;
   } else {
@@ -179,9 +179,9 @@ export function listKeysAndTypes(
   } else return keys.entries();
 }
 
-export async function saveYml(pathWithFilename: string, json: unknown) {
-  const ymlString = yaml.dump(json);
-  await writeFile(pathWithFilename, ymlString);
+export async function saveYaml(pathWithFilename: string, json: unknown) {
+  const yamlString = yaml.dump(json);
+  await writeFile(pathWithFilename, yamlString);
 }
 
 type ResourceWithService = {
@@ -221,14 +221,14 @@ export async function clearOrCreateOutputDir(outputDir: string) {
   await mkdir(outputDir, { recursive: true });
 }
 
-export function parseMetadata(props: MetadataValues): MetadataItem[] {
+export function buildManualMetadata(props: MetadataValues): MetadataItem[] {
   const metadata: MetadataItem[] = [];
   for (const [key, label] of Object.entries(objectLabels)) {
     const value = props[key];
     if (value) {
       const parsedValue: InternationalString = {};
       for (const lang in value) {
-        parsedValue[lang] = checkArrray(value[lang]).map(String);
+        parsedValue[lang] = toArray(value[lang]).map(String);
       }
       metadata.push({
         label,
@@ -239,6 +239,6 @@ export function parseMetadata(props: MetadataValues): MetadataItem[] {
   return metadata;
 }
 
-export function getLabel(metadata: MetadataItem[]) {
+export function getTitleLabel(metadata: MetadataItem[]) {
   return metadata.find(({ label }) => label?.en?.[0] === "Title")?.value;
 }

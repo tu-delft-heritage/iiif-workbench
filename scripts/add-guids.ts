@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 import { Command } from "commander";
 import { v4 } from "uuid";
-import { loadYml } from "../src/input.ts";
+import { loadYaml } from "../src/input.ts";
 import { closeLog } from "../src/log.ts";
-import { saveYml } from "../src/shared.ts";
+import { saveYaml } from "../src/shared.ts";
 
 const program = new Command();
 
@@ -15,22 +15,22 @@ program
   .action(async (files: string[]) => {
     try {
       for (const path of files) {
-        const yml = await loadYml(path);
+        const inputConfig = await loadYaml(path);
 
-        if (!yml.collection.guid) {
-          yml.collection = { guid: v4(), ...yml.collection };
+        if (!inputConfig.collection.guid) {
+          inputConfig.collection = { guid: v4(), ...inputConfig.collection };
         }
 
-        yml.items.forEach((object, index) => {
-          if (!object.guid) {
-            yml.items[index] = { guid: v4(), ...object };
+        inputConfig.items.forEach((item, index) => {
+          if (!item.guid) {
+            inputConfig.items[index] = { guid: v4(), ...item };
           }
         });
 
         // Not overwriting existing file in order to preserve comments, etc.
         const outputPath = path.replace(".yml", "-guids.yml");
 
-        await saveYml(outputPath, yml);
+        await saveYaml(outputPath, inputConfig);
         console.log(`Wrote ${outputPath}`);
       }
     } finally {

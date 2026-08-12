@@ -1,5 +1,5 @@
 export type {
-  CollectionDescription,
+  InputConfig,
   LanguageValue,
   MetadataValues,
 } from "../input.ts";

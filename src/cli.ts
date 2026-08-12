@@ -8,7 +8,7 @@ import {
   addStats,
   emptyStats,
   formatError,
-  processInputFile,
+  generateManifestsForInputFile,
 } from "./manifest-runner.ts";
 
 export type CliOptions = {
@@ -23,7 +23,7 @@ export function normalizeProcessArgv(argv: string[]) {
   return [runtime, script, ...args.filter((arg) => arg !== "--")];
 }
 
-export async function runFiles(files: string[], cliOptions: CliOptions) {
+export async function runCli(files: string[], cliOptions: CliOptions) {
   const dryRun = Boolean(cliOptions.dryRun);
   setLogEnabled(!dryRun);
 
@@ -42,7 +42,7 @@ export async function runFiles(files: string[], cliOptions: CliOptions) {
   try {
     for (const file of files) {
       try {
-        const stats = await processInputFile(file, options);
+        const stats = await generateManifestsForInputFile(file, options);
         addStats(total, stats);
       } catch (err) {
         total.errors++;

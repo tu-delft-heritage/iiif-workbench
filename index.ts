@@ -2,7 +2,7 @@
 import { Command } from "commander";
 import {
   normalizeProcessArgv,
-  runFiles,
+  runCli,
   type CliOptions,
 } from "./src/cli.ts";
 
@@ -27,7 +27,7 @@ program
   )
   .showHelpAfterError()
   .action((files: string[], cliOptions: CliOptions) =>
-    runFiles(files, cliOptions),
+    runCli(files, cliOptions),
   );
 
 await program.parseAsync(normalizeProcessArgv(process.argv));
